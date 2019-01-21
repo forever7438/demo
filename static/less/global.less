@@ -1,0 +1,33 @@
+/* 自制三角样式 */
+.global-fun-tag(@height,@color,@head-width:4px) {
+    display: inline-block;
+    line-height: @height;
+    background-color: @color;
+    padding: 0 5px;
+    position: relative;
+    margin: 0 auto;
+  
+    &::before {
+      content: "";
+      background-color: @color;
+      display: inline-block;
+      height: @height+0.1rem;
+      width: @head-width;
+      position: absolute;
+      left: -@head-width;
+      border-top-left-radius: @head-width;
+      border-bottom-left-radius: @head-width / 2;
+    }
+  
+    &::after {
+      content: "";
+      height: 0;
+      width: 0;
+      position: absolute;
+      right: -@height / 2;
+      border-top: @height / 2 solid @color;
+      border-bottom: @height / 2 solid @color;
+      border-right: @height / 2 solid transparent;
+      border-left: 0 solid transparent;
+    }
+  }
