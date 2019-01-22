@@ -3,13 +3,15 @@ import Router from 'vue-router'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
 
-import home from '@/views/home'
+import production from '@/views/production'
+import lesson from '@/views/lesson'
+import personal from '@/views/personal'
 import login from '@/views/login'
 import lessonDetail from '@/views/lessonDetail'
 Vue.use(Router)
 const Routers = [{
     path: '/',
-    redirect: "/home"
+    redirect: "/production"
   },
   {
     path: '/login',
@@ -17,14 +19,24 @@ const Routers = [{
     component: login
   },
   {
-    path: '/home',
-    name: 'home',
-    component: home
+    path: '/production',
+    name: 'production',
+    component: production
+  },
+  {
+    path: '/lesson',
+    name: 'lesson',
+    component: lesson
   },
   {
     path: '/lessonDetail',
     name: 'lessonDetail',
     component: lessonDetail
+  },
+  {
+    path: '/personal',
+    name: 'personal',
+    component: personal
   },
 ];
 const RouterConfig = {

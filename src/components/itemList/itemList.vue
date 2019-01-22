@@ -1,46 +1,46 @@
 <template>
-    <div class="item_content">
-      <div class="item_header">
-          <p>
-              <img src="../../../static/img/icon_touxiang01.png" alt="">
-              <span>真实姓名</span>
-              <i>老师&nbsp;&nbsp;神龙小学</i>
-          </p>
-          <p>
-              <i class="lesson_title">基础课程</i>
-              <span class="labels">
-                  <i class="fun-tag">创意创意1</i>
-                  <i class="fun-tag">创意2</i>
-                  <i class="fun-tag">创意3</i>
-              </span>
-          </p>
+  <div class="item_content">
+    <div class="item_header">
+      <p>
+        <img src="../../../static/img/icon_touxiang01.png" alt>
+        <span>真实姓名</span>
+        <i>老师&nbsp;&nbsp;神龙小学</i>
+      </p>
+      <p>
+        <i class="lesson_title">基础课程</i>
+        <span class="labels">
+          <i class="fun-tag">创意创意1</i>
+          <i class="fun-tag">创意2</i>
+          <i class="fun-tag">创意3</i>
+        </span>
+      </p>
+    </div>
+    <div class="item_body">
+      <video src="../../../static/test1.mp4" controls="controls"></video>
+    </div>
+    <div class="item_footer">
+      <div class="message">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-icon-test"></use>
+        </svg>
+        <span>888</span>
       </div>
-      <div class="item_body">
-          <video src="../../../static/test1.mp4" controls='controls'></video>
-      </div>
-      <div class="item_footer">
-          <div class="message">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-icon-test"></use>
-                </svg>
-            <span>888</span>
-          </div>
-        <div class="meun">
-             <div>
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-wujiaoxing_kong"></use>
-                </svg>
-            <span>888</span>
-          </div>
-           <div>
-                <svg class="icon like" aria-hidden="true">
-                    <use xlink:href="#icon-z-like"></use>
-                </svg>
-            <span>888</span>
-          </div>
+      <div class="meun">
+        <div>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-wujiaoxing_kong"></use>
+          </svg>
+          <span>888</span>
+        </div>
+        <div>
+          <svg class="icon like" aria-hidden="true">
+            <use xlink:href="#icon-z-like"></use>
+          </svg>
+          <span>888</span>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
