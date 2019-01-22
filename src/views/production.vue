@@ -1,7 +1,7 @@
 <template>
-    <div class="home_contnet">
-       <item-list v-for="(item,index) in videoList" :key="index"></item-list>
-    </div>
+  <div class="production_contnet">
+    <item-list v-for="(item,index) in videoList" :key="index"></item-list>
+  </div>
 </template>
 
 <script>
@@ -22,8 +22,8 @@ export default {
 <style lang='less' scoped>
 .production_contnet {
   position: relative;
-  top: 1.8rem;
+  top: 1.5rem;
   margin-bottom: 2rem;
-  z-index: 666666;
+  z-index: 999999;
 }
 </style>

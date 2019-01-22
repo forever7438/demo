@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <lesson-detail></lesson-detail>
-    </div>
+  <div>
+    <lesson-detail></lesson-detail>
+  </div>
 </template>
 
 <script>

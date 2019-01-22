@@ -6,7 +6,9 @@ import NProgress from 'nprogress'
 import production from '@/views/production'
 import lesson from '@/views/lesson'
 import personal from '@/views/personal'
-import login from '@/views/login'
+import quickLogin from '@/views/login/quickLogin'
+import forgetPassword from '@/views/login/forgetPassword'
+import updatePasswprd from '@/views/login/updatePasswprd'
 import lessonDetail from '@/views/lessonDetail'
 Vue.use(Router)
 const Routers = [{
@@ -14,9 +16,19 @@ const Routers = [{
     redirect: "/production"
   },
   {
-    path: '/login',
-    name: 'login',
-    component: login
+    path: '/quickLogin',
+    name: 'quickLogin',
+    component: quickLogin
+  },
+  {
+    path: '/forgetPassword',
+    name: 'forgetPassword',
+    component: forgetPassword
+  },
+  {
+    path: '/updatePasswprd',
+    name: 'updatePasswprd',
+    component: updatePasswprd
   },
   {
     path: '/production',

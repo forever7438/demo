@@ -11,8 +11,8 @@ export default {
 <style lang='less' scoped>
 .lesson_contnet {
   position: relative;
-  top: 1.8rem;
+  top: 1.5rem;
   margin-bottom: 2rem;
-  z-index: 666666;
+  z-index: 999999;
 }
 </style>
