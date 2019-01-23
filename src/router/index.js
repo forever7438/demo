@@ -6,14 +6,27 @@ import NProgress from 'nprogress'
 import production from '@/views/production'
 import lesson from '@/views/lesson'
 import personal from '@/views/personal'
+import login from '@/views/login/login'
 import quickLogin from '@/views/login/quickLogin'
 import forgetPassword from '@/views/login/forgetPassword'
-import updatePasswprd from '@/views/login/updatePasswprd'
+import updatePassword from '@/views/login/updatePassword'
 import lessonDetail from '@/views/lessonDetail'
+import myFllow from '@/views/personalCenter/myFllow'
+import myCollection from '@/views/personalCenter/myCollection'
+import myLesson from '@/views/personalCenter/myLesson'
+import myProduction from '@/views/personalCenter/myProduction'
+import mySetting from '@/views/personalCenter/mySetting'
+import myMessage from '@/views/personalCenter/myMessage'
+import myFan from '@/views/personalCenter/myFan'
 Vue.use(Router)
 const Routers = [{
     path: '/',
     redirect: "/production"
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: login
   },
   {
     path: '/quickLogin',
@@ -26,9 +39,9 @@ const Routers = [{
     component: forgetPassword
   },
   {
-    path: '/updatePasswprd',
-    name: 'updatePasswprd',
-    component: updatePasswprd
+    path: '/updatePassword',
+    name: 'updatePassword',
+    component: updatePassword
   },
   {
     path: '/production',
@@ -49,6 +62,41 @@ const Routers = [{
     path: '/personal',
     name: 'personal',
     component: personal
+  },
+  {
+    path: '/myFllow',
+    name: 'myFllow',
+    component: myFllow
+  },
+  {
+    path: '/myCollection',
+    name: 'myCollection',
+    component: myCollection
+  },
+  {
+    path: '/myLesson',
+    name: 'myLesson',
+    component: myLesson
+  },
+  {
+    path: '/myProduction',
+    name: 'myProduction',
+    component: myProduction
+  },
+  {
+    path: '/mySetting',
+    name: 'mySetting',
+    component: mySetting
+  },
+  {
+    path: '/myMessage',
+    name: 'myMessage',
+    component: myMessage
+  },
+  {
+    path: '/myFan',
+    name: 'myFan',
+    component: myFan
   },
 ];
 const RouterConfig = {

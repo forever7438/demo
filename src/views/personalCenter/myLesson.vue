@@ -1,13 +1,13 @@
 <template>
-  <div class="lesson_contnet">
-    <tips title="创客课程"></tips>
+  <div class="lesson_content">
+    <tips title="我发布的课程"></tips>
   </div>
 </template>
 
 <script>
-import tips from "../components/tips";
+import tips from "../../components/tips";
 export default {
-  name: "lesson",
+  name: "mylesson",
   components: {
     tips
   }
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.lesson_contnet {
+.lesson_content {
   position: relative;
   top: 1.5rem;
   z-index: 999999;

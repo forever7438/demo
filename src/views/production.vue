@@ -1,15 +1,18 @@
 <template>
   <div class="production_contnet">
+    <tips title="创客视频"></tips>
     <item-list v-for="(item,index) in videoList" :key="index"></item-list>
   </div>
 </template>
 
 <script>
 import itemList from "../components/itemList/itemList";
+import tips from "../components/tips";
 export default {
   name: "production",
   components: {
-    itemList
+    itemList,
+    tips
   },
   data() {
     return {

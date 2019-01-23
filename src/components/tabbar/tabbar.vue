@@ -24,11 +24,35 @@ export default {
     };
   },
   created() {
-    if (['login','forgetPassword','updatePasswprd'].includes(this.$route.name)) {
-      this.isShow = false;
+    this.showBar(this.$route.name);
+  },
+  methods: {
+    showBar(name) {
+      const pathName = [
+        "login",
+        "quickLogin",
+        "forgetPassword",
+        "updatePasswprd",
+        "myFan",
+        "myFllow",
+        "myCollection",
+        "myLesson",
+        "myProduction",
+        "mySetting",
+        "myMessage"
+      ];
+      if (pathName.includes(name)) {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }
     }
   },
-  methods: {}
+  watch: {
+    $route(to, from) {
+      this.showBar(to.name);
+    }
+  }
 };
 </script>
 
