@@ -32,14 +32,15 @@ export default {
         "login",
         "quickLogin",
         "forgetPassword",
-        "updatePasswprd",
+        "updatePassword",
         "myFan",
         "myFllow",
         "myCollection",
         "myLesson",
         "myProduction",
         "mySetting",
-        "myMessage"
+        "myMessage",
+        "lessonDetail"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;

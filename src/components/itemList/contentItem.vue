@@ -21,9 +21,11 @@ export default {
 
 <style lang='less' scoped>
 .item_contnet {
-  width: 4.5rem;
+  width: 4.6rem;
   box-shadow: #c5dcff 0 1px 5px 1px;
   border-radius: 0.2rem;
+  margin-bottom: 0.3rem;
+  background: #ffffff;
   img {
     width: 100%;
     height: 3rem;
@@ -34,18 +36,40 @@ export default {
     justify-content: space-between;
     padding: 0 0.1rem;
     font-size: 0.4rem;
+    span {
+      &:nth-of-type(1) {
+        font-size: 0.45rem;
+        font-weight: 600;
+      }
+    }
   }
   .operation_list {
     display: flex;
     span {
       flex: 1;
       font-size: 0.4rem;
+      &::before {
+        display: inline-block;
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        vertical-align: sub;
+      }
       &:nth-of-type(1) {
         &::before {
-          display: inline-block;
-          width: 0.5rem;
-          height: 0.5rem;
           background: url("../../../static/img/icon-pinglun01.png") no-repeat
+            center/100%;
+        }
+      }
+      &:nth-of-type(2) {
+        &::before {
+          background: url("../../../static/img/icon_shoucang01.png") no-repeat
+            center/100%;
+        }
+      }
+      &:nth-of-type(3) {
+        &::before {
+          background: url("../../../static/img/icon_dianzan01.png") no-repeat
             center/100%;
         }
       }

@@ -104,6 +104,7 @@ export default {
             color: #ffffff;
             border-radius: 4px;
             border: none;
+            font-size: 0.4rem;
             background: -webkit-linear-gradient(
               left,
               #3e40e2,
@@ -130,8 +131,11 @@ export default {
         color: #ffffff;
         border-radius: 4px;
         border: none;
-        background: -webkit-linear-gradient(left, #3e40e2, #4413b8);
-        /* Safari 5.1 - 6.0 */
+        background: -webkit-linear-gradient(
+          left,
+          #3e40e2,
+          #4413b8
+        ); /* Safari 5.1 - 6.0 */
         background: -o-linear-gradient(
           right,
           #3e40e2,

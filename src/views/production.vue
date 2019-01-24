@@ -1,7 +1,7 @@
 <template>
   <div class="production_contnet">
     <tips title="创客视频"></tips>
-    <item-list v-for="(item,index) in videoList" :key="index"></item-list>
+    <item-list v-for="(item,index) in videoList" :key="index" itemtype="production"></item-list>
   </div>
 </template>
 

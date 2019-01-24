@@ -151,8 +151,13 @@ export default {
           height: 1rem;
           text-align: center;
           line-height: 1rem;
+          font-size: 0.5rem;
+          color: #000;
         }
         p {
+          font-size: 0.5rem;
+          font-weight: 600;
+          color: #000;
           &::before {
             display: inline-block;
             content: "";

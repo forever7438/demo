@@ -17,6 +17,8 @@ button {
   border: 1px solid #13c211;
   border-radius: 5px;
   background: #ffffff;
+  font-size: 0.5rem;
+  font-weight: 600;
   &::before {
     display: inline-block;
     width: 0.6rem;

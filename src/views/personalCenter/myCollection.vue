@@ -6,7 +6,7 @@
       <p>收藏课程</p>
     </div>
     <div class="collection_list">
-      <contentItem></contentItem>
+      <contentItem v-for="(item,index) in 10" :key="index"></contentItem>
     </div>
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
   components: {
     tips,
     contentItem
+  },
+  data() {
+    return {};
   }
 };
 </script>
@@ -49,8 +52,10 @@ export default {
     }
   }
   .collection_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin: 0 0.3rem 0.3rem 0.3rem;
-    background: #ffffff;
   }
 }
 </style>

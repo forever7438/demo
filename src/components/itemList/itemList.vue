@@ -16,7 +16,10 @@
       </p>
     </div>
     <div class="item_body">
-      <video src="../../../static/test1.mp4" controls="controls"></video>
+      <video src="../../../static/test1.mp4" controls="controls" v-if="itemtype=='production'"></video>
+      <router-link to="/lessonDetail" v-if="itemtype=='lesson'">
+        <img src="../../../static/img/test.jpg">
+      </router-link>
     </div>
     <div class="item_footer">
       <div class="message">
@@ -45,7 +48,10 @@
 
 <script>
 export default {
-  name: "itemList"
+  name: "itemList",
+  props: {
+    itemtype: String
+  }
 };
 </script>
 
@@ -108,6 +114,10 @@ export default {
   }
   .item_body {
     video {
+      width: 100%;
+      height: 5rem;
+    }
+    img {
       width: 100%;
       height: 5rem;
     }

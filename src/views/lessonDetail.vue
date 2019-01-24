@@ -1,15 +1,18 @@
 <template>
-  <div>
-    <lesson-detail></lesson-detail>
+  <div class="detail_contnet">
+    <tips title="课程详情"></tips>
+    <messageDetail></messageDetail>
   </div>
 </template>
 
 <script>
-import lessonDetail from "../components/lesson/detail.vue";
+import messageDetail from "../components/lesson/messageDetail";
+import tips from "../components/tips";
 export default {
   name: "lessonDetail",
   components: {
-    lessonDetail
+    tips,
+    messageDetail
   },
   data() {
     return {};
@@ -17,5 +20,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='less' scoped>
+.detail_contnet {
+  position: relative;
+  top: 1.5rem;
+  z-index: 999999;
+}
 </style>
