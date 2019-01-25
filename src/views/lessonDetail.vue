@@ -2,17 +2,20 @@
   <div class="detail_contnet">
     <tips title="课程详情"></tips>
     <messageDetail></messageDetail>
+    <lessonDesc></lessonDesc>
   </div>
 </template>
 
 <script>
 import messageDetail from "../components/lesson/messageDetail";
+import lessonDesc from "../components/lesson/lessonDesc";
 import tips from "../components/tips";
 export default {
   name: "lessonDetail",
   components: {
     tips,
-    messageDetail
+    messageDetail,
+    lessonDesc
   },
   data() {
     return {};

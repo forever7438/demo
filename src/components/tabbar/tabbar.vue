@@ -1,6 +1,17 @@
 <template>
   <div v-if="isShow">
-    <ul class="tabbar">
+    <ul class="tabbar_play" v-if="this.$route.name=='lessonPlay'">
+      <li>
+        <span>点赞 1888</span>
+      </li>
+      <li>
+        <span>评论 888</span>
+      </li>
+      <li>
+        <span>收藏 888</span>
+      </li>
+    </ul>
+    <ul class="tabbar" v-else>
       <li>
         <router-link to="/production" tag="p" active-class="isProduction"></router-link>
       </li>
@@ -40,7 +51,9 @@ export default {
         "myProduction",
         "mySetting",
         "myMessage",
-        "lessonDetail"
+        "lessonDetail",
+        "homepage",
+        "accountManagement"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;
@@ -120,6 +133,69 @@ div {
         p {
           background: url("../../../static/img/icon_wode03.png") no-repeat
             center/100%;
+        }
+      }
+    }
+  }
+  .tabbar_play {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 3px solid #ddd;
+    border-radius: 0.5rem 0.5rem 0 0;
+    li {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      span {
+        font-size: 0.5rem;
+        font-weight: 600;
+      }
+      &:nth-of-type(1) {
+        border-right: 1px solid #dddddd;
+        span {
+          &::before {
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0.1rem;
+            content: "";
+            background: url("../../../static/img/icon_dianzan01.png") no-repeat
+              center/100%;
+            vertical-align: sub;
+          }
+        }
+      }
+      &:nth-of-type(2) {
+        border-right: 1px solid #dddddd;
+        span {
+          &::before {
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0.1rem;
+            content: "";
+            background: url("../../../static/img/icon-pinglun01.png") no-repeat
+              center/100%;
+            vertical-align: sub;
+          }
+        }
+      }
+      &:nth-of-type(3) {
+        span {
+          &::before {
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0.1rem;
+            content: "";
+            background: url("../../../static/img/icon_shoucang02.png") no-repeat
+              center/100%;
+            vertical-align: sub;
+          }
         }
       }
     }

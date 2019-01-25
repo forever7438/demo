@@ -62,5 +62,9 @@ export default {
       }
     }
   }
+  .item_motto {
+    font-size: 0.4rem;
+    text-align: left;
+  }
 }
 </style>

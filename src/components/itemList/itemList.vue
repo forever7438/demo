@@ -2,7 +2,9 @@
   <div class="item_content">
     <div class="item_header">
       <p>
-        <img src="../../../static/img/icon_touxiang01.png" alt>
+        <router-link to="/homepage">
+          <img src="../../../static/img/icon_touxiang01.png" alt>
+        </router-link>
         <span>真实姓名</span>
         <i>老师&nbsp;&nbsp;神龙小学</i>
       </p>
@@ -95,6 +97,7 @@ export default {
           font-weight: 600;
         }
         .labels {
+          font-size: 0.4rem;
           .fun-tag {
             margin-right: 0.4rem !important;
             color: #f9fdfe;
@@ -123,9 +126,10 @@ export default {
     }
   }
   .item_footer {
-    padding: 0 10px;
+    padding: 0 0.2rem;
     display: flex;
     justify-content: space-between;
+    font-size: 0.5rem;
     .message {
       display: flex;
       align-items: center;

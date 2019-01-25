@@ -11,6 +11,9 @@ import quickLogin from '@/views/login/quickLogin'
 import forgetPassword from '@/views/login/forgetPassword'
 import updatePassword from '@/views/login/updatePassword'
 import lessonDetail from '@/views/lessonDetail'
+import lessonPlay from '@/views/lessonPlay'
+import homepage from '@/views/homepage'
+import accountManagement from "@/views/accountManagement"
 import myFllow from '@/views/personalCenter/myFllow'
 import myCollection from '@/views/personalCenter/myCollection'
 import myLesson from '@/views/personalCenter/myLesson'
@@ -21,7 +24,7 @@ import myFan from '@/views/personalCenter/myFan'
 Vue.use(Router)
 const Routers = [{
     path: '/',
-    redirect: "/production"
+    redirect: "/login"
   },
   {
     path: '/login',
@@ -59,9 +62,24 @@ const Routers = [{
     component: lessonDetail
   },
   {
+    path: '/lessonPlay',
+    name: 'lessonPlay',
+    component: lessonPlay
+  },
+  {
     path: '/personal',
     name: 'personal',
     component: personal
+  },
+  {
+    path: '/homepage',
+    name: 'homepage',
+    component: homepage
+  },
+  {
+    path: '/accountManagement',
+    name: 'accountManagement',
+    component: accountManagement
   },
   {
     path: '/myFllow',
