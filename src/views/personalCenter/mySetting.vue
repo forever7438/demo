@@ -2,7 +2,7 @@
   <div class="setting_content">
     <tips title="我的设置"></tips>
     <div class="account_setting">
-      <router-link to="/myProduction">
+      <router-link to="/accountManagement">
         <p>账号管理</p>
         <i>
           <svg class="icon" aria-hidden="true">
@@ -76,6 +76,7 @@ export default {
     box-shadow: #c5dcff 0 1px 5px 1px;
     border-radius: 0.2rem;
     background: #ffffff;
+    font-size: 0.5rem;
     ul {
       display: flex;
       flex-direction: column;

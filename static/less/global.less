@@ -1,5 +1,5 @@
 /* 自制三角样式 */
-.global-fun-tag(@height,@color,@head-width:4px) {
+.global-fun-tag(@height,@color,@head-width:4/37.5rem) {
     display: inline-block;
     line-height: @height;
     background-color: @color;
@@ -11,7 +11,7 @@
       content: "";
       background-color: @color;
       display: inline-block;
-      height: @height+0.1rem;
+      height: @height+ 2/37.5rem;
       width: @head-width;
       position: absolute;
       left: -@head-width;

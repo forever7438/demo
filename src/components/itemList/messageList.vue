@@ -40,7 +40,10 @@ export default {
   div {
     .message_type {
       text-align: left;
+      font-size: 0.4rem;
       img {
+        width: 0.5rem;
+        height: 0.5rem;
         vertical-align: sub;
       }
       span {
@@ -49,6 +52,7 @@ export default {
     }
     .message_detail {
       text-align: left;
+      font-size: 0.4rem;
       span {
         position: relative;
         i {

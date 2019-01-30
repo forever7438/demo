@@ -59,13 +59,14 @@ export default {
     background: #ffffff;
     .homepage_head {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
       font-size: 0.5rem;
       font-weight: 600;
       img {
         width: 2.5rem;
         height: 2.5rem;
+        margin: 0 0.5rem;
         border-radius: 50%;
         border: 0.05rem solid #358dfd;
       }

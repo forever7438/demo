@@ -13,6 +13,7 @@ import updatePassword from '@/views/login/updatePassword'
 import lessonDetail from '@/views/lessonDetail'
 import lessonPlay from '@/views/lessonPlay'
 import homepage from '@/views/homepage'
+import updateSign from '@/views/updateSign'
 import accountManagement from "@/views/accountManagement"
 import myFllow from '@/views/personalCenter/myFllow'
 import myCollection from '@/views/personalCenter/myCollection'
@@ -24,7 +25,7 @@ import myFan from '@/views/personalCenter/myFan'
 Vue.use(Router)
 const Routers = [{
     path: '/',
-    redirect: "/login"
+    redirect: "/production"
   },
   {
     path: '/login',
@@ -106,6 +107,7 @@ const Routers = [{
     name: 'mySetting',
     component: mySetting
   },
+  
   {
     path: '/myMessage',
     name: 'myMessage',
@@ -115,6 +117,11 @@ const Routers = [{
     path: '/myFan',
     name: 'myFan',
     component: myFan
+  },
+  {
+    path: '/updateSign',
+    name: 'updateSign',
+    component: updateSign
   },
 ];
 const RouterConfig = {

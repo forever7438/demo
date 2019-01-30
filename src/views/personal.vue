@@ -113,7 +113,7 @@ export default {
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 50%;
-      border: 3px solid #ffffff;
+      border: 0.1rem solid #ffffff;
       margin-right: 0.2rem;
     }
     .person_message {

@@ -99,16 +99,16 @@ export default {
         .labels {
           font-size: 0.4rem;
           .fun-tag {
-            margin-right: 0.4rem !important;
+            margin-right: 0.5rem !important;
             color: #f9fdfe;
             &:nth-of-type(1) {
-              .global-fun-tag(0.7rem, #86bbe1);
+              .global-fun-tag(0.8rem, #86bbe1);
             }
             &:nth-of-type(2) {
-              .global-fun-tag(0.7rem, #98dd80);
+              .global-fun-tag(0.8rem, #98dd80);
             }
             &:nth-of-type(3) {
-              .global-fun-tag(0.7rem, #efa096);
+              .global-fun-tag(0.8rem, #efa096);
             }
           }
         }

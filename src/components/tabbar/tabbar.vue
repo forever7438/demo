@@ -53,7 +53,8 @@ export default {
         "myMessage",
         "lessonDetail",
         "homepage",
-        "accountManagement"
+        "accountManagement",
+        "updateSign",
       ];
       if (pathName.includes(name)) {
         this.isShow = false;

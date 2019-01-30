@@ -60,6 +60,8 @@ export default {
   .login_message {
     display: flex;
     flex-direction: column;
+    font-size: 0.5rem;
+    font-weight: 600;
     ul {
       li {
         margin: 5%;
@@ -83,8 +85,8 @@ export default {
             background: url("../../../static/img/icon_yonghu.png") no-repeat
               center/100%;
             position: absolute;
-            left: 5px;
-            top: 8px;
+            left: 5/37.5rem;
+            top: 8/37.5rem;
           }
         }
         &:nth-of-type(2) {
@@ -100,8 +102,8 @@ export default {
             background: url("../../../static/img/icon_mima.png") no-repeat
               center/100%;
             position: absolute;
-            left: 5px;
-            top: 8px;
+            left: 5/37.5rem;
+            top: 8/37.5rem;
           }
         }
       }
@@ -134,7 +136,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 0 5%;
-      font-size: 14px;
+      font-size: 14/37.5rem;
       p {
         color: #0370df;
       }

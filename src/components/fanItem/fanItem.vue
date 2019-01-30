@@ -46,7 +46,7 @@ export default {
         width: 1.3rem;
         height: 1.3rem;
         border-radius: 50%;
-        border: 1px solid #358dfd;
+        border: 0.03rem solid #358dfd;
         margin-right: 5px;
       }
       span {

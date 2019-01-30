@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <web-header></web-header>
-    <router-view/>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
     <navigator></navigator>
   </div>
 </template>
@@ -26,4 +28,16 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+/* 路由切换过度效果 */
+/* .slide-enter{
+  -webkit-transform: translate(50%, 0);
+  transform: translate(50%, 0);
+  transition: all 0.5s ease-in-out;
+}
+.slide-leave-active{
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  transition: all 0.5s ease-in-out;
+} */
 </style>

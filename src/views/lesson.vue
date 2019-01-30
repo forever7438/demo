@@ -21,6 +21,7 @@ export default {
 .lesson_contnet {
   position: relative;
   top: 1.5rem;
+  margin-bottom: 2rem;
   z-index: 999999;
 }
 </style>
