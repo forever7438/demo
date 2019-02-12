@@ -129,7 +129,7 @@ export default {
           to right,
           #3e40e2,
           #4413b8
-        ); /* 标准的语法 */
+        );
       }
     }
     .error_message {

@@ -1,14 +1,14 @@
 <template>
-  <div v-if="isShow">
+  <div class="tabbar_content" v-if="isShow">
     <ul class="tabbar_play" v-if="this.$route.name=='lessonPlay'">
-      <li>
-        <span>点赞 1888</span>
+      <li @click="like">
+        <span>点赞 {{likeNum}}</span>
       </li>
-      <li>
-        <span>评论 888</span>
+      <li @click="comment">
+        <span>评论 {{commentNum}}</span>
       </li>
-      <li>
-        <span>收藏 888</span>
+      <li @click="collection">
+        <span>收藏 {{collectionNum}}</span>
       </li>
     </ul>
     <ul class="tabbar" v-else>
@@ -17,21 +17,37 @@
       </li>
       <li>
         <router-link to="/lesson" tag="p" active-class="isLesson"></router-link>
-      </li>00000
+      </li>
       <li>
         <router-link to="/personal" tag="p" active-class="isPersonal"></router-link>
       </li>
     </ul>
+    <dialogModel v-if="isShowModel">
+      <dialogText></dialogText>
+      <dialogBtn cancalText="取消" confirmText="确定" @cancal="isShowModel=false" @confirm="handle"></dialogBtn>
+    </dialogModel>
   </div>
 </template>
 
 <script>
+import dialogModel from "../dialog/dialogModel";
+import dialogText from "../dialog/dialogText";
+import dialogBtn from "../dialog/dialogBtn";
 export default {
   name: "Navigator",
+  components: {
+    dialogModel,
+    dialogText,
+    dialogBtn
+  },
   data() {
     return {
       active: 0,
-      isShow: true
+      isShow: true,
+      isShowModel: false,
+      likeNum: 20,
+      commentNum: 14,
+      collectionNum: 45
     };
   },
   created() {
@@ -54,13 +70,36 @@ export default {
         "lessonDetail",
         "homepage",
         "accountManagement",
-        "updateSign",
+        "updateSign"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;
       } else {
         this.isShow = true;
       }
+    },
+    like() {
+      this.$toast.success("点赞成功");
+      this.likeNum++;
+    },
+    comment() {
+      this.isShowModel = true;
+      // this.$toast.success("评论成功");
+    },
+    collection() {
+      this.$toast.success("收藏成功");
+    },
+    handle() {
+      if (!this.$store.state.data.text) {
+        this.isShowModel = false;
+        this.$dialog.alert({
+          message: "请填写内容"
+        });
+        return;
+      }
+      this.isShowModel = false;
+      this.commentNum++;
+      this.$store.commit("CLEAR_TEXT");
     }
   },
   watch: {
@@ -72,7 +111,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-div {
+.tabbar_content {
   width: 100%;
   height: 1.8rem;
   position: fixed;

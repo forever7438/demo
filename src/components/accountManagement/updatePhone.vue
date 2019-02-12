@@ -6,7 +6,7 @@
           <i>手机号码</i>
           <span>15872406760</span>
         </div>
-        <span class="btn">解绑</span>
+        <span class="btn" @click="sendErrorBtn">解绑</span>
       </li>
       <li>
         <i>修改密码</i>
@@ -22,7 +22,12 @@
 
 <script>
 export default {
-  name: "updatePhone"
+  name: "updatePhone",
+  methods: {
+    sendErrorBtn() {
+      this.$emit("Untying");
+    }
+  }
 };
 </script>
 
@@ -54,10 +59,21 @@ export default {
           margin-right: 0.8rem;
         }
         .btn {
-          color: #472fe0;
+          color: #fff;
           font-size: 0.4rem;
+          padding: 0 0.2rem;
           border: 0.03rem solid #472fe0;
           border-radius: 0.2rem;
+          background: -webkit-linear-gradient(left, #3e40e2, #4413b8);
+          /* Safari 5.1 - 6.0 */
+          background: -o-linear-gradient(
+            right,
+            #3e40e2,
+            #4413b8
+          ); /* Opera 11.1 - 12.0 */
+          background: -moz-linear-gradient(right, #3e40e2, #4413b8);
+          /* Firefox 3.6 - 15 */
+          background: linear-gradient(to right, #3e40e2, #4413b8);
         }
       }
       &:nth-of-type(2) {

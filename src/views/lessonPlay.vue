@@ -25,6 +25,6 @@ export default {
   position: relative;
   top: 1.5rem;
   margin-bottom: 2rem;
-  z-index: 999999;
+  // z-index: 999999;
 }
 </style>

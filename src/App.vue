@@ -11,12 +11,14 @@
 <script>
 import Navigator from "./components/tabbar/tabbar";
 import webHeader from "./components/header/header";
+import store from "./store/store.js";
 export default {
   name: "App",
   components: {
     Navigator,
     webHeader
-  }
+  },
+  store
 };
 </script>
 
