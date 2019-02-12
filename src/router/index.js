@@ -1,27 +1,27 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import 'nprogress/nprogress.css'
-import NProgress from 'nprogress'
+import accountManagement from "@/views/accountManagement";
+import homepage from '@/views/homepage';
+import lesson from '@/views/lesson';
+import lessonDetail from '@/views/lessonDetail';
+import lessonPlay from '@/views/lessonPlay';
+import forgetPassword from '@/views/login/forgetPassword';
+import login from '@/views/login/login';
+import quickLogin from '@/views/login/quickLogin';
+import updatePassword from '@/views/login/updatePassword';
+import personal from '@/views/personal';
+import myCollection from '@/views/personalCenter/myCollection';
+import myFan from '@/views/personalCenter/myFan';
+import myFllow from '@/views/personalCenter/myFllow';
+import myLesson from '@/views/personalCenter/myLesson';
+import myMessage from '@/views/personalCenter/myMessage';
+import myProduction from '@/views/personalCenter/myProduction';
+import mySetting from '@/views/personalCenter/mySetting';
+import production from '@/views/production';
+import updateSign from '@/views/updateSign';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import production from '@/views/production'
-import lesson from '@/views/lesson'
-import personal from '@/views/personal'
-import login from '@/views/login/login'
-import quickLogin from '@/views/login/quickLogin'
-import forgetPassword from '@/views/login/forgetPassword'
-import updatePassword from '@/views/login/updatePassword'
-import lessonDetail from '@/views/lessonDetail'
-import lessonPlay from '@/views/lessonPlay'
-import homepage from '@/views/homepage'
-import updateSign from '@/views/updateSign'
-import accountManagement from "@/views/accountManagement"
-import myFllow from '@/views/personalCenter/myFllow'
-import myCollection from '@/views/personalCenter/myCollection'
-import myLesson from '@/views/personalCenter/myLesson'
-import myProduction from '@/views/personalCenter/myProduction'
-import mySetting from '@/views/personalCenter/mySetting'
-import myMessage from '@/views/personalCenter/myMessage'
-import myFan from '@/views/personalCenter/myFan'
 Vue.use(Router)
 const Routers = [{
     path: '/',

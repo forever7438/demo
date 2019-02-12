@@ -17,7 +17,7 @@
       </li>
       <li>
         <router-link to="/lesson" tag="p" active-class="isLesson"></router-link>
-      </li>
+      </li>00000
       <li>
         <router-link to="/personal" tag="p" active-class="isPersonal"></router-link>
       </li>
