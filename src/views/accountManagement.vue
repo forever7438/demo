@@ -8,7 +8,7 @@
     <loginOut></loginOut>
     <dialogModel v-if="isShow">
       <dialogTitle title="验证码已经发送到您手机了哟~"></dialogTitle>
-      <!-- <dialogPhone></dialogPhone> -->
+      <dialogPhone></dialogPhone>
       <dialogCode></dialogCode>
       <dialogBtn @cancal="isShow=false" cancalText="取消" confirmText="解绑"></dialogBtn>
     </dialogModel>

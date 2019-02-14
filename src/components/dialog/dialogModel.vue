@@ -20,7 +20,8 @@ export default {
   right: 0;
   bottom: 0;
   margin: 0 auto;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999999999;
   height: 100vh;
   .dialog_box {
     width: 90%;

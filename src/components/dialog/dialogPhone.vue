@@ -1,7 +1,10 @@
 <template>
-  <div class="phone_content">
-    <span>手机号码:</span>
-    <input type="number">
+  <div>
+    <div class="phone_content">
+      <span>手机号码:</span>
+      <input type="number">
+    </div>
+    <!-- <div class="error_message">验证码输入错误,请查证后输入</div> -->
   </div>
 </template>
 
@@ -18,11 +21,23 @@ export default {
   font-size: 0.45rem;
   span {
     flex: 2;
-    text-align: left;
+    text-align: right;
   }
   input {
-    flex: 7;
+    // flex: 7;
+    width: 6.5rem;
     padding: 0.1rem;
+  }
+}
+.error_message {
+  font-size: 0.4rem;
+  &::before {
+    margin-right: 0.1rem;
+    display: inline-block;
+    content: "*";
+    color: red;
+    font-size: 0.5rem;
+    vertical-align: text-top;
   }
 }
 </style>

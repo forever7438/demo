@@ -13,7 +13,7 @@
           <p>
             <span>2018-08-01&nbsp;&nbsp;20:25:05</span>
             <span>
-              <i>回复</i>
+              <i @click="isShowModel=true">回复</i>
               <i>4</i>
             </span>
           </p>
@@ -22,15 +22,46 @@
         <div class="line"></div>
       </li>
     </ul>
+
+    <!-- 回复模块 -->
+    <dialogModel v-if="isShowModel">
+      <dialogText></dialogText>
+      <dialogBtn cancalText="取消" confirmText="确定" @cancal="isShowModel=false" @confirm="handle"></dialogBtn>
+    </dialogModel>
   </div>
 </template>
 
 <script>
 import reply from "./reply";
+import dialogModel from "../dialog/dialogModel";
+import dialogText from "../dialog/dialogText";
+import dialogBtn from "../dialog/dialogBtn";
 export default {
   name: "commentItem",
   components: {
-    reply
+    reply,
+    dialogModel,
+    dialogText,
+    dialogBtn
+  },
+  data() {
+    return {
+      isShowModel: false
+    };
+  },
+  methods: {
+    handle() {
+      if (!this.$store.state.data.text) {
+        this.isShowModel = false;
+        this.$dialog.alert({
+          message: "请填写内容"
+        });
+        return;
+      }
+      this.isShowModel = false;
+      this.commentNum++;
+      this.$store.commit("CLEAR_TEXT");
+    }
   }
 };
 </script>

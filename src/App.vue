@@ -18,7 +18,9 @@ export default {
     Navigator,
     webHeader
   },
-  store
+  store,
+  created() {
+  }
 };
 </script>
 

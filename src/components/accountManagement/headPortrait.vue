@@ -1,18 +1,42 @@
 <template>
   <div class="head_portrait_content">
     <span>头像</span>
-    <img src="../../../static/img/lf.jpg">
+    <img :src="userImg">
+    <input type="file" id="img_file" @change="getImgFile">
   </div>
 </template>
 
 <script>
 export default {
-  name: "headPortrait"
+  name: "headPortrait",
+  data() {
+    return {
+      imgFile: null,
+      userImg: "../../../static/img/lf.jpg"
+    };
+  },
+  methods: {
+    getImgFile() {
+      this.imgFile = document.querySelector("#img_file").files[0];
+      const imgType = ["image/gif", "image/jpeg", "image/png"];
+      if (!imgType.includes(this.imgFile.type)) {
+        this.imgFile = null;
+        this.$dialog.alert({
+          message: "格式不正确,请重新上传"
+        });
+        return;
+      } else {
+        //显示头像
+        this.userImg = URL.createObjectURL(this.imgFile);
+      }
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .head_portrait_content {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,6 +56,14 @@ export default {
     height: 1.5rem;
     border-radius: 50%;
     border: 0.05rem solid #358dfd;
+  }
+  input {
+    position: absolute;
+    right: 0.55rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    opacity: 0;
   }
 }
 </style>

@@ -79,7 +79,11 @@ export default {
       }
     },
     like() {
-      this.$toast.success("点赞成功");
+      this.$toast.success({
+        duration: 1000,
+        message: "点赞成功"
+      });
+
       this.likeNum++;
     },
     comment() {
@@ -115,7 +119,7 @@ export default {
   width: 100%;
   height: 1.8rem;
   position: fixed;
-  z-index: 999999999999999;
+  z-index: 999999999;
   left: 0;
   bottom: 0;
 

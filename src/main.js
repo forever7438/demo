@@ -3,6 +3,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
+import moment from 'moment'
 import router from './router'
 import VideoPlayer from 'vue-video-player'
 import Vuex from 'vuex'
@@ -15,7 +16,11 @@ Vue.use(VideoPlayer)
 Vue.use(Vant)
 Vue.use(Vuex)
 Vue.config.productionTip = false
+//日期格式化
+Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
 
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
