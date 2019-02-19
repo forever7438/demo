@@ -11,7 +11,7 @@
       <dialogPhone></dialogPhone>
       <dialogCode></dialogCode>
       <dialogBtn @cancal="isShow=false" cancalText="取消" confirmText="解绑"></dialogBtn>
-    </dialogModel>
+    </dialogModel>`
   </div>
 </template>
 
@@ -19,14 +19,14 @@
 import tips from "../components/tips";
 import headPortrait from "../components/accountManagement/headPortrait";
 import updatePhone from "../components/accountManagement/updatePhone";
-import loginOut from "../components/accountManagement/loginOut";
+import loginOut from "../components/accountManagement/loginOut"; 
 import information from "../components/accountManagement/information";
 import sign from "../components/accountManagement/sign";
 import dialogModel from "../components/dialog/dialogModel";
 import dialogTitle from "../components/dialog/dialogTitle";
 import dialogPhone from "../components/dialog/dialogPhone";
 import dialogCode from "../components/dialog/dialogCode";
-import dialogBtn from "../components/dialog/dialogBtn";
+import dialogBtn from "../components/dialog/dialogBtn";  
 export default {
   name: "accountManagement",
   components: {

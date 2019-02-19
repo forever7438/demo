@@ -21,7 +21,6 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Vue from 'vue';
 import Router from 'vue-router';
-
 Vue.use(Router)
 const Routers = [{
     path: '/',
@@ -126,7 +125,7 @@ const Routers = [{
 ];
 const RouterConfig = {
   // 使用 HTML5 的 History 路由模式
-  mode: 'history',
+  // mode: 'history',
   routes: Routers,
   //路由跳转后每次置顶
   scrollBehavior(to, from, savedPosition) {

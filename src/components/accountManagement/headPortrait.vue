@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getImgFile() {
-      this.imgFile = document.querySelector("#img_file").files[0];
+      this.imgFile = document.querySelector("#img_file").files[0];2
       const imgType = ["image/gif", "image/jpeg", "image/png"];
       if (!imgType.includes(this.imgFile.type)) {
         this.imgFile = null;
