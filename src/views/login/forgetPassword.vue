@@ -8,11 +8,16 @@
       <h3>益谷创客平台</h3>
       <ul>
         <li>
-          <input type="number" placeholder="请输入手机号码">
+          <input type="number" placeholder="请输入手机号码" v-model="phoneNum" @blur="isHavePhoneNum">
         </li>
         <li>
-          <input type="number" placeholder="请输入验证码">
-          <button>发送验证码</button>
+          <input
+            type="number"
+            placeholder="请输入验证码"
+            v-model="verificationCode"
+            @blur="saveVerificationCode"
+          >
+          <button @click="sendCode">{{msg}}</button>
         </li>
       </ul>
       <div class="submit_btn">
@@ -24,6 +29,7 @@
 
 <script>
 import loginHeader from "../../components/header/loginHeader";
+import { fetchVerificationCode } from "@/api/index";
 export default {
   name: "forgetPassword",
   components: {
@@ -31,11 +37,75 @@ export default {
   },
   data() {
     return {
-      logo_image: require("../../../static/img/logo.png")
+      logo_image: require("../../../static/img/logo.png"),
+      phoneNum: null,
+      verificationCode: null,
+      msg: "发送验证码"
     };
   },
   methods: {
+    //手机号验证
+    isHavePhoneNum() {
+      if (this.phoneNum) {
+        const regPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+        if (!regPhone.test(this.phoneNum)) {
+          this.phoneNum = null;
+          this.$toast.fail({
+            mask: true,
+            message: "格式不正确"
+          });
+          this.$store.commit("CLEAR_PHONE_NUM");
+        } else {
+          this.$store.commit("SET_PHONE_NUM", this.phoneNum);
+        }
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: "请输入手机号"
+        });
+        this.$store.commit("CLEAR_PHONE_NUM");
+      }
+    },
+    //发送验证码
+    async sendCode() {
+      if (!this.phoneNum) {
+        this.$toast({
+          mask: true,
+          message: "手机号不得为空"
+        });
+        return;
+      }
+      let res = await fetchVerificationCode({
+        phoneNum: this.phoneNum
+      });
+      if (res.data.code === 200) {
+        this.$toast.success({
+          mask: true,
+          message: "发送成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //存储验证码
+    saveVerificationCode() {
+      this.$store.commit("SET_CODE", this.verificationCode);
+    },
+    //下一步
     nextStep() {
+      if (
+        !this.$store.state.data.phoneNum ||
+        !this.$store.state.data.verificationCode
+      ) {
+        this.$toast({
+          mask: true,
+          message: "请输入手机号或验证码"
+        });
+        return;
+      }
       this.$router.push("/updatePassword");
     }
   }

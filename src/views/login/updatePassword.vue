@@ -8,14 +8,14 @@
       <h3>益谷创客平台</h3>
       <ul>
         <li>
-          <input type="password" placeholder="请输入密码">
+          <input type="password" placeholder="请输入密码" v-model="newPassword">
         </li>
         <li>
-          <input type="password" placeholder="请再次输入密码">
+          <input type="password" placeholder="请再次输入密码" v-model="restPassword">
         </li>
       </ul>
       <div class="submit_btn">
-        <button>确认修改</button>
+        <button @click="retrievePassword">确认修改</button>
       </div>
       <div class="error_message">
         <p>密码由8-12位字符组成,区分大小写</p>
@@ -25,7 +25,9 @@
 </template>
 
 <script>
+import md5 from "js-md5";
 import loginHeader from "../../components/header/loginHeader";
+import { retrievePassword } from "@/api/index";
 export default {
   name: "updatePassword",
   components: {
@@ -33,12 +35,53 @@ export default {
   },
   data() {
     return {
-      logo_image: require("../../../static/img/logo.png")
+      logo_image: require("../../../static/img/logo.png"),
+      newPassword: null,
+      restPassword: null
     };
   },
   methods: {
     goback() {
       window.history.go(-1);
+    },
+    //修改密码
+    async retrievePassword() {
+      if (this.newPassword !== this.restPassword) {
+        this.$toast({
+          mask: true,
+          message: "两次输入的密码不一致"
+        });
+        return;
+      }
+      if (this.newPassword.length < 6) {
+        this.$toast({
+          mask: true,
+          message: "密码长度不得小于6位数哦"
+        });
+        return;
+      }
+      let parmes = {
+        phone: this.$store.state.data.phoneNum,
+        verificationCode: this.$store.state.data.verificationCode,
+        newPassword: md5(`maker{${this.newPassword}}`)
+      };
+      let res = await retrievePassword(parmes);
+      if (res.data.code === 200) {
+        this.$store.commit("CLEAR_PHONE_NUM");
+        this.$store.commit("CLEAR_CODE");
+        this.$toast({
+          mask: true,
+          message: "成功找回密码，快使用新密码登录吧！"
+        });
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 3000);
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
     }
   }
 };

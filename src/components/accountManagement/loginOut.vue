@@ -1,12 +1,20 @@
 <template>
   <div class="login_out_content">
-    <router-link to="/login" tag="span">退出登录</router-link>
+    <span @click="loginOut">退出登录</span>
   </div>
 </template>
 
 <script>
+import Cookies from "js-cookie";
 export default {
-  name: "loginOut"
+  name: "loginOut",
+  methods: {
+    //退出登录
+    async loginOut() {
+      Cookies.remove("token");
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
 
