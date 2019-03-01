@@ -1,14 +1,14 @@
 <template>
   <div class="message_content">
-    <video src="../../../static/test1.mp4" controls="controls"></video>
+    <video :src="sectionDetail.videoPath" controls="controls"></video>
     <div class="message_detail">
-      <h3>基础课程</h3>
+      <h3>{{sectionDetail.sectionName}}</h3>
       <div class="message_detail_head">
         <div>
-          <img src="../../../static/img/lf.jpg">
+          <img :src="sectionDetail.avatar">
           <span>
-            <p>路飞</p>
-            <p>神龙小学&nbsp;&nbsp;六年级一班</p>
+            <p>{{sectionDetail.realName}}</p>
+            <p>{{sectionDetail.sectionName}}&nbsp;&nbsp;六年级一班</p>
           </span>
         </div>
         <fllowBtn></fllowBtn>
@@ -16,7 +16,7 @@
       <div class="message_detail_body">
         <div class="message_detail_desc">
           <span>章节介绍：</span>
-          <span>创客基础课程以中国学生发展核心素养和中小学课程大纲为基础进行.</span>
+          <span>{{sectionDetail.sectionDesc}}</span>
         </div>
       </div>
     </div>
@@ -29,6 +29,9 @@ export default {
   name: "chapterPlay",
   components: {
     fllowBtn
+  },
+  props: {
+    sectionDetail: Object
   }
 };
 </script>
@@ -88,7 +91,8 @@ export default {
           font-weight: 600;
           text-align: left;
           &:nth-of-type(1) {
-            width: 4rem;
+            // width: 4rem;
+            margin-right: 0.5rem;
           }
           &:nth-of-type(2) {
             margin-left: -0.5rem;

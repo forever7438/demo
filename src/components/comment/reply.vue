@@ -1,25 +1,27 @@
 <template>
   <div class="reply_content">
     <ul>
-      <li v-for="(item,index) in 1" :key="index">
+      <li v-for="(item,index) in replyList" :key="index">
         <div class="comment_header">
-          <img src="../../../static/img/nm.jpg">
-          <span>娜美</span>
-          <span>六年级一班&nbsp;&nbsp;神龙小学</span>
+          <img :src="item.replyAvatar">
+          <span>{{item.replyUsername}}</span>
+          <span>{{item.replySchoolName}}&nbsp;&nbsp;{{item.replyClassName}}</span>
         </div>
         <div class="comment_body">
-          <p>@
-            <i>乔巴</i>很有创意！
+          <p>
+            @
+            <i>{{item.replyToWhom}}</i>
+            &nbsp;{{item.replyContent}}
           </p>
           <p>
-            <span>2018-08-01&nbsp;&nbsp;20:25:05</span>
+            <span>{{item.replyTime | dateformat('YYYY-MM-DD HH:mm:ss')}}</span>
             <span>
               <i>回复</i>
-              <i>4</i>
+              <i>{{item.replyLikeCount}}</i>
             </span>
           </p>
         </div>
-        <replyAgain></replyAgain>
+        <!-- <replyAgain></replyAgain> -->
       </li>
     </ul>
   </div>
@@ -31,6 +33,9 @@ export default {
   name: "reply",
   components: {
     replyAgain
+  },
+  props: {
+    replyList: Array
   }
 };
 </script>

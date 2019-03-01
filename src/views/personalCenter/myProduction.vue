@@ -2,7 +2,7 @@
   <div class="porduction_content">
     <tips title="我发布的视频"></tips>
     <div class="production_list">
-      <contentItem v-for="(item,index) in 15" :key="index"></contentItem>
+      <contentItem v-for="(item,index) in listCreation" :key="index" :item="item"></contentItem>
     </div>
   </div>
 </template>
@@ -10,11 +10,39 @@
 <script>
 import tips from "../../components/tips";
 import contentItem from "../../components/itemList/contentItem";
+import { creationOfUser } from "@/api/index";
 export default {
   name: "myProduction",
   components: {
     tips,
     contentItem
+  },
+  data() {
+    return {
+      listCreation: [],
+      userInfo: {}
+    };
+  },
+  created() {
+    this.getProduction();
+  },
+  methods: {
+    //获取个人作品
+    async getProduction() {
+      let res = await creationOfUser({
+        userId: sessionStorage.getItem("userId"),
+        pageNum: 1,
+        pageSize: 10
+      });
+      if (res.data.code === 200) {
+        this.listCreation = res.data.data.creationList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>

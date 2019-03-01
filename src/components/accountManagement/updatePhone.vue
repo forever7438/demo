@@ -48,7 +48,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // padding-bottom: 0.2rem;
       span {
         padding: 0.1rem;
       }

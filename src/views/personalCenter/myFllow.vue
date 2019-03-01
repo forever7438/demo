@@ -1,13 +1,14 @@
 <template>
   <div class="fllow_contnet">
     <tips title="我的关注"></tips>
-    <fanItem v-for="(item,index) in fanList" :key="index"></fanItem>
+    <fanItem v-for="(item,index) in fllowList" :key="index" :item="item"></fanItem>
   </div>
 </template>
 
 <script>
 import fanItem from "../../components/fanItem/fanItem";
 import tips from "../../components/tips";
+import { followedByUser } from "@/api/index";
 export default {
   name: "myFllow",
   components: {
@@ -16,8 +17,29 @@ export default {
   },
   data() {
     return {
-      fanList: [1, 2, 3, 4, 5, 6, 7, 8]
+      fllowList: []
     };
+  },
+  created() {
+    this.getFllowList();
+  },
+  methods: {
+    //获取关注列表
+    async getFllowList() {
+      let res = await followedByUser({
+        userId: sessionStorage.getItem("userId"),
+        pageNum: 1,
+        pageSize: 10
+      });
+      if (res.data.code === 200) {
+        this.fllowList = res.data.data.followerList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>

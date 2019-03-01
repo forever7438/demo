@@ -2,25 +2,26 @@
   <div class="item_content">
     <div class="item_header">
       <p>
-        <router-link to="/homepage">
-          <img src="../../../static/img/icon_touxiang01.png" alt>
+        <router-link :to="{path:'/homepage',query:{userId:message.userId}}">
+          <img :src="message.avatar">
         </router-link>
-        <span>真实姓名</span>
-        <i>老师&nbsp;&nbsp;神龙小学</i>
+        <span>{{message.nickName}}</span>
+        <i>老师&nbsp;&nbsp;{{message.schoolName}}</i>
       </p>
       <p>
-        <i class="lesson_title">基础课程</i>
+        <i class="lesson_title">{{message.creationName || message.lessonName}}</i>
         <span class="labels">
-          <i class="fun-tag">创意创意1</i>
-          <i class="fun-tag">创意2</i>
-          <i class="fun-tag">创意3</i>
+          <i class="fun-tag" v-for="(item,index) in message.labels" :key="index">{{item.labelName}}</i>
         </span>
       </p>
     </div>
     <div class="item_body">
-      <video src="../../../static/test1.mp4" controls="controls" v-if="itemtype=='production'"></video>
-      <router-link to="/lessonDetail" v-if="itemtype=='lesson'">
-        <img src="../../../static/img/test.jpg">
+      <video :src="message.videoPath" controls="controls" v-if="itemtype=='production'"></video>
+      <router-link
+        :to="{path:'/lessonDetail',query:{lessonId:message.lessonId}}"
+        v-if="itemtype=='lesson'"
+      >
+        <img :src="message.coverImage">
       </router-link>
     </div>
     <div class="item_footer">
@@ -28,20 +29,20 @@
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-icon-test"></use>
         </svg>
-        <span>888</span>
+        <span>{{message.likeCount}}</span>
       </div>
       <div class="meun">
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-wujiaoxing_kong"></use>
           </svg>
-          <span>888</span>
+          <span>{{message.viewTimes}}</span>
         </div>
         <div>
           <svg class="icon like" aria-hidden="true">
             <use xlink:href="#icon-z-like"></use>
           </svg>
-          <span>888</span>
+          <span>{{message.likeCount}}</span>
         </div>
       </div>
     </div>
@@ -52,7 +53,8 @@
 export default {
   name: "itemList",
   props: {
-    itemtype: String
+    itemtype: String,
+    message: Object
   }
 };
 </script>
@@ -90,8 +92,9 @@ export default {
       }
       &:nth-of-type(2) {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         .lesson_title {
+          margin-right: 0.3rem;
           font-size: 0.5rem;
           color: #3789ff;
           font-weight: 600;
@@ -99,7 +102,7 @@ export default {
         .labels {
           font-size: 0.4rem;
           .fun-tag {
-            margin-right: 0.5rem !important;
+            margin-right: 0.6rem !important;
             color: #f9fdfe;
             &:nth-of-type(1) {
               .global-fun-tag(0.8rem, #86bbe1);

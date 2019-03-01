@@ -1,8 +1,8 @@
 <template>
   <div class="detail_contnet">
     <tips title="课程详情"></tips>
-    <messageDetail></messageDetail>
-    <lessonDesc></lessonDesc>
+    <messageDetail :messageDetail="lessonDetail"></messageDetail>
+    <lessonDesc :lessonDesc="lessonDetail.sections"></lessonDesc>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import messageDetail from "../components/lesson/messageDetail";
 import lessonDesc from "../components/lesson/lessonDesc";
 import tips from "../components/tips";
+import { lessonDetail } from "@/api/index";
 export default {
   name: "lessonDetail",
   components: {
@@ -18,7 +19,29 @@ export default {
     lessonDesc
   },
   data() {
-    return {};
+    return {
+      lessonDetail: {}
+    };
+  },
+  created() {
+    this.lessonDetails();
+  },
+  methods: {
+    //课程详情
+    async lessonDetails() {
+      let res = await lessonDetail({
+        lessonId: this.$route.query.lessonId
+      });
+      if (res.data.code === 200) {
+        this.lessonDetail = res.data.data;
+        document.title = `武汉益谷-创客空间-${this.lessonDetail.lessonName}`;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>

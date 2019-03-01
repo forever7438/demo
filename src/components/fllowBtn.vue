@@ -20,12 +20,18 @@ export default {
         this.isTrue = false;
         this.isTab = true;
         this.message = "取消关注";
-        this.$toast.success("关注");
+        this.$toast.success({
+          mask: true,
+          message: "关注"
+        });
       } else {
         this.isTrue = true;
         this.isTab = false;
         this.message = "关注";
-        this.$toast.success("取消关注");
+        this.$toast.success({
+          mask: true,
+          message: "取消关注"
+        });
       }
     }
   }

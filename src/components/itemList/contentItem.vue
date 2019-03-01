@@ -1,21 +1,24 @@
 <template>
   <div class="item_contnet">
-    <img src="../../../static/img/test.jpg">
+    <img :src="item.coverImage">
     <div class="item_message">
-      <span>小火车</span>
-      <span>2018-09-11</span>
+      <span>{{item.lessonName || item.creationName}}</span>
+      <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
     </div>
     <div class="operation_list">
-      <span>888</span>
-      <span>1888</span>
-      <span>2888</span>
+      <span>{{item.viewTimes}}</span>
+      <span>{{item.viewTimes}}</span>
+      <span>{{item.likeCount}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "contentItem"
+  name: "contentItem",
+  props: {
+    item: Object
+  }
 };
 </script>
 
@@ -38,8 +41,13 @@ export default {
     font-size: 0.4rem;
     span {
       &:nth-of-type(1) {
+        width: 2rem;
+        text-align: left;
         font-size: 0.45rem;
         font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

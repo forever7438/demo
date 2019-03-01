@@ -2,10 +2,10 @@
   <div class="lesson_content">
     <h3>课程章节</h3>
     <ul>
-      <li v-for="(item,index) in 10" :key="index">
-        <router-link to="/lessonPlay" tag="p">
-          <span>创客介绍</span>
-          <i>01:00:00</i>
+      <li v-for="(item,index) in lessonDesc" :key="index">
+        <router-link :to="{path:'/lessonPlay',query:{sectionId:item.sectionId}}" tag="p">
+          <span>{{item.sectionName}}</span>
+          <i>{{item.videoLength}}</i>
         </router-link>
       </li>
     </ul>
@@ -14,7 +14,10 @@
 
 <script>
 export default {
-  name: "lessonDesc"
+  name: "lessonDesc",
+  props: {
+    lessonDesc: Array
+  }
 };
 </script>
 

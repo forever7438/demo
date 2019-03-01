@@ -1,14 +1,14 @@
 <template>
   <div class="message_content">
-    <img src="../../../static/img/test.jpg">
+    <img :src="messageDetail.coverImage">
     <div class="message_detail">
-      <h3>基础课程</h3>
+      <h3>{{messageDetail.lessonName}}</h3>
       <div class="message_detail_head">
         <div>
-          <img src="../../../static/img/icon_touxiang01.png">
+          <img :src="messageDetail.avatar">
           <span>
-            <p>真实姓名</p>
-            <p>神龙小学&nbsp;&nbsp;六年级一班</p>
+            <p>{{messageDetail.realName}}</p>
+            <p>{{messageDetail.schoolName}}&nbsp;&nbsp;六年级一班</p>
           </span>
         </div>
         <fllowBtn></fllowBtn>
@@ -16,12 +16,10 @@
       <div class="message_detail_body">
         <div class="message_detail_desc">
           <span>章节介绍：</span>
-          <span>创客基础课程以中国学生发展核心素养和中小学课程大纲为基础进行.</span>
+          <span>{{messageDetail.lessonDesc}}</span>
         </div>
         <div class="message_detail_labels">
-          <i class="fun-tag">创意创意1</i>
-          <i class="fun-tag">创意2</i>
-          <i class="fun-tag">创意3</i>
+          <i class="fun-tag" v-for="(item,index) in messageDetail.labels" :key="index">{{item}}</i>
         </div>
       </div>
       <div class="message_detail_foot">
@@ -29,19 +27,19 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>888</span>
+          <span>{{messageDetail.likeCount}}</span>
         </div>
         <div class="watch">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-wujiaoxing_kong"></use>
           </svg>
-          <span>888</span>
+          <span>{{messageDetail.viewTimes}}</span>
         </div>
         <div class="report">
           <svg class="icon like" aria-hidden="true">
             <use xlink:href="#icon-z-like"></use>
           </svg>
-          <span>888</span>
+          <span>{{messageDetail.likeCount}}</span>
         </div>
       </div>
     </div>
@@ -54,6 +52,9 @@ export default {
   name: "messageDetail",
   components: {
     fllowBtn
+  },
+  props: {
+    messageDetail: Object
   }
 };
 </script>
@@ -113,7 +114,7 @@ export default {
           font-weight: 600;
           text-align: left;
           &:nth-of-type(1) {
-            width: 4rem;
+            margin-right: 0.5rem;
           }
           &:nth-of-type(2) {
             margin-left: -0.5rem;
@@ -125,7 +126,7 @@ export default {
         margin: 0.1rem 0 0.1rem 0.1rem;
         font-size: 0.4rem;
         .fun-tag {
-          margin-right: 0.5rem !important;
+          margin-right: 0.6rem !important;
           color: #f9fdfe;
           &:nth-of-type(1) {
             .global-fun-tag(0.8rem, #86bbe1);

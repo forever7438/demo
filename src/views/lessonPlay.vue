@@ -1,8 +1,8 @@
 <template>
   <div class="lessonPlay_content">
     <tips title="章节播放"></tips>
-    <chapterPlay></chapterPlay>
-    <commentItem></commentItem>
+    <chapterPlay :sectionDetail="sectionDetails"></chapterPlay>
+    <commentItem :targetId="$route.query.sectionId" type="section"></commentItem>
   </div>
 </template>
 
@@ -10,12 +10,38 @@
 import tips from "../components/tips";
 import chapterPlay from "../components/lesson/chapterPlay";
 import commentItem from "../components/comment/commentItem";
+import { sectionDetail } from "@/api/index";
 export default {
   name: "lessonPlay",
   components: {
     tips,
     chapterPlay,
     commentItem
+  },
+  data() {
+    return {
+      sectionDetails: {}
+    };
+  },
+  created() {
+    this.sectionDetail();
+  },
+  methods: {
+    //章节详情
+    async sectionDetail() {
+      let res = await sectionDetail({
+        sectionId: this.$route.query.sectionId
+      });
+      if (res.data.code === 200) {
+        this.sectionDetails = res.data.data;
+        document.title = `武汉益谷-创客空间-${this.sectionDetails.sectionName}`;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>

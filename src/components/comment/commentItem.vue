@@ -2,23 +2,23 @@
   <div class="commentItem_content">
     <h3>评论</h3>
     <ul>
-      <li v-for="(item,index) in 10" :key="index">
+      <li v-for="(item,index) in commentList" :key="index">
         <div class="comment_header">
-          <img src="../../../static/img/qb.jpg">
-          <span>乔巴</span>
-          <span>六年级一班&nbsp;&nbsp;神龙小学</span>
+          <img :src="item.commentAvatar">
+          <span>{{item.commentUsername}}</span>
+          <span>{{item.commentSchoolName}}&nbsp;&nbsp;{{item.commentClassName}}</span>
         </div>
         <div class="comment_body">
-          <p>做的不错!</p>
+          <p>{{item.commentContent}}</p>
           <p>
-            <span>2018-08-01&nbsp;&nbsp;20:25:05</span>
+            <span>{{item.commentTime | dateformat('YYYY-MM-DD HH:mm:ss')}}</span>
             <span>
               <i @click="isShowModel=true">回复</i>
-              <i>4</i>
+              <i>{{item.commentLikeCount}}</i>
             </span>
           </p>
         </div>
-        <reply></reply>
+        <reply :replyList='item.replyList'></reply>
         <div class="line"></div>
       </li>
     </ul>
@@ -36,6 +36,7 @@ import reply from "./reply";
 import dialogModel from "../dialog/dialogModel";
 import dialogText from "../dialog/dialogText";
 import dialogBtn from "../dialog/dialogBtn";
+import { comment, commentsList } from "@/api/index";
 export default {
   name: "commentItem",
   components: {
@@ -44,10 +45,19 @@ export default {
     dialogText,
     dialogBtn
   },
+  props: {
+    type: String,
+    targetId: String,
+    title: String
+  },
   data() {
     return {
-      isShowModel: false
+      isShowModel: false,
+      commentList: {}
     };
+  },
+  created() {
+    this.getCommentsList(1);
   },
   methods: {
     handle() {
@@ -61,6 +71,25 @@ export default {
       this.isShowModel = false;
       this.commentNum++;
       this.$store.commit("CLEAR_TEXT");
+    },
+    //获取评论列表
+    async getCommentsList(pageNum) {
+      let parmes = {
+        pageNum: pageNum,
+        pageSize: 6,
+        targetId: this.targetId,
+        type: this.type
+      };
+      let res = await commentsList(parmes);
+      if (res.data.code === 200) {
+        // 获取评论列表 - 成功
+        this.commentList = res.data.data.commentList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
     }
   }
 };

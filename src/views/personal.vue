@@ -2,13 +2,13 @@
   <div class="personal_contnet">
     <tips title="个人中心"></tips>
     <div class="person_info">
-      <img src="../../static/img/qb.jpg">
+      <img :src="userInfo.avatar">
       <div class="person_message">
         <p>
-          <span>真实姓名</span>
-          <i>神龙小学 六年级一班</i>
+          <span>{{userInfo.realName}}</span>
+          <i>{{userInfo.schoolName}} {{userInfo.className}}</i>
         </p>
-        <p>这个人很懒，什么都没留下！~</p>
+        <p>{{userInfo.signatrue}}</p>
       </div>
     </div>
     <div class="person_list">
@@ -90,12 +90,29 @@
 
 <script>
 import tips from "../components/tips";
+import { fetchUserInfo } from "@/api/index";
 export default {
   name: "personal",
   components: {
     tips
   },
-  created() {}
+  data() {
+    return {
+      userInfo: {}
+    };
+  },
+  created() {
+    this.getUserInfo();
+  },
+  methods: {
+    //获取个人信息
+    async getUserInfo() {
+      let res = await fetchUserInfo({
+        userId: sessionStorage.getItem("userId")
+      });
+      this.userInfo = res.data.data;
+    }
+  }
 };
 </script>
 
@@ -123,6 +140,9 @@ export default {
         span {
           font-size: 0.45rem;
           font-weight: 600;
+        }
+        &:nth-of-type(2) {
+          text-align: left;
         }
       }
     }
