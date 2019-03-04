@@ -1,8 +1,8 @@
 <template>
   <div class="personal_contnet">
-    <tips title="个人中心"></tips>
+    <tips title="个人中心" :isActive="true"></tips>
     <div class="person_info">
-      <img :src="userInfo.avatar">
+      <img :src="userInfo.avatar || img">
       <div class="person_message">
         <p>
           <span>{{userInfo.realName}}</span>
@@ -98,7 +98,8 @@ export default {
   },
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      img: "../../static/img/icon_touxiang02.png"
     };
   },
   created() {
@@ -137,12 +138,11 @@ export default {
       color: #ffffff;
       font-size: 0.4rem;
       p {
+        text-align: left;
+        overflow: hidden;
         span {
           font-size: 0.45rem;
           font-weight: 600;
-        }
-        &:nth-of-type(2) {
-          text-align: left;
         }
       }
     }

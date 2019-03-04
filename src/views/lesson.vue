@@ -1,6 +1,6 @@
 <template>
   <div class="lesson_contnet">
-    <tips title="创客课程"></tips>
+    <tips title="创客课程" :isActive="true"></tips>
     <item-list v-for="(item,index) in lessonList" :key="index" itemtype="lesson" :message="item"></item-list>
   </div>
 </template>

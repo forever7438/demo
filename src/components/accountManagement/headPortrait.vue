@@ -1,31 +1,37 @@
 <template>
-  <div class="head_portrait_content">
-    <span>头像</span>
-    <img :src="userImg">
-    <input type="file" id="img_file" @change="getImgFile">
+  <div>
+    <div class="head_portrait_content">
+      <span>头像</span>
+      <img :src="userImg">
+      <input type="file" id="img_file" @change="getImgFile">
+    </div>
     <!-- 进度显示 -->
-    <progress :complete="complete"></progress>
+    <progress-bar :complete="complete" :isShow="isShow"></progress-bar>
   </div>
 </template>
 
 <script>
-import progress from "../progress";
+import progressBar from "../progress";
 import { ossDir } from "../../config/url.js";
 import { Decrypt, randomString } from "@/assets/js/utils.js";
 import { changeAvatar, getS3Properties } from "@/api/index";
 export default {
   name: "headPortrait",
   components: {
-    progress
+    progressBar
+  },
+  props: {
+    userImg: String
   },
   data() {
     return {
+      isShow: false,
       complete: 0,
       option: null,
       s3: null,
       imgKey: null,
       imgFile: null,
-      userImg: "../../../static/img/lf.jpg"
+      // userImg: "../../../static/img/icon_touxiang02.png"
     };
   },
   created() {
@@ -44,6 +50,7 @@ export default {
         });
         return;
       } else {
+        this.isShow = true;
         //显示头像
         this.userImg = URL.createObjectURL(this.imgFile);
         let reader = new FileReader();
@@ -126,13 +133,15 @@ export default {
       };
       let res = await changeAvatar(params);
       if (res.data.code === 200) {
+        this.isShow = false;
+        this.complete = 0;
         this.$toast({
           mask: true,
           message: "提交成功,等待后台管理员审核"
         });
       } else {
-        // this.isLoading = false;
-        // this.complete = 0;
+        this.isLoading = false;
+        this.complete = 0;
         this.$toast({
           mask: true,
           message: res.data.message

@@ -3,15 +3,17 @@
     <ul>
       <li>
         <i>姓名</i>
-        <span>路飞</span>
+        <span>{{message.realName}}</span>
       </li>
       <li>
         <i>学校</i>
-        <span>神龙小学</span>
+        <span v-if="message.schoolName">{{message.schoolName}}</span>
+        <span v-else>暂无学校信息</span>
       </li>
       <li>
         <i>班级</i>
-        <span>一年级一班</span>
+        <span v-if="message.className">{{message.className}}</span>
+        <span v-else>暂无班级信息</span>
       </li>
     </ul>
   </div>
@@ -19,7 +21,10 @@
 
 <script>
 export default {
-  name: "information"
+  name: "information",
+  props: {
+    message: Object
+  }
 };
 </script>
 

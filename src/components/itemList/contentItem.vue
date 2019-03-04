@@ -1,6 +1,6 @@
 <template>
   <div class="item_contnet">
-    <img :src="item.coverImage">
+    <img :src="item.coverImage || img">
     <div class="item_message">
       <span>{{item.lessonName || item.creationName}}</span>
       <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
@@ -18,6 +18,11 @@ export default {
   name: "contentItem",
   props: {
     item: Object
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang02.png"
+    };
   }
 };
 </script>

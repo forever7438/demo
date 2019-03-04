@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(item,index) in replyList" :key="index">
         <div class="comment_header">
-          <img :src="item.replyAvatar">
+          <img :src="item.replyAvatar || img">
           <span>{{item.replyUsername}}</span>
           <span>{{item.replySchoolName}}&nbsp;&nbsp;{{item.replyClassName}}</span>
         </div>
@@ -30,12 +30,17 @@
 <script>
 import replyAgain from "./replyAgain";
 export default {
-  name: "reply",
+  name: "commentReply",
   components: {
     replyAgain
   },
   props: {
     replyList: Array
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang02.png"
+    };
   }
 };
 </script>

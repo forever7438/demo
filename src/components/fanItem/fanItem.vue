@@ -1,8 +1,7 @@
 <template>
   <div class="fan_item_contnet">
     <div class="item_meun">
-      <img v-if="item.avatar" :src="item.avatar">
-      <img v-else src="../../../static/img/icon_touxiang01.png">
+      <img :src="item.avatar || img">
     </div>
     <div class="item_message">
       <p>{{item.realName}}</p>
@@ -25,6 +24,11 @@ export default {
   },
   props: {
     item: Object
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang01.png"
+    };
   }
 };
 </script>

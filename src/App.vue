@@ -4,7 +4,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
-    <navigator></navigator>
+    <navigator :likeType="likeType"></navigator>
   </div>
 </template>
 
@@ -19,7 +19,15 @@ export default {
     webHeader
   },
   store,
+  data() {
+    return {
+      likeType: null
+    };
+  },
   created() {
+    if (["lessonPlay"].includes(this.$route.name)) {
+      this.likeType = "section";
+    }
   }
 };
 </script>

@@ -5,7 +5,7 @@
       <h3>{{messageDetail.lessonName}}</h3>
       <div class="message_detail_head">
         <div>
-          <img :src="messageDetail.avatar">
+          <img :src="messageDetail.avatar || img">
           <span>
             <p>{{messageDetail.realName}}</p>
             <p>{{messageDetail.schoolName}}&nbsp;&nbsp;六年级一班</p>
@@ -15,8 +15,9 @@
       </div>
       <div class="message_detail_body">
         <div class="message_detail_desc">
-          <span>章节介绍：</span>
-          <span>{{messageDetail.lessonDesc}}</span>
+          <span>课程介绍：</span>
+          <span v-if="messageDetail.lessonDesc">{{messageDetail.lessonDesc}}</span>
+          <span v-else>暂无课程介绍!!!</span>
         </div>
         <div class="message_detail_labels">
           <i class="fun-tag" v-for="(item,index) in messageDetail.labels" :key="index">{{item}}</i>
@@ -55,6 +56,11 @@ export default {
   },
   props: {
     messageDetail: Object
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang02.png"
+    };
   }
 };
 </script>

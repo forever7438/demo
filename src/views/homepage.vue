@@ -6,28 +6,29 @@
         <p>
           <span>关注数</span>
           <span>
-            <i class="fllow_number">88</i>人
+            <i class="fllow_number">{{userInfo.viewedTimes}}</i>人
           </span>
         </p>
-        <img src="../../static/img/lf.jpg">
+        <img :src="userInfo.avatar || img">
         <p>
           <span>粉丝数</span>
           <span>
-            <i class="fan_number">88</i>人
+            <i class="fan_number">{{userInfo.likeCount}}</i>人
           </span>
         </p>
       </div>
       <div class="homepage_body">
         <p>
-          <span class="homepage_name">路飞</span>
-          <span>六年级一班 神龙小学</span>
+          <span class="homepage_name">{{userInfo.realName}}</span>
+          <span>{{userInfo.schoolName}} {{userInfo.className}}</span>
         </p>
         <fllowBtn></fllowBtn>
-        <p>这个人很懒，什么都没留下！~</p>
+        <p v-if="userInfo.signatrue">{{userInfo.signatrue}}</p>
+        <p v-else>这个人很懒，什么都没留下！~</p>
       </div>
     </div>
-    <homepageList title="TA发布的视频"></homepageList>
-    <homepageList title="TA发布的课程"></homepageList>
+    <homepageList title="TA发布的视频" :list="creationList"></homepageList>
+    <homepageList title="TA发布的课程" :list="lessonList"></homepageList>
   </div>
 </template>
 
@@ -35,12 +36,69 @@
 import tips from "../components/tips";
 import fllowBtn from "../components/fllowBtn";
 import homepageList from "../components/itemList/homepageList";
+import { fetchUserInfo, creationOfUser, lessonOfUser } from "@/api/index";
 export default {
   name: "homepage",
   components: {
     tips,
     fllowBtn,
     homepageList
+  },
+  data() {
+    return {
+      userInfo: {},
+      creationList: [],
+      lessonList: [],
+      img: "../../static/img/icon_touxiang02.png"
+    };
+  },
+  created() {
+    this.getUserInfo();
+    this.getUserCreationList();
+    this.getUserLessonList();
+  },
+  methods: {
+    //获取个人信息
+    async getUserInfo() {
+      let res = await fetchUserInfo({
+        userId: this.$route.query.userId
+      });
+      this.userInfo = res.data.data;
+    },
+
+    //获取个人发布的视频
+    async getUserCreationList() {
+      let res = await creationOfUser({
+        userId: this.$route.query.userId,
+        pageNum: 1,
+        pageSize: 10
+      });
+      if (res.data.code === 200) {
+        this.creationList = res.data.data.creationList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+
+    //获取个人发布的课程
+    async getUserLessonList() {
+      let res = await lessonOfUser({
+        userId: this.$route.query.userId,
+        pageNum: 1,
+        pageSize: 10
+      });
+      if (res.data.code === 200) {
+        this.lessonList = res.data.data.lessonnList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>

@@ -9,7 +9,7 @@
       </i>
     </div>
     <div class="production_list">
-      <contentItem v-for="(item,index) in 4" :key="index"></contentItem>
+      <contentItem v-for="(item,index) in list" :key="index" :item="item"></contentItem>
     </div>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
     contentItem
   },
   props: {
-    title: String
+    title: String,
+    list: Array
   }
 };
 </script>

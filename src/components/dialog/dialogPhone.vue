@@ -2,7 +2,7 @@
   <div>
     <div class="phone_content">
       <span>手机号码:</span>
-      <input type="number">
+      <input type="number" v-model="phoneNum" @change="savePhone">
     </div>
     <!-- <div class="error_message">验证码输入错误,请查证后输入</div> -->
   </div>
@@ -10,7 +10,18 @@
 
 <script>
 export default {
-  name: "dialogPhone"
+  name: "dialogPhone",
+  data() {
+    return {
+      phoneNum: null
+    };
+  },
+  methods: {
+    //获取用户输入手机号,存储在vuex里
+    savePhone() {
+      this.$store.commit("SET_PHONE_NUM", this.phoneNum);
+    }
+  }
 };
 </script>
 

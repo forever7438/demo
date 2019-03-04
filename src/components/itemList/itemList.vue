@@ -3,7 +3,7 @@
     <div class="item_header">
       <p>
         <router-link :to="{path:'/homepage',query:{userId:message.userId}}">
-          <img :src="message.avatar">
+          <img :src="message.avatar || img">
         </router-link>
         <span>{{message.nickName}}</span>
         <i>老师&nbsp;&nbsp;{{message.schoolName}}</i>
@@ -55,6 +55,11 @@ export default {
   props: {
     itemtype: String,
     message: Object
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang02.png"
+    };
   }
 };
 </script>

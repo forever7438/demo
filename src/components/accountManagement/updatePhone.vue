@@ -1,12 +1,19 @@
 <template>
   <div class="update_phone_content">
     <ul>
-      <li>
+      <li v-if="phone">
         <div>
           <i>手机号码</i>
-          <span>15872406760</span>
+          <span>{{phone}}</span>
         </div>
         <span class="btn" @click="sendErrorBtn">解绑</span>
+      </li>
+      <li v-else>
+        <div>
+          <i>手机号码</i>
+          <span>暂无绑定手机号</span>
+        </div>
+        <span class="btn" @click="sendSaveBtn">绑定</span>
       </li>
       <li>
         <i>修改密码</i>
@@ -23,9 +30,17 @@
 <script>
 export default {
   name: "updatePhone",
+  props: {
+    phone: String
+  },
   methods: {
+    //解绑手机号
     sendErrorBtn() {
       this.$emit("Untying");
+    },
+    //绑定手机号
+    sendSaveBtn() {
+      this.$emit("binding");
     }
   }
 };
@@ -55,7 +70,7 @@ export default {
         padding-bottom: 0.2rem;
         border-bottom: 0.03rem solid #dddddd;
         i {
-          margin-right: 0.8rem;
+          margin-right: 0.5rem;
         }
         .btn {
           color: #fff;

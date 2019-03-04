@@ -4,7 +4,7 @@
     <ul>
       <li v-for="(item,index) in commentList" :key="index">
         <div class="comment_header">
-          <img :src="item.commentAvatar">
+          <img :src="item.commentAvatar || img">
           <span>{{item.commentUsername}}</span>
           <span>{{item.commentSchoolName}}&nbsp;&nbsp;{{item.commentClassName}}</span>
         </div>
@@ -13,12 +13,12 @@
           <p>
             <span>{{item.commentTime | dateformat('YYYY-MM-DD HH:mm:ss')}}</span>
             <span>
-              <i @click="isShowModel=true">回复</i>
+              <i @click="showModel(item)">回复</i>
               <i>{{item.commentLikeCount}}</i>
             </span>
           </p>
         </div>
-        <reply :replyList='item.replyList'></reply>
+        <commentReply :replyList="item.replyList"></commentReply>
         <div class="line"></div>
       </li>
     </ul>
@@ -32,15 +32,15 @@
 </template>
 
 <script>
-import reply from "./reply";
+import commentReply from "./commentReply";
 import dialogModel from "../dialog/dialogModel";
 import dialogText from "../dialog/dialogText";
 import dialogBtn from "../dialog/dialogBtn";
-import { comment, commentsList } from "@/api/index";
+import { comment, commentsList, reply } from "@/api/index";
 export default {
   name: "commentItem",
   components: {
-    reply,
+    commentReply,
     dialogModel,
     dialogText,
     dialogBtn
@@ -53,30 +53,25 @@ export default {
   data() {
     return {
       isShowModel: false,
-      commentList: {}
+      commentList: {},
+      replyMessage: null,
+      img: "../../../static/img/icon_touxiang02.png"
     };
   },
   created() {
     this.getCommentsList(1);
   },
+  computed: {
+    state() {
+      return this.$store.state.data.isChange;
+    }
+  },
   methods: {
-    handle() {
-      if (!this.$store.state.data.text) {
-        this.isShowModel = false;
-        this.$dialog.alert({
-          message: "请填写内容"
-        });
-        return;
-      }
-      this.isShowModel = false;
-      this.commentNum++;
-      this.$store.commit("CLEAR_TEXT");
-    },
     //获取评论列表
     async getCommentsList(pageNum) {
       let parmes = {
         pageNum: pageNum,
-        pageSize: 6,
+        pageSize: 100,
         targetId: this.targetId,
         type: this.type
       };
@@ -89,6 +84,48 @@ export default {
           mask: true,
           message: res.data.message
         });
+      }
+    },
+
+    showModel(obj) {
+      this.isShowModel = true;
+      this.replyMessage = obj;
+    },
+    //回复
+    async handle() {
+      if (!this.$store.state.data.text) {
+        this.isShowModel = false;
+        this.$toast.fail({
+          mask: true,
+          message: "请填写内容"
+        });
+        return;
+      }
+      let res = await reply({
+        commentId: this.replyMessage.commentId,
+        content: this.$store.state.data.text,
+        atUserId: this.replyMessage.commentUserId
+      });
+      if (res.data.code === 200) {
+        this.getCommentsList(1);
+        this.$toast.success({
+          mask: true,
+          message: "回复成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+      this.isShowModel = false;
+      this.$store.commit("CLEAR_TEXT");
+    }
+  },
+  watch: {
+    state(newd, old) {
+      if (newd) {
+        this.getCommentsList(1);
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="production_contnet">
-    <tips title="创客视频"></tips>
+    <tips title="创客视频" :isActive="true"></tips>
     <!-- <search></search> -->
     <item-list v-for="(item,index) in videoList" :key="index" itemtype="production" :message="item"></item-list>
     <!-- <search-content></search-content> -->

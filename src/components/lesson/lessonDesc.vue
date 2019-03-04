@@ -59,6 +59,7 @@ export default {
               center/cover;
             vertical-align: middle;
             margin-right: 0.1rem;
+            margin-bottom: 0.1rem;
           }
         }
       }

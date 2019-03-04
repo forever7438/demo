@@ -5,7 +5,7 @@
       <h3>{{sectionDetail.sectionName}}</h3>
       <div class="message_detail_head">
         <div>
-          <img :src="sectionDetail.avatar">
+          <img :src="sectionDetail.avatar || img">
           <span>
             <p>{{sectionDetail.realName}}</p>
             <p>{{sectionDetail.sectionName}}&nbsp;&nbsp;六年级一班</p>
@@ -32,6 +32,11 @@ export default {
   },
   props: {
     sectionDetail: Object
+  },
+  data() {
+    return {
+      img: "../../../static/img/icon_touxiang02.png"
+    };
   }
 };
 </script>

@@ -2,13 +2,13 @@
   <div class="tabbar_content" v-if="isShow">
     <ul class="tabbar_play" v-if="this.$route.name=='lessonPlay'">
       <li @click="like">
-        <span>点赞 {{likeNum}}</span>
+        <span>点赞 {{sectionDetails.praise}}</span>
       </li>
       <li @click="comment">
-        <span>评论 {{commentNum}}</span>
+        <span>评论 {{commentList.length}}</span>
       </li>
       <li @click="collection">
-        <span>收藏 {{collectionNum}}</span>
+        <span>收藏 {{sectionDetails.praise}}</span>
       </li>
     </ul>
     <ul class="tabbar" v-else>
@@ -33,6 +33,7 @@
 import dialogModel from "../dialog/dialogModel";
 import dialogText from "../dialog/dialogText";
 import dialogBtn from "../dialog/dialogBtn";
+import { sectionDetail, comment, commentsList, like } from "@/api/index";
 export default {
   name: "Navigator",
   components: {
@@ -40,18 +41,22 @@ export default {
     dialogText,
     dialogBtn
   },
+  props: {
+    likeType: String
+  },
   data() {
     return {
       active: 0,
       isShow: true,
       isShowModel: false,
-      likeNum: 20,
-      commentNum: 14,
-      collectionNum: 45
+      sectionDetails: {},
+      commentList: []
     };
   },
   created() {
     this.showBar(this.$route.name);
+    this.sectionDetail();
+    this.getCommentsList(1);
   },
   methods: {
     showBar(name) {
@@ -78,37 +83,99 @@ export default {
         this.isShow = true;
       }
     },
-    like() {
-      this.$toast.success({
-        duration: 1000,
-        message: "点赞成功"
+    //章节详情
+    async sectionDetail() {
+      let res = await sectionDetail({
+        sectionId: this.$route.query.sectionId
       });
-
-      this.likeNum++;
+      if (res.data.code === 200) {
+        this.sectionDetails = res.data.data;
+      }
+    },
+    //获取评论列表
+    async getCommentsList(pageNum) {
+      let parmes = {
+        pageNum: pageNum,
+        pageSize: 100,
+        targetId: this.$route.query.sectionId,
+        type: this.likeType
+      };
+      let res = await commentsList(parmes);
+      if (res.data.code === 200) {
+        // 获取评论列表 - 成功
+        this.commentList = res.data.data.commentList;
+      }
+    },
+    //点赞
+    async like() {
+      if (this.sectionDetails.isLiked) {
+        return;
+      }
+      let res = await like({
+        targetId: this.$route.query.sectionId,
+        type: this.likeType
+      });
+      if (res.data.code === 200) {
+        this.sectionDetail();
+        this.$toast.success({
+          mask: true,
+          message: "点赞成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
     },
     comment() {
       this.isShowModel = true;
-      // this.$toast.success("评论成功");
     },
     collection() {
       this.$toast.success("收藏成功");
     },
-    handle() {
+    //提交评论内容
+    async handle() {
       if (!this.$store.state.data.text) {
         this.isShowModel = false;
-        this.$dialog.alert({
-          message: "请填写内容"
+        this.$toast.fail({
+          mask: true,
+          message: "内容不得为空"
         });
         return;
       }
+      this.$store.commit("SET_STATE");
+      let res = await comment({
+        type: this.likeType,
+        content: this.$store.state.data.text,
+        targetId:
+          this.$route.query.creationId ||
+          this.$route.query.sectionId ||
+          this.$route.query.lessonId ||
+          this.$route.query.userId ||
+          sessionStorage.getItem("userId")
+      });
+      if (res.data.code === 200) {
+        this.$store.commit("CLEAR_STATE");
+        this.getCommentsList(1);
+        this.$toast.success({
+          mask: true,
+          message: "评论成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
       this.isShowModel = false;
-      this.commentNum++;
       this.$store.commit("CLEAR_TEXT");
     }
   },
   watch: {
     $route(to, from) {
       this.showBar(to.name);
+      this.getCommentsList(1);
     }
   }
 };

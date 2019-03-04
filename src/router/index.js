@@ -24,7 +24,7 @@ import Router from 'vue-router';
 Vue.use(Router)
 const Routers = [{
     path: '/',
-    redirect: "/production"
+    redirect: "/login"
   },
   {
     path: '/login',
@@ -106,7 +106,7 @@ const Routers = [{
     name: 'mySetting',
     component: mySetting
   },
-  
+
   {
     path: '/myMessage',
     name: 'myMessage',

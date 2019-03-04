@@ -1,7 +1,8 @@
 <template>
   <div class="sign_content">
     <i class="sign_title">个性签名</i>
-    <span>榜样在前，路在脚下！！对生活用品的设计很有一番自己的想法......</span>
+    <span v-if="autograph">{{autograph}}</span>
+    <span v-else>该用户很懒,什么都没有留下！！！</span>
     <router-link to="/updateSign" tag="i" class="arrow">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jiantou1"></use>
@@ -12,7 +13,10 @@
 
 <script>
 export default {
-  name: "sign"
+  name: "sign",
+  props: {
+    autograph: String
+  }
 };
 </script>
 

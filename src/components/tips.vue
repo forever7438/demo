@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.isActive {
+  display: none;
+}
 .header_shade {
   width: 100%;
   height: 1.4rem;
