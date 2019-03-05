@@ -24,7 +24,7 @@ exports.creationPopular = async function (parmes) {
 
 //随机推荐作品
 exports.randomCreations = async function (parmes) {
-  const url = `${baseUrl}/creation/relatedCreation`
+  const url = `${baseUrl}/creation/randomCreations`
   return axios.post(url, qs.stringify(parmes))
 }
 //通过标签搜索作品

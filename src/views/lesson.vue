@@ -8,7 +8,7 @@
 <script>
 import itemList from "../components/itemList/itemList";
 import tips from "../components/tips";
-import { filterLessons } from "@/api/index";
+import { filterLessons, randomLessons } from "@/api/index";
 export default {
   name: "lesson",
   components: {
@@ -35,6 +35,18 @@ export default {
         sort: value
       };
       let res = await filterLessons(parmes);
+      if (res.data.code === 200) {
+        this.lessonList = res.data.data.lessonList;
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //随机获取课程
+    async randomLessonsList() {
+      let res = await randomLessons();
       if (res.data.code === 200) {
         this.lessonList = res.data.data.lessonList;
       } else {

@@ -1,36 +1,64 @@
 <template>
   <div>
-    <button :class="{'remove_concerns':isTab}" @click="tabShow">{{message}}</button>
+    <button
+      :class="{'remove_concerns':isFollowed}"
+      @click="tabShow(userId)"
+    >{{isFollowed?'取消关注':'关注'}}</button>
   </div>
 </template>
 
 <script>
+import { follow, cancelFollow } from "@/api/index";
 export default {
   name: "fllowBtn",
+  props: {
+    isFollowed: Boolean,
+    userId: String
+  },
   data() {
-    return {
-      isTrue: true,
-      isTab: false,
-      message: "关注"
-    };
+    return {};
   },
   methods: {
-    tabShow() {
-      if (this.isTrue) {
-        this.isTrue = false;
-        this.isTab = true;
-        this.message = "取消关注";
+    tabShow(userId) {
+      if (this.isFollowed) {
+        this.cancelFollow(userId);
+      } else {
+        this.follow(userId);
+      }
+    },
+    //关注
+    async follow(userId) {
+      let res = await follow({
+        userId: userId || this.$route.query.userId
+      });
+      if (res.data.code === 200) {
+        this.$emit("refreshUserInfo");
         this.$toast.success({
           mask: true,
-          message: "关注"
+          message: "关注成功"
         });
       } else {
-        this.isTrue = true;
-        this.isTab = false;
-        this.message = "关注";
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //取消关注
+    async cancelFollow(userId) {
+      let res = await cancelFollow({
+        userId: userId || this.$route.query.userId
+      });
+      if (res.data.code === 200) {
+        this.$emit("refreshUserInfo");
         this.$toast.success({
           mask: true,
-          message: "取消关注"
+          message: "取消成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
         });
       }
     }

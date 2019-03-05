@@ -58,8 +58,30 @@ export default {
   },
   data() {
     return {
-      img: "../../../static/img/icon_touxiang02.png"
+      img: "../../../static/img/icon_touxiang02.png",
+      videos: null
     };
+  },
+  mounted() {
+    this.alonePlay();
+  },
+  methods: {
+    //控制单个video播放
+    alonePlay() {
+      this.videos = document.querySelectorAll("video");
+      for (let i = this.videos.length - 1; i >= 0; i--) {
+        this.videos[i].addEventListener("play", () => {
+          this.pasueAll(i);
+        });
+      }
+    },
+    pasueAll(index) {
+      for (let j = this.videos.length - 1; j >= 0; j--) {
+        if (j != index) {
+          this.videos[j].pause();
+        }
+      }
+    }
   }
 };
 </script>

@@ -2,32 +2,84 @@
   <div class="message_item">
     <div>
       <div class="message_type">
-        <img :src="iconImage">
-        <span>系统通知</span>
+        <img :src="item.action==='system'?iconImageSystem:iconImageNotice">
+        <span>{{item.action==='system'?'系统通知':'提示消息'}}</span>
       </div>
       <div class="message_detail">
         <span>
-          <i>最新一期的创客小明星出炉啦！快去看看吧！~</i>
-          <i>2018-06-12&nbsp;&nbsp;&nbsp;15:31:23</i>
-          <i class="dot"></i>
+          <i v-if="item.action!='system'">
+            <s>{{item.custom[0]}}</s>
+            {{item.custom[1]}}{{item.custom[2]}}{{item.custom[3]}}&nbsp;~
+          </i>
+          <i v-else>{{item.custom[0]}}&nbsp;~</i>
+          <i>{{item.createAt | dateformat('YYYY-MM-DD HH:mm:ss') }}</i>
+          <!-- <i class="dot"></i> -->
         </span>
       </div>
     </div>
-    <span class="del_btn">
+    <span class="del_btn" @click="isShowModel=true">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-shanchu-copy"></use>
       </svg>
     </span>
+
+    <!-- 弹窗模块 -->
+    <dialogModel v-if="isShowModel">
+      <dialogTitle title="确认删除该条消息？"></dialogTitle>
+      <dialogBtn
+        @cancal="isShowModel=false"
+        cancalText="取消"
+        confirmText="确定"
+        @confirm="delMessage(item.messageId)"
+      ></dialogBtn>
+    </dialogModel>
   </div>
 </template>
 
 <script>
+import dialogModel from "../../components/dialog/dialogModel";
+import dialogTitle from "../../components/dialog/dialogTitle";
+import dialogBtn from "../../components/dialog/dialogBtn";
+import { deleteMessage } from "@/api/index";
 export default {
   name: "messageList",
+  components: {
+    dialogModel,
+    dialogTitle,
+    dialogBtn
+  },
+  props: {
+    item: Object
+  },
   data() {
     return {
-      iconImage: require("../../../static/img/icon_xitong_01.png")
+      iconImageSystem: require("../../../static/img/icon_xitong_01.png"),
+      iconImageNotice: require("../../../static/img/icon_tishi_01.png"),
+      isShowModel: false
     };
+  },
+  created() {},
+  methods: {
+    //删除消息
+    async delMessage(messageId) {
+      let res = await deleteMessage({
+        messageId: messageId
+      });
+
+      if (res.data.code === 200) {
+        this.isShowModel = false;
+        this.$emit("refreshMessageList");
+        this.$toast.success({
+          mask: true,
+          message: "删除成功"
+        });
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>
@@ -58,7 +110,7 @@ export default {
         i {
           &:nth-of-type(1) {
             display: block;
-            width: 8rem;
+            width: 7rem;
             font-weight: 600;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -67,6 +119,10 @@ export default {
           &:nth-of-type(2) {
             font-size: 0.4rem;
             font-weight: 600;
+          }
+          s {
+            text-decoration: none;
+            color: #6470e1;
           }
         }
         .dot {
@@ -83,11 +139,15 @@ export default {
     }
   }
   .del_btn {
-    width: 1.3rem;
+    width: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0.8rem;
+    &:active {
+      background-color: #ddd;
+      border-radius: 0.1rem;
+    }
   }
 }
 </style>

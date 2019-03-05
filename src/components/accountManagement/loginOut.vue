@@ -12,6 +12,7 @@ export default {
     //退出登录
     async loginOut() {
       Cookies.remove("token");
+      sessionStorage.clear();
       this.$router.push("/login");
     }
   }

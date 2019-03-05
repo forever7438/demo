@@ -22,7 +22,7 @@
           <span class="homepage_name">{{userInfo.realName}}</span>
           <span>{{userInfo.schoolName}} {{userInfo.className}}</span>
         </p>
-        <fllowBtn></fllowBtn>
+        <fllowBtn :isFollowed="userInfo.isFollowed" @refreshUserInfo="getUserInfo"></fllowBtn>
         <p v-if="userInfo.signatrue">{{userInfo.signatrue}}</p>
         <p v-else>这个人很懒，什么都没留下！~</p>
       </div>

@@ -4,7 +4,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
-    <navigator :likeType="likeType"></navigator>
+    <navigator></navigator>
   </div>
 </template>
 
@@ -20,15 +20,9 @@ export default {
   },
   store,
   data() {
-    return {
-      likeType: null
-    };
+    return {};
   },
-  created() {
-    if (["lessonPlay"].includes(this.$route.name)) {
-      this.likeType = "section";
-    }
-  }
+  created() {}
 };
 </script>
 

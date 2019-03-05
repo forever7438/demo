@@ -10,7 +10,11 @@
       <p v-else>这家伙很懒,什么都没有留下！！！</p>
     </div>
     <div class="item_motto">
-      <fllowBtn></fllowBtn>
+      <fllowBtn
+        :isFollowed="item.isFollowed"
+        :userId="item.userId"
+        @refreshUserInfo="getParentList"
+      ></fllowBtn>
     </div>
   </div>
 </template>
@@ -29,6 +33,17 @@ export default {
     return {
       img: "../../../static/img/icon_touxiang01.png"
     };
+  },
+  methods: {
+    //调用父组件刷新列表方法
+    getParentList() {
+      if (this.$parent.fanList) {
+        this.$parent.getFanList();
+      }
+      if (this.$parent.fllowList) {
+        this.$parent.getFllowList();
+      }
+    }
   }
 };
 </script>

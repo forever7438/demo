@@ -7,6 +7,11 @@
     </span>
     <span class="header_title">{{title}}</span>
     <span class="header_bth" v-if="showBtn" @click="sendSure">完成</span>
+    <span class="header_bth" v-if="showDel" @click="sendSure">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-quanbushanchu"></use>
+      </svg>
+    </span>
   </div>
 </template>
 
@@ -19,7 +24,8 @@ export default {
       type: Boolean,
       required: false
     },
-    showBtn: Boolean
+    showBtn: Boolean,
+    showDel: Boolean
   },
   methods: {
     goback() {

@@ -2,7 +2,14 @@
   <div class="production_contnet">
     <tips title="创客视频" :isActive="true"></tips>
     <!-- <search></search> -->
-    <item-list v-for="(item,index) in videoList" :key="index" itemtype="production" :message="item"></item-list>
+    <van-pull-refresh v-model="isLoading" @refresh="randomCreationsList">
+      <item-list
+        v-for="(item,index) in videoList"
+        :key="index"
+        itemtype="production"
+        :message="item"
+      ></item-list>
+    </van-pull-refresh>
     <!-- <search-content></search-content> -->
   </div>
 </template>
@@ -12,7 +19,7 @@ import itemList from "../components/itemList/itemList";
 import tips from "../components/tips";
 import search from "../components/search/search";
 import searchContent from "../components/search/searchContent";
-import { filterCreations, commonUserInfo } from "@/api/index";
+import { commonUserInfo, randomCreations } from "@/api/index";
 export default {
   name: "production",
   components: {
@@ -25,26 +32,20 @@ export default {
     return {
       userId: null,
       videoList: [],
-      pageSize: 20
+      isLoading: false
     };
   },
   created() {
     this.getUserInfo();
-    this.searchCreation("time");
+    this.randomCreationsList();
   },
   methods: {
-    //获取作品
-    async searchCreation(value) {
-      let parmes = {
-        labelId: null,
-        pageNum: 1,
-        pageSize: this.pageSize,
-        sort: value
-      };
-      let res = await filterCreations(parmes);
+    //随机获取作品视频
+    async randomCreationsList() {
+      let res = await randomCreations();
       if (res.data.code === 200) {
+        this.isLoading = false;
         this.videoList = res.data.data.creationList;
-        // this.pageInfo = res.data.data.pageInfo;
       } else {
         this.$toast.fail({
           mask: true,

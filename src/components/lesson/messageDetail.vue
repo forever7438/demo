@@ -124,6 +124,11 @@ export default {
           }
           &:nth-of-type(2) {
             margin-left: -0.5rem;
+            width: 7rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+            overflow: hidden;
           }
         }
       }
