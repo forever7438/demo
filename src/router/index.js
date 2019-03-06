@@ -21,6 +21,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Vue from 'vue';
 import Router from 'vue-router';
+import Cookies from "js-cookie";
 Vue.use(Router)
 const Routers = [{
     path: '/',
@@ -139,10 +140,25 @@ const RouterConfig = {
     }
   },
 };
+//token验证   路由拦截
 const router = new Router(RouterConfig);
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  next()
+  if (['login', 'loginMiddle'].includes(to.name)) {
+    next()
+  }
+  if (!Cookies.get("token")) {
+    if (['changepwd', 'login', 'loginMiddle'].includes(to.name)) {
+      next()
+    } else {
+      next({
+        path: '/'
+      })
+    }
+
+  } else {
+    next()
+  }
 });
 router.afterEach(() => {
   NProgress.done();
