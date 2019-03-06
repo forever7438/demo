@@ -27,8 +27,8 @@
         <p v-else>这个人很懒，什么都没留下！~</p>
       </div>
     </div>
-    <homepageList title="TA发布的视频" :list="creationList"></homepageList>
-    <homepageList title="TA发布的课程" :list="lessonList"></homepageList>
+    <homepageList title="TA发布的视频" :list="creationList" type="creation"></homepageList>
+    <homepageList title="TA发布的课程" :list="lessonList" type="lesson"></homepageList>
   </div>
 </template>
 

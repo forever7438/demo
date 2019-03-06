@@ -14,11 +14,14 @@
             <span>{{item.commentTime | dateformat('YYYY-MM-DD HH:mm:ss')}}</span>
             <span>
               <i @click="showModel(item)">回复</i>
-              <i>{{item.commentLikeCount}}</i>
+              <i
+                :class="[{'isLike':!item.isLiked}]"
+                @click="addLikeNum(item.commentId,item.isLiked)"
+              >{{item.commentLikeCount}}</i>
             </span>
           </p>
         </div>
-        <commentReply :replyList="item.replyList"></commentReply>
+        <commentReply :replyList="item.replyList" :commentId="item.commentId"></commentReply>
         <div class="line"></div>
       </li>
     </ul>
@@ -36,7 +39,7 @@ import commentReply from "./commentReply";
 import dialogModel from "../dialog/dialogModel";
 import dialogText from "../dialog/dialogText";
 import dialogBtn from "../dialog/dialogBtn";
-import { comment, commentsList, reply } from "@/api/index";
+import { comment, commentsList, reply, like } from "@/api/index";
 export default {
   name: "commentItem",
   components: {
@@ -120,6 +123,25 @@ export default {
       }
       this.isShowModel = false;
       this.$store.commit("CLEAR_TEXT");
+    },
+    //点赞
+    async addLikeNum(id, isLiked) {
+      if (isLiked) {
+        return;
+      }
+      let parmes = {
+        targetId: id,
+        type: "comment"
+      };
+      let res = await like(parmes);
+      if (res.data.code === 200) {
+        this.getCommentsList(1);
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
     }
   },
   watch: {
@@ -218,6 +240,17 @@ export default {
                         no-repeat center/100%;
                       vertical-align: sub;
                     }
+                  }
+                }
+                .isLike {
+                  &::before {
+                    display: inline-block;
+                    width: 0.6rem;
+                    height: 0.6rem;
+                    content: "";
+                    background: url("../../../static/img/icon_dianzan01.png")
+                      no-repeat center/100% !important;
+                    vertical-align: sub;
                   }
                 }
               }

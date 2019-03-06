@@ -11,7 +11,7 @@
             <p>{{sectionDetail.sectionName}}&nbsp;&nbsp;六年级一班</p>
           </span>
         </div>
-        <fllowBtn></fllowBtn>
+        <fllowBtn :userId="sectionDetail.userId"></fllowBtn>
       </div>
       <div class="message_detail_body">
         <div class="message_detail_desc">

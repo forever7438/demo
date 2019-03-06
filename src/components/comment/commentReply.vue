@@ -16,12 +16,20 @@
           <p>
             <span>{{item.replyTime | dateformat('YYYY-MM-DD HH:mm:ss')}}</span>
             <span>
-              <i>回复</i>
-              <i>{{item.replyLikeCount}}</i>
+              <i @click="showModel(item)">回复</i>
+              <i
+                :class="[{'isLike':!item.isLiked}]"
+                @click="addLikeNum(item.replyId,item.isLiked)"
+              >{{item.replyLikeCount}}</i>
             </span>
           </p>
         </div>
         <!-- <replyAgain></replyAgain> -->
+        <!-- 回复模块 -->
+        <dialogModel v-if="isShowModel">
+          <dialogText></dialogText>
+          <dialogBtn cancalText="取消" confirmText="确定" @cancal="isShowModel=false" @confirm="handle"></dialogBtn>
+        </dialogModel>
       </li>
     </ul>
   </div>
@@ -29,18 +37,83 @@
 
 <script>
 import replyAgain from "./replyAgain";
+import dialogModel from "../dialog/dialogModel";
+import dialogText from "../dialog/dialogText";
+import dialogBtn from "../dialog/dialogBtn";
+import { like, reply } from "@/api/index";
 export default {
   name: "commentReply",
   components: {
-    replyAgain
+    replyAgain,
+    dialogModel,
+    dialogText,
+    dialogBtn
   },
   props: {
-    replyList: Array
+    replyList: Array,
+    commentId: String
   },
   data() {
     return {
+      isShowModel: false,
       img: "../../../static/img/icon_touxiang02.png"
     };
+  },
+  methods: {
+    //点赞
+    async addLikeNum(id, isLiked) {
+      if (isLiked) {
+        return;
+      }
+      let parmes = {
+        targetId: id,
+        type: "reply"
+      };
+      let res = await like(parmes);
+      if (res.data.code === 200) {
+        this.$parent.getCommentsList(1);
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+
+    showModel(obj) {
+      this.isShowModel = true;
+      this.replyMessage = obj;
+    },
+    //回复
+    async handle() {
+      if (!this.$store.state.data.text) {
+        this.isShowModel = false;
+        this.$toast.fail({
+          mask: true,
+          message: "请填写内容"
+        });
+        return;
+      }
+      let res = await reply({
+        commentId: this.commentId,
+        content: this.$store.state.data.text,
+        atUserId: this.replyMessage.replyUserId
+      });
+      if (res.data.code === 200) {
+        this.$parent.getCommentsList(1);
+        this.$toast.success({
+          mask: true,
+          message: "回复成功"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+      this.isShowModel = false;
+      this.$store.commit("CLEAR_TEXT");
+    }
   }
 };
 </script>
@@ -122,6 +195,17 @@ export default {
                         no-repeat center/100%;
                       vertical-align: sub;
                     }
+                  }
+                }
+                .isLike {
+                  &::before {
+                    display: inline-block;
+                    width: 0.6rem;
+                    height: 0.6rem;
+                    content: "";
+                    background: url("../../../static/img/icon_dianzan01.png")
+                      no-repeat center/100% !important;
+                    vertical-align: sub;
                   }
                 }
               }

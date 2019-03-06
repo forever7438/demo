@@ -2,7 +2,12 @@
   <div class="item_contnet">
     <img :src="item.coverImage || img">
     <div class="item_message">
-      <span>{{item.lessonName || item.creationName}}</span>
+      <router-link
+        tag="span"
+        :to="{path:'/lessonDetail',query:{lessonId:item.lessonId}}"
+        v-if="genre=='lesson'"
+      >{{item.lessonName || item.creationName}}</router-link>
+      <span v-else>{{item.lessonName || item.creationName}}</span>
       <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
     </div>
     <div class="operation_list">
@@ -17,7 +22,8 @@
 export default {
   name: "contentItem",
   props: {
-    item: Object
+    item: Object,
+    genre: String
   },
   data() {
     return {

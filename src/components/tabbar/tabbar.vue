@@ -1,6 +1,6 @@
 <template>
   <div class="tabbar_content" v-if="isShow">
-    <ul class="tabbar_play" v-if="this.$route.name=='lessonPlay'">
+    <ul class="tabbar_play" v-if="['lessonPlay','productionDetail'].includes($route.name)">
       <li @click="like">
         <span>点赞 {{likeNum}}</span>
       </li>

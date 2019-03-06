@@ -1,0 +1,77 @@
+<template>
+  <div class="detail_contnet">
+    <tips title="作品详情"></tips>
+    <messageDetail :messageDetail="creationDetails" type="creation"></messageDetail>
+    <commentItem :targetId="$route.query.creationId" type="creation"></commentItem>
+  </div>
+</template>
+
+<script>
+import commentItem from "../components/comment/commentItem";
+import messageDetail from "../components/lesson/messageDetail";
+import tips from "../components/tips";
+import { creationDetail, commentsList } from "@/api/index";
+export default {
+  name: "productionDetail",
+  components: {
+    commentItem,
+    messageDetail,
+    tips
+  },
+  data() {
+    return {
+      creationDetails: {}
+    };
+  },
+  created() {
+    this.creationDetail();
+    this.getCommentsList(1);
+  },
+  methods: {
+    //作品详情
+    async creationDetail() {
+      let res = await creationDetail({
+        creationId: this.$route.query.creationId
+      });
+      if (res.data.code === 200) {
+        this.creationDetails = res.data.data;
+        document.title = `武汉益谷-创客空间-${
+          this.creationDetails.creationName
+        }`;
+        //存储点赞数量在vuex里面
+        this.$store.commit("SET_LIKE_NUM", this.creationDetails.likeCount);
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //获取评论列表
+    async getCommentsList(pageNum) {
+      let parmes = {
+        pageNum: pageNum,
+        pageSize: 100,
+        targetId: this.$route.query.creationId,
+        type: "creation"
+      };
+      let res = await commentsList(parmes);
+      if (res.data.code === 200) {
+        // 获取评论列表 - 成功
+        //存储评论数量于vuex里
+        this.$store.commit("SET_COMMENT_NUM", res.data.data.commentList.length);
+      }
+    }
+  }
+};
+</script>
+
+
+<style lang='less' scoped>
+.detail_contnet {
+  position: relative;
+  top: 1.5rem;
+  margin-bottom: 2rem;
+  z-index: 999999;
+}
+</style>

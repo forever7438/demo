@@ -9,7 +9,18 @@
         <i>老师&nbsp;&nbsp;{{message.schoolName}}</i>
       </p>
       <p>
-        <i class="lesson_title">{{message.creationName || message.lessonName}}</i>
+        <router-link
+          tag="i"
+          class="lesson_title"
+          :to="{path:'/lessonDetail',query:{lessonId:message.lessonId}}"
+          v-if="itemtype=='lesson'"
+        >{{message.creationName || message.lessonName}}</router-link>
+        <router-link
+          tag="i"
+          class="lesson_title"
+          :to="{path:'/productionDetail',query:{creationId:message.creationId}}"
+          v-else
+        >{{message.creationName || message.lessonName}}</router-link>
         <span class="labels">
           <i class="fun-tag" v-for="(item,index) in message.labels" :key="index">{{item.labelName}}</i>
         </span>
@@ -17,12 +28,7 @@
     </div>
     <div class="item_body">
       <video :src="message.videoPath" controls="controls" v-if="itemtype=='production'"></video>
-      <router-link
-        :to="{path:'/lessonDetail',query:{lessonId:message.lessonId}}"
-        v-if="itemtype=='lesson'"
-      >
-        <img :src="message.coverImage">
-      </router-link>
+      <img v-if="itemtype=='lesson'" :src="message.coverImage">
     </div>
     <div class="item_footer">
       <div class="message">

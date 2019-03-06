@@ -16,6 +16,7 @@ import myMessage from '@/views/personalCenter/myMessage';
 import myProduction from '@/views/personalCenter/myProduction';
 import mySetting from '@/views/personalCenter/mySetting';
 import production from '@/views/production';
+import productionDetail from '@/views/productionDetail';
 import updateSign from '@/views/updateSign';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -51,6 +52,11 @@ const Routers = [{
     path: '/production',
     name: 'production',
     component: production
+  },
+  {
+    path: '/productionDetail',
+    name: 'productionDetail',
+    component: productionDetail
   },
   {
     path: '/lesson',

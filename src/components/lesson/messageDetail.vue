@@ -1,23 +1,24 @@
 <template>
   <div class="message_content">
-    <img :src="messageDetail.coverImage">
+    <video v-if="type=='creation'" :src="messageDetail.videoPath" controls="controls"></video>
+    <img v-else :src="messageDetail.coverImage">
     <div class="message_detail">
-      <h3>{{messageDetail.lessonName}}</h3>
+      <h3>{{messageDetail.lessonName || messageDetail.creationName }}</h3>
       <div class="message_detail_head">
         <div>
           <img :src="messageDetail.avatar || img">
           <span>
             <p>{{messageDetail.realName}}</p>
-            <p>{{messageDetail.schoolName}}&nbsp;&nbsp;六年级一班</p>
+            <p>{{messageDetail.schoolName}}&nbsp;&nbsp;{{messageDetail.className}}</p>
           </span>
         </div>
-        <fllowBtn></fllowBtn>
+        <fllowBtn :userId="messageDetail.ownerId"></fllowBtn>
       </div>
       <div class="message_detail_body">
         <div class="message_detail_desc">
-          <span>课程介绍：</span>
+          <span>{{type=='creation'?'作品':'课程'}}介绍：</span>
           <span v-if="messageDetail.lessonDesc">{{messageDetail.lessonDesc}}</span>
-          <span v-else>暂无课程介绍!!!</span>
+          <span v-else>暂无{{type=='creation'?'作品':'课程'}}介绍!!!</span>
         </div>
         <div class="message_detail_labels">
           <i class="fun-tag" v-for="(item,index) in messageDetail.labels" :key="index">{{item}}</i>
@@ -55,7 +56,8 @@ export default {
     fllowBtn
   },
   props: {
-    messageDetail: Object
+    messageDetail: Object,
+    type: String
   },
   data() {
     return {
@@ -74,6 +76,10 @@ export default {
   border-radius: 0.2rem;
   background: #fff;
   img {
+    width: 100%;
+    height: 4.5rem;
+  }
+  video {
     width: 100%;
     height: 4.5rem;
   }

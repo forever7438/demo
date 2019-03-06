@@ -2,7 +2,7 @@
   <div class="lesson_content">
     <tips title="我发布的课程"></tips>
     <div class="lesson_list">
-      <contentItem v-for="(item,index) in listLesson" :key="index" :item="item"></contentItem>
+      <contentItem v-for="(item,index) in listLesson" :key="index" :item="item" genre="lesson"></contentItem>
     </div>
   </div>
 </template>
