@@ -3,7 +3,7 @@
     <div class="code_content">
       <span class="code">验证码:</span>
       <input type="number" v-model="verificationCode" @change="saveCode">
-      <span class="send_code" @click="sendCode(phone)">发送</span>
+      <button class="send_code" :disabled="isDisabled" @click="sendCode(phone)">{{btnMessage}}</button>
     </div>
     <!-- <div class="error_message">验证码输入错误,请查证后输入</div> -->
   </div>
@@ -18,7 +18,11 @@ export default {
   },
   data() {
     return {
-      verificationCode: null
+      verificationCode: null,
+      btnMessage: "发送",
+      count: 60,
+      timeDown: null,
+      isDisabled: false
     };
   },
   methods: {
@@ -32,6 +36,11 @@ export default {
         });
         return;
       }
+      this.isDisabled = true;
+      this.timeDown = setInterval(() => {
+        this.count--;
+        this.btnMessage = `(${this.count}s)`;
+      }, 1000);
       let res = await fetchVerificationCode({
         phoneNum: phoneNum
       });
@@ -50,6 +59,16 @@ export default {
     //存储验证码在vuex里
     saveCode() {
       this.$store.commit("SET_CODE", this.verificationCode);
+    }
+  },
+  watch: {
+    count(newd, old) {
+      if (newd === 0) {
+        clearInterval(this.timeDown);
+        this.count = 60;
+        this.btnMessage = "发送";
+        this.isDisabled = false;
+      }
     }
   }
 };
@@ -71,6 +90,7 @@ export default {
     padding: 0.1rem;
   }
   .send_code {
+    border: none;
     line-height: 0.9rem;
     flex: 2;
     margin-left: 0.2rem;

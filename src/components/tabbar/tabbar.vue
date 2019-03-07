@@ -1,17 +1,6 @@
 <template>
   <div class="tabbar_content" v-if="isShow">
-    <ul class="tabbar_play" v-if="['lessonPlay','productionDetail'].includes($route.name)">
-      <li @click="like">
-        <span>点赞 {{likeNum}}</span>
-      </li>
-      <li @click="comment">
-        <span>评论 {{commentNum}}</span>
-      </li>
-      <li @click="collection">
-        <span>收藏 {{likeNum}}</span>
-      </li>
-    </ul>
-    <ul class="tabbar" v-else>
+    <ul class="tabbar">
       <li>
         <router-link to="/production" tag="p" active-class="isProduction"></router-link>
       </li>
@@ -22,47 +11,19 @@
         <router-link to="/personal" tag="p" active-class="isPersonal"></router-link>
       </li>
     </ul>
-    <dialogModel v-if="isShowModel">
-      <dialogText></dialogText>
-      <dialogBtn cancalText="取消" confirmText="确定" @cancal="isShowModel=false" @confirm="handle"></dialogBtn>
-    </dialogModel>
   </div>
 </template>
 
 <script>
-import dialogModel from "../dialog/dialogModel";
-import dialogText from "../dialog/dialogText";
-import dialogBtn from "../dialog/dialogBtn";
-import { sectionDetail, comment, commentsList, like } from "@/api/index";
 export default {
   name: "Navigator",
-  components: {
-    dialogModel,
-    dialogText,
-    dialogBtn
-  },
   data() {
     return {
-      active: 0,
-      isShow: true,
-      isShowModel: false,
-      sectionDetails: {}
+      isShow: true
     };
   },
-
   created() {
     this.showBar(this.$route.name);
-    if (this.$route.name === "lessonPlay") {
-      this.sectionDetail();
-    }
-  },
-  computed: {
-    likeNum() {
-      return this.$store.state.data.likeNum;
-    },
-    commentNum() {
-      return this.$store.state.data.commentNum;
-    }
   },
   methods: {
     showBar(name) {
@@ -81,88 +42,15 @@ export default {
         "lessonDetail",
         "homepage",
         "accountManagement",
-        "updateSign"
+        "updateSign",
+        "productionDetail",
+        "lessonPlay"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;
       } else {
         this.isShow = true;
       }
-    },
-    //章节详情
-    async sectionDetail() {
-      let res = await sectionDetail({
-        sectionId: this.$route.query.sectionId
-      });
-      if (res.data.code === 200) {
-        this.sectionDetails = res.data.data;
-      }
-    },
-    //点赞
-    async like() {
-      if (this.sectionDetails.isLiked) {
-        return;
-      }
-      let res = await like({
-        targetId: this.$route.query.sectionId,
-        type: "section"
-      });
-      if (res.data.code === 200) {
-        this.sectionDetails.isLiked = true;
-        this.$store.commit("ADD_LIKE_NUM");
-        this.$toast.success({
-          mask: true,
-          message: "点赞成功"
-        });
-      } else {
-        this.$toast({
-          mask: true,
-          message: res.data.message
-        });
-      }
-    },
-    comment() {
-      this.isShowModel = true;
-    },
-    collection() {
-      this.$toast.success("收藏成功");
-    },
-    //提交评论内容
-    async handle() {
-      if (!this.$store.state.data.text) {
-        this.isShowModel = false;
-        this.$toast.fail({
-          mask: true,
-          message: "内容不得为空"
-        });
-        return;
-      }
-      this.$store.commit("SET_STATE");
-      let res = await comment({
-        type: "section",
-        content: this.$store.state.data.text,
-        targetId:
-          this.$route.query.creationId ||
-          this.$route.query.sectionId ||
-          this.$route.query.lessonId ||
-          this.$route.query.userId ||
-          sessionStorage.getItem("userId")
-      });
-      if (res.data.code === 200) {
-        this.$store.commit("ADD_COMMENT_NUM");
-        this.$store.commit("CLEAR_STATE");
-        this.$toast.success({
-          mask: true,
-          message: "评论成功"
-        });
-      } else {
-        this.$toast.fail({
-          mask: true,
-          message: res.data.message
-        });
-      }
-      this.isShowModel = false;
-      this.$store.commit("CLEAR_TEXT");
     }
   },
   watch: {

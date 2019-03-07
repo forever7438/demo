@@ -1,21 +1,24 @@
 <template>
   <div class="lesson_content">
     <tips title="我发布的课程"></tips>
-    <div class="lesson_list">
+    <div v-if="listLesson.length" class="lesson_list">
       <contentItem v-for="(item,index) in listLesson" :key="index" :item="item" genre="lesson"></contentItem>
     </div>
+    <noContent v-else></noContent>
   </div>
 </template>
 
 <script>
 import tips from "../../components/tips";
 import contentItem from "../../components/itemList/contentItem";
+import noContent from "../../components/noContent";
 import { lessonOfUser } from "@/api/index";
 export default {
   name: "mylesson",
   components: {
     tips,
-    contentItem
+    contentItem,
+    noContent
   },
   data() {
     return {

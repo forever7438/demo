@@ -29,7 +29,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{messageDetail.likeCount}}</span>
+          <span>{{commentNum}}</span>
         </div>
         <div class="watch">
           <svg class="icon" aria-hidden="true">
@@ -57,7 +57,8 @@ export default {
   },
   props: {
     messageDetail: Object,
-    type: String
+    type: String,
+    commentNum: Number
   },
   data() {
     return {

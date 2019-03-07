@@ -3,6 +3,12 @@
     <tips title="章节播放"></tips>
     <chapterPlay :sectionDetail="sectionDetails"></chapterPlay>
     <commentItem :targetId="$route.query.sectionId" type="section"></commentItem>
+    <tabbarList
+      :commentNum="commentNum"
+      :likeNum="sectionDetails.praise"
+      pathType="section"
+      :isLiked="sectionDetails.isLiked"
+    ></tabbarList>
   </div>
 </template>
 
@@ -10,17 +16,20 @@
 import tips from "../components/tips";
 import chapterPlay from "../components/lesson/chapterPlay";
 import commentItem from "../components/comment/commentItem";
+import tabbarList from "../components/tabbar/tabbarList";
 import { sectionDetail, commentsList } from "@/api/index";
 export default {
   name: "lessonPlay",
   components: {
     tips,
     chapterPlay,
-    commentItem
+    commentItem,
+    tabbarList
   },
   data() {
     return {
-      sectionDetails: {}
+      sectionDetails: {},
+      commentNum: null
     };
   },
   created() {
@@ -36,8 +45,6 @@ export default {
       if (res.data.code === 200) {
         this.sectionDetails = res.data.data;
         document.title = `武汉益谷-创客空间-${this.sectionDetails.sectionName}`;
-        //存储点赞数量在vuex里面
-        this.$store.commit("SET_LIKE_NUM", this.sectionDetails.praise);
       } else {
         this.$toast.fail({
           mask: true,
@@ -56,8 +63,7 @@ export default {
       let res = await commentsList(parmes);
       if (res.data.code === 200) {
         // 获取评论列表 - 成功
-        //存储评论数量于vuex里
-        this.$store.commit("SET_COMMENT_NUM", res.data.data.commentList.length);
+        this.commentNum = res.data.data.commentList.length;
       }
     }
   }

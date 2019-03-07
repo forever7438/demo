@@ -18,11 +18,7 @@ export default {
     Navigator,
     webHeader
   },
-  store,
-  data() {
-    return {};
-  },
-  created() {}
+  store
 };
 </script>
 

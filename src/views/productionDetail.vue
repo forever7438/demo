@@ -1,8 +1,14 @@
 <template>
   <div class="detail_contnet">
     <tips title="作品详情"></tips>
-    <messageDetail :messageDetail="creationDetails" type="creation"></messageDetail>
+    <messageDetail :messageDetail="creationDetails" type="creation" :commentNum="commentNum"></messageDetail>
     <commentItem :targetId="$route.query.creationId" type="creation"></commentItem>
+    <tabbarList
+      :commentNum="commentNum"
+      :likeNum="creationDetails.likeCount"
+      pathType="creation"
+      :isLiked="creationDetails.isLiked"
+    ></tabbarList>
   </div>
 </template>
 
@@ -10,17 +16,20 @@
 import commentItem from "../components/comment/commentItem";
 import messageDetail from "../components/lesson/messageDetail";
 import tips from "../components/tips";
+import tabbarList from "../components/tabbar/tabbarList";
 import { creationDetail, commentsList } from "@/api/index";
 export default {
   name: "productionDetail",
   components: {
     commentItem,
     messageDetail,
-    tips
+    tips,
+    tabbarList
   },
   data() {
     return {
-      creationDetails: {}
+      creationDetails: {},
+      commentNum: null
     };
   },
   created() {
@@ -38,8 +47,6 @@ export default {
         document.title = `武汉益谷-创客空间-${
           this.creationDetails.creationName
         }`;
-        //存储点赞数量在vuex里面
-        this.$store.commit("SET_LIKE_NUM", this.creationDetails.likeCount);
       } else {
         this.$toast({
           mask: true,
@@ -58,8 +65,7 @@ export default {
       let res = await commentsList(parmes);
       if (res.data.code === 200) {
         // 获取评论列表 - 成功
-        //存储评论数量于vuex里
-        this.$store.commit("SET_COMMENT_NUM", res.data.data.commentList.length);
+        this.commentNum = res.data.data.commentList.length;
       }
     }
   }

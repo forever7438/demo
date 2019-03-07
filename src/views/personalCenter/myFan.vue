@@ -1,19 +1,24 @@
 <template>
   <div class="fan_content">
     <tips title="我的粉丝"></tips>
-    <fanItem v-for="(item,index) in fanList" :key="index" :item="item"></fanItem>
+    <div v-if="fanList.length">
+      <fanItem v-for="(item,index) in fanList" :key="index" :item="item"></fanItem>
+    </div>
+    <noContent v-else></noContent>
   </div>
 </template>
 
 <script>
 import fanItem from "../../components/fanItem/fanItem";
 import tips from "../../components/tips";
+import noContent from "../../components/noContent";
 import { followersOfUser } from "@/api/index";
 export default {
   name: "myFan",
   components: {
     fanItem,
-    tips
+    tips,
+    noContent
   },
   data() {
     return {

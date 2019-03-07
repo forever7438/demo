@@ -20,6 +20,8 @@ export default {
       )
     ) {
       this.isShow = false;
+    } else {
+      this.isShow = true;
     }
   }
 };

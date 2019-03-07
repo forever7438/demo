@@ -1,7 +1,7 @@
 <template>
   <div class="message_content">
     <tips title="我的消息" :showDel="true" @showBtn="isShowModel=true"></tips>
-    <div class="message_list">
+    <div v-if="messageList.length" class="message_list">
       <messageLists
         v-for="(item,index) in messageList"
         :key="index"
@@ -9,6 +9,7 @@
         @refreshMessageList="getMessageList"
       ></messageLists>
     </div>
+    <noContent v-else></noContent>
     <!-- 弹窗模块 -->
     <dialogModel v-if="isShowModel">
       <dialogTitle title="确认删除全部消息？"></dialogTitle>
@@ -28,6 +29,7 @@ import messageLists from "../../components/itemList/messageList";
 import dialogModel from "../../components/dialog/dialogModel";
 import dialogTitle from "../../components/dialog/dialogTitle";
 import dialogBtn from "../../components/dialog/dialogBtn";
+import noContent from "../../components/noContent";
 import { messageList, deleteAllMessage } from "@/api/index";
 export default {
   name: "myMessage",
@@ -36,7 +38,8 @@ export default {
     messageLists,
     dialogModel,
     dialogTitle,
-    dialogBtn
+    dialogBtn,
+    noContent
   },
   data() {
     return {

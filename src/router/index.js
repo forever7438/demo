@@ -149,12 +149,12 @@ const RouterConfig = {
 //token验证   路由拦截
 const router = new Router(RouterConfig);
 router.beforeEach((to, from, next) => {
-  NProgress.start();
+  // NProgress.start();
   if (['login', 'loginMiddle'].includes(to.name)) {
     next()
   }
   if (!Cookies.get("token")) {
-    if (['changepwd', 'login', 'loginMiddle'].includes(to.name)) {
+    if (['forgetPassword', 'login', 'quickLogin'].includes(to.name)) {
       next()
     } else {
       next({
@@ -167,6 +167,6 @@ router.beforeEach((to, from, next) => {
   }
 });
 router.afterEach(() => {
-  NProgress.done();
+  // NProgress.done();
 });
 export default router

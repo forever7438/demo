@@ -1,21 +1,24 @@
 <template>
   <div class="porduction_content">
     <tips title="我发布的视频"></tips>
-    <div class="production_list">
+    <div v-if="listCreation.length" class="production_list">
       <contentItem v-for="(item,index) in listCreation" :key="index" :item="item"></contentItem>
     </div>
+    <noContent v-else></noContent>
   </div>
 </template>
 
 <script>
 import tips from "../../components/tips";
 import contentItem from "../../components/itemList/contentItem";
+import noContent from "../../components/noContent";
 import { creationOfUser } from "@/api/index";
 export default {
   name: "myProduction",
   components: {
     tips,
-    contentItem
+    contentItem,
+    noContent
   },
   data() {
     return {

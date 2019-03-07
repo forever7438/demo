@@ -7,7 +7,11 @@
         :to="{path:'/lessonDetail',query:{lessonId:item.lessonId}}"
         v-if="genre=='lesson'"
       >{{item.lessonName || item.creationName}}</router-link>
-      <span v-else>{{item.lessonName || item.creationName}}</span>
+      <router-link
+        tag="span"
+        :to="{path:'/productionDetail',query:{creationId:item.creationId}}"
+        v-else
+      >{{item.lessonName || item.creationName}}</router-link>
       <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
     </div>
     <div class="operation_list">

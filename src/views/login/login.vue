@@ -14,7 +14,7 @@
         </li>
       </ul>
       <div class="submit_btn">
-        <button @click="login">登录</button>
+        <button @click="login">{{btnMessage}}</button>
       </div>
       <div class="error_message">
         <router-link to="/forgetPassword" tag="p">忘记密码?</router-link>
@@ -36,7 +36,8 @@ export default {
       parmes: {
         account: null,
         password: null
-      }
+      },
+      btnMessage: "登录"
     };
   },
   created() {
@@ -63,12 +64,14 @@ export default {
         });
         return;
       }
+      this.btnMessage = "登录中...";
       //密码进行md5加密
       var res = await loginIn({
         account: this.parmes.account,
         password: md5(`maker{${this.parmes.password}}`)
       });
       if (res.data.code === 200) {
+        this.btnMessage = "登录";
         //存储token在cookies供全局使用
         Cookies.set("token", res.data.data.token);
         this.$toast.success({
@@ -82,10 +85,11 @@ export default {
           window.open(href.href, "_self");
         }, 3000);
       } else {
+        this.btnMessage = "登录";
         //清空输入框
         this.parmes.account = null;
         this.parmes.password = null;
-        this.$toast.fail({
+        this.$toast({
           mask: true,
           message: res.data.message
         });
@@ -118,6 +122,7 @@ export default {
       li {
         margin: 5%;
         display: flex;
+        font-size: 0.4rem;
         input {
           height: 1rem;
           border-radius: 0.1rem;

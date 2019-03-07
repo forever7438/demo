@@ -16,7 +16,7 @@
         </li>
       </ul>
       <div class="submit_btn">
-        <button>登录</button>
+        <button>{{btnMessage}}</button>
       </div>
       <div class="error_message">
         <p>没有绑定手机号将无法使用快速登录</p>
@@ -35,13 +35,16 @@ export default {
   },
   data() {
     return {
-      logo_image: require("../../../static/img/logo.png")
+      logo_image: require("../../../static/img/logo.png"),
+      btnMessage: "登录"
     };
   }
 };
 </script>
 <style lang='less' scoped>
 .login_content {
+  font-size: 0.5rem;
+  font-weight: 600;
   .login_bg {
     position: relative;
     width: 100%;
@@ -62,6 +65,7 @@ export default {
       li {
         margin: 5%;
         display: flex;
+        font-size: 0.4rem;
         input {
           height: 1rem;
           border-radius: 0.1rem;
@@ -154,7 +158,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 0 5%;
-      font-size: 14px;
+      font-size: 14/37.5rem;
       p {
         &::before {
           content: "*";

@@ -1,19 +1,24 @@
 <template>
   <div class="fllow_contnet">
     <tips title="我的关注"></tips>
-    <fanItem v-for="(item,index) in fllowList" :key="index" :item="item"></fanItem>
+    <div v-if="fllowList.length">
+      <fanItem v-for="(item,index) in fllowList" :key="index" :item="item"></fanItem>
+    </div>
+    <noContent v-else></noContent>
   </div>
 </template>
 
 <script>
 import fanItem from "../../components/fanItem/fanItem";
 import tips from "../../components/tips";
+import noContent from "../../components/noContent";
 import { followedByUser } from "@/api/index";
 export default {
   name: "myFllow",
   components: {
     fanItem,
-    tips
+    tips,
+    noContent
   },
   data() {
     return {
