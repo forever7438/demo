@@ -2,26 +2,81 @@
   <div class="collection_content">
     <tips title="我的收藏"></tips>
     <div class="tab_list">
-      <p class="isActive">收藏视频</p>
-      <p>收藏课程</p>
+      <p :class="{isActive:isCheckA}" @click="tabA">收藏视频</p>
+      <p :class="{isActive:isCheckB}" @click="tabB">收藏课程</p>
     </div>
-    <div class="collection_list">
+    <div v-if="flag&&checkList.length" class="collection_list">
       <contentItem v-for="(item,index) in 10" :key="index"></contentItem>
     </div>
+    <noContent v-else></noContent>
   </div>
 </template>
 
 <script>
 import tips from "../../components/tips";
 import contentItem from "../../components/itemList/contentItem";
+import noContent from "../../components/noContent";
+import { getCollectCreationList, getCollectLessonList } from "@/api/index";
 export default {
   name: "myCollection",
   components: {
     tips,
-    contentItem
+    contentItem,
+    noContent
   },
   data() {
-    return {};
+    return {
+      flag: false,
+      collectionCreationList: [],
+      collectionLessonList: [],
+      checkList: null,
+      isCheckA: true,
+      isCheckB: false
+    };
+  },
+  created() {
+    this.getCollectCreationList();
+    this.getCollectLessonList();
+  },
+  methods: {
+    //获取收藏视频
+    async getCollectCreationList() {
+      let res = await getCollectCreationList();
+      if (res.data.code === 200) {
+        this.flag = true;
+        this.collectionCreationList = res.data.data;
+        this.checkList = this.collectionCreationList;
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //获取收藏课程
+    async getCollectLessonList() {
+      let res = await getCollectLessonList();
+      if (res.data.code === 200) {
+        this.collectionLessonList = res.data.data;
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //切换A
+    tabA() {
+      this.isCheckA = true;
+      this.isCheckB = false;
+      this.checkList = this.collectionCreationList;
+    },
+    //切换B
+    tabB() {
+      this.isCheckA = false;
+      this.isCheckB = true;
+      this.checkList = this.collectionLessonList;
+    }
   }
 };
 </script>

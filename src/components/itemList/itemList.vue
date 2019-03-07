@@ -27,26 +27,26 @@
       </p>
     </div>
     <div class="item_body">
-      <video :src="message.videoPath" controls="controls" v-if="itemtype=='production'"></video>
+      <video :src="message.videoPath" controls="controls" v-if="itemtype=='creation'"></video>
       <img v-if="itemtype=='lesson'" :src="message.coverImage">
     </div>
     <div class="item_footer">
       <div class="message">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-icon-test"></use>
+        <svg class="icon like" aria-hidden="true">
+          <use xlink:href="#icon-z-like"></use>
         </svg>
         <span>{{message.likeCount}}</span>
       </div>
       <div class="meun">
-        <div>
+        <div @click="collect(message.lessonId||message.creationId,itemtype)">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-wujiaoxing_kong"></use>
           </svg>
           <span>{{message.viewTimes}}</span>
         </div>
         <div>
-          <svg class="icon like" aria-hidden="true">
-            <use xlink:href="#icon-z-like"></use>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-icon-test"></use>
           </svg>
           <span>{{message.likeCount}}</span>
         </div>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { collect } from "@/api/index";
 export default {
   name: "itemList",
   props: {
@@ -86,6 +87,24 @@ export default {
         if (j != index) {
           this.videos[j].pause();
         }
+      }
+    },
+    //收藏
+    async collect(targetId, type) {
+      let res = await collect({
+        targetId: targetId,
+        type: type
+      });
+      if (res.data.code === 200) {
+        this.$toast.success({
+          mask: true,
+          message: "收藏成功"
+        });
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
       }
     }
   }
@@ -127,10 +146,15 @@ export default {
         display: flex;
         // justify-content: space-between;
         .lesson_title {
+          max-width: 2.5rem;
           margin-right: 0.3rem;
           font-size: 0.5rem;
           color: #3789ff;
           font-weight: 600;
+          text-align: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .labels {
           font-size: 0.4rem;

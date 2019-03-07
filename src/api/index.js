@@ -14,6 +14,7 @@ import makerStar from "./makerStar";
 import message from "./message";
 import personalSpace from "./personalSpace";
 import userInfo from "./userInfo";
+import collection from "./collection";
 import {
   baseUrl
 } from '../config/url';
@@ -85,4 +86,5 @@ module.exports = merge(
   message,
   personalSpace,
   userInfo,
+  collection
 );

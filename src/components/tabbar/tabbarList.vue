@@ -8,7 +8,7 @@
         <span>评论 {{commentNum}}</span>
       </li>
       <li @click="collection">
-        <span>收藏 {{likeNum}}</span>
+        <span>收藏 {{collectCount}}</span>
       </li>
     </ul>
 
@@ -40,7 +40,8 @@ export default {
     pathType: String,
     likeNum: Number,
     commentNum: Number,
-    isLiked: Boolean
+    isLiked: Boolean,
+    collectCount: Number
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <div class="detail_contnet">
     <tips title="课程详情"></tips>
-    <messageDetail :messageDetail="lessonDetail"></messageDetail>
+    <messageDetail :messageDetail="lessonDetail" type="lesson"></messageDetail>
     <lessonDesc :lessonDesc="lessonDetail.sections"></lessonDesc>
   </div>
 </template>

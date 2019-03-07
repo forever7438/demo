@@ -13,8 +13,12 @@
 </template>
 
 <script>
+import noContent from "../../components/noContent";
 export default {
   name: "lessonDesc",
+  components: {
+    noContent
+  },
   props: {
     lessonDesc: Array
   }

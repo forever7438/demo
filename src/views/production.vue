@@ -6,7 +6,7 @@
       <item-list
         v-for="(item,index) in videoList"
         :key="index"
-        itemtype="production"
+        itemtype="creation"
         :message="item"
       ></item-list>
     </van-pull-refresh>

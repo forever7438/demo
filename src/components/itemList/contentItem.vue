@@ -80,7 +80,7 @@ export default {
       }
       &:nth-of-type(1) {
         &::before {
-          background: url("../../../static/img/icon-pinglun01.png") no-repeat
+          background: url("../../../static/img/icon_dianzan01.png") no-repeat
             center/100%;
         }
       }
@@ -92,7 +92,7 @@ export default {
       }
       &:nth-of-type(3) {
         &::before {
-          background: url("../../../static/img/icon_dianzan01.png") no-repeat
+          background: url("../../../static/img/icon-pinglun01.png") no-repeat
             center/100%;
         }
       }

@@ -6,6 +6,7 @@
     <tabbarList
       :commentNum="commentNum"
       :likeNum="creationDetails.likeCount"
+      :collectCount="creationDetails.collectCount"
       pathType="creation"
       :isLiked="creationDetails.isLiked"
     ></tabbarList>

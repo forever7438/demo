@@ -25,23 +25,24 @@
         </div>
       </div>
       <div class="message_detail_foot">
-        <div class="message">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-icon-test"></use>
+        <div class="message" @click="like(type,messageDetail.isLiked)">
+          <svg class="icon like" aria-hidden="true">
+            <use v-if="messageDetail.isLiked" xlink:href="#icon-dianzan"></use>
+            <use v-else xlink:href="#icon-z-like"></use>
           </svg>
-          <span>{{commentNum}}</span>
+          <span>{{messageDetail.likeCount}}</span>
         </div>
         <div class="watch">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-wujiaoxing_kong"></use>
           </svg>
-          <span>{{messageDetail.viewTimes}}</span>
+          <span>{{messageDetail.collectCount}}</span>
         </div>
         <div class="report">
-          <svg class="icon like" aria-hidden="true">
-            <use xlink:href="#icon-z-like"></use>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{messageDetail.likeCount}}</span>
+          <span>{{commentNum}}</span>
         </div>
       </div>
     </div>
@@ -50,6 +51,7 @@
 
 <script>
 import fllowBtn from "../fllowBtn";
+import { like } from "@/api/index";
 export default {
   name: "messageDetail",
   components: {
@@ -64,6 +66,37 @@ export default {
     return {
       img: "../../../static/img/icon_touxiang02.png"
     };
+  },
+  methods: {
+    //点赞
+    async like(pathType, isLiked) {
+      if (isLiked) {
+        return;
+      }
+      let res = await like({
+        targetId:
+          this.$route.query.lessonId ||
+          this.$route.query.sectionId ||
+          this.$route.query.creationId,
+        type: pathType
+      });
+      if (res.data.code === 200) {
+        if (pathType === "lesson") {
+          this.$parent.lessonDetails();
+        } else {
+          this.$parent.creationDetail();
+        }
+        this.$toast.success({
+          mask: true,
+          message: "点赞成功"
+        });
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
   }
 };
 </script>
