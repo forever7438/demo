@@ -6,7 +6,7 @@
       <p :class="{isActive:isCheckB}" @click="tabB">收藏课程</p>
     </div>
     <div v-if="flag&&checkList.length" class="collection_list">
-      <contentItem v-for="(item,index) in 10" :key="index"></contentItem>
+      <contentItem v-for="(item,index) in checkList" :key="index" :item="item"></contentItem>
     </div>
     <noContent v-else></noContent>
   </div>

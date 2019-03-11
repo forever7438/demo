@@ -21,6 +21,7 @@ export default {
       verificationCode: null,
       btnMessage: "发送",
       count: 60,
+      regPhone: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       timeDown: null,
       isDisabled: false
     };
@@ -33,6 +34,13 @@ export default {
         this.$toast.fail({
           mask: true,
           message: "请输入手机号"
+        });
+        return;
+      }
+      if (!this.regPhone.test(phone || this.$store.state.data.phoneNum)) {
+        this.$toast({
+          mask: true,
+          message: "请输入有效手机号"
         });
         return;
       }

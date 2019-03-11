@@ -8,15 +8,15 @@
       <h3>益谷创客平台</h3>
       <ul>
         <li>
-          <input type="number" placeholder="请输入手机号码">
+          <input type="number" placeholder="请输入手机号码" v-model="phoneNum">
         </li>
         <li>
-          <input type="number" placeholder="请输入验证码">
-          <button>发送验证码</button>
+          <input type="number" placeholder="请输入验证码" v-model="verificationCode">
+          <button :disabled="isDisabled" @click="sendCode">{{codeMessage}}</button>
         </li>
       </ul>
       <div class="submit_btn">
-        <button>{{btnMessage}}</button>
+        <button @click="loginByVerificationCode">{{btnMessage}}</button>
       </div>
       <div class="error_message">
         <p>没有绑定手机号将无法使用快速登录</p>
@@ -27,7 +27,9 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
 import loginHeader from "../../components/header/loginHeader";
+import { fetchVerificationCode, loginByVerificationCode } from "@/api/index";
 export default {
   name: "quickLogin",
   components: {
@@ -36,8 +38,109 @@ export default {
   data() {
     return {
       logo_image: require("../../../static/img/logo.png"),
-      btnMessage: "登录"
+      btnMessage: "登录",
+      phoneNum: null,
+      verificationCode: null,
+      count: 60,
+      timeDown: null,
+      isDisabled: false,
+      regPhone: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
+      codeMessage: "发送验证码"
     };
+  },
+  methods: {
+    //发送验证码
+    async sendCode() {
+      if (!this.phoneNum) {
+        this.$toast.fail({
+          mask: true,
+          message: "请输入手机号"
+        });
+        return;
+      }
+      if (!this.regPhone.test(this.phoneNum)) {
+        this.$toast({
+          mask: true,
+          message: "请输入有效手机号"
+        });
+        return;
+      }
+      this.isDisabled = true;
+      this.timeDown = setInterval(() => {
+        this.count--;
+        this.codeMessage = `(${this.count}s)`;
+      }, 1000);
+      let res = await fetchVerificationCode({
+        phoneNum: this.phoneNum
+      });
+      if (res.data.code === 200) {
+        this.$toast.success({
+          mask: true,
+          message: "验证码已发送"
+        });
+      } else {
+        this.$toast.fail({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //手机号+验证码登录
+    async loginByVerificationCode() {
+      if (!this.phoneNum) {
+        this.$toast.fail({
+          mask: true,
+          message: "请输入手机号"
+        });
+        return;
+      }
+      if (!this.verificationCode) {
+        this.$toast.fail({
+          mask: true,
+          message: "请输入验证码"
+        });
+        return;
+      }
+      this.btnMessage = "登录中...";
+      let res = await loginByVerificationCode({
+        phoneNum: this.phoneNum,
+        code: this.verificationCode
+      });
+      if (res.data.code === 200) {
+        this.btnMessage = "登录";
+        //存储token在cookies供全局使用
+        Cookies.set("token", res.data.data.token);
+        this.$toast.success({
+          mask: true,
+          message: "登录成功"
+        });
+        setTimeout(() => {
+          let href = this.$router.resolve({
+            path: "/production"
+          });
+          window.open(href.href, "_self");
+        }, 3000);
+      } else {
+        this.btnMessage = "登录";
+        //清空输入框
+        this.phoneNum = null;
+        this.verificationCode = null;
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    }
+  },
+  watch: {
+    count(newd, old) {
+      if (newd === 0) {
+        clearInterval(this.timeDown);
+        this.count = 60;
+        this.codeMessage = "发送验证码";
+        this.isDisabled = false;
+      }
+    }
   }
 };
 </script>

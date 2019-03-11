@@ -44,7 +44,9 @@ export default {
         "accountManagement",
         "updateSign",
         "productionDetail",
-        "lessonPlay"
+        "lessonPlay",
+        "userAgreement",
+        "privacyPolicy"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;

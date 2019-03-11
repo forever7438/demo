@@ -1,7 +1,9 @@
 <template>
   <div class="lesson_contnet">
     <tips title="创客课程" :isActive="true"></tips>
-    <item-list v-for="(item,index) in lessonList" :key="index" itemtype="lesson" :message="item"></item-list>
+    <van-pull-refresh v-model="isLoading" @refresh="randomLessonsList">
+      <item-list v-for="(item,index) in lessonList" :key="index" itemtype="lesson" :message="item"></item-list>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -18,11 +20,12 @@ export default {
   data() {
     return {
       lessonList: [],
-      pageSize: 20
+      isLoading: false
     };
   },
   created() {
-    this.searchLesson("time");
+    // this.searchLesson("time");
+    this.randomLessonsList();
   },
   methods: {
     //获取课程
@@ -48,7 +51,8 @@ export default {
     async randomLessonsList() {
       let res = await randomLessons();
       if (res.data.code === 200) {
-        this.lessonList = res.data.data.lessonList;
+        this.isLoading = false;
+        this.lessonList = res.data.data;
       } else {
         this.$toast.fail({
           mask: true,

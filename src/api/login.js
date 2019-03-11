@@ -46,5 +46,11 @@ exports.retrievePassword = async function (parmes) {
   const url = `${baseUrl}/login/retrievePassword`
   return axios.post(url, qs.stringify(parmes))
 }
+
+//通过手机号+验证码登录
+exports.loginByVerificationCode = async function (parmes) {
+  const url = `${baseUrl}/login/loginByVerificationCode`
+  return axios.post(url, qs.stringify(parmes))
+}
 /* end
  */

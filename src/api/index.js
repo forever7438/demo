@@ -24,6 +24,7 @@ import {
 let loading //定义loading变量
 function startLoading() { //使用vant loading start 方法
   loading = Toast.loading({
+    duration: 0,
     mask: true,
     message: '加载中...'
   });
@@ -52,7 +53,7 @@ export function tryHideFullScreenLoading() {
 axios.interceptors.request.use(
   config => {
     let token = Cookies.get("token");
-    if (token && !(window.location.pathname.split('/').indexOf('login') > 0 && window.location.pathname.split('/').length == 3)) { // 判断是否存在token，如果存在的话，则每个http header都加上token(如果使用第三方接口,则不需要添加token)
+    if (token && !(window.location.pathname.split('/').indexOf('login') > 0 || window.location.pathname.split('/').indexOf('quickLogin') > 0)) { // 判断是否存在token，如果存在的话，则每个http header都加上token(如果使用第三方接口,则不需要添加token)
       config.headers.token = `${token}`;
     }
     showFullScreenLoading()

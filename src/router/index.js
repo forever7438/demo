@@ -18,6 +18,8 @@ import mySetting from '@/views/personalCenter/mySetting';
 import production from '@/views/production';
 import productionDetail from '@/views/productionDetail';
 import updateSign from '@/views/updateSign';
+import userAgreement from "@/views/userAgreement";
+import privacyPolicy from "@/views/privacyPolicy";
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Vue from 'vue';
@@ -129,10 +131,20 @@ const Routers = [{
     name: 'updateSign',
     component: updateSign
   },
+  {
+    path: '/userAgreement',
+    name: 'userAgreement',
+    component: userAgreement
+  },
+  {
+    path: '/privacyPolicy',
+    name: 'privacyPolicy',
+    component: privacyPolicy
+  }
 ];
 const RouterConfig = {
   // 使用 HTML5 的 History 路由模式
-  // mode: 'history',
+  mode: 'history',
   routes: Routers,
   //路由跳转后每次置顶
   scrollBehavior(to, from, savedPosition) {

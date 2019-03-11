@@ -7,7 +7,7 @@
       <li @click="comment">
         <span>评论 {{commentNum}}</span>
       </li>
-      <li @click="collection">
+      <li @click="collection(pathType,isCollection)">
         <span>收藏 {{collectCount}}</span>
       </li>
     </ul>
@@ -28,7 +28,7 @@
 import dialogModel from "../dialog/dialogModel";
 import dialogText from "../dialog/dialogText";
 import dialogBtn from "../dialog/dialogBtn";
-import { comment, like } from "@/api/index";
+import { comment, like, collect } from "@/api/index";
 export default {
   name: "tabbarList",
   components: {
@@ -41,7 +41,11 @@ export default {
     likeNum: Number,
     commentNum: Number,
     isLiked: Boolean,
-    collectCount: Number
+    collectCount: Number,
+    isCollection: {
+      type: Boolean,
+      required: false
+    }
   },
   data() {
     return {
@@ -92,11 +96,31 @@ export default {
     comment() {
       this.isShowModel = true;
     },
-    collection() {
-      this.$toast.success({
-        mask: true,
-        message: "收藏成功"
+    //收藏
+    async collection(pathType, isCollection) {
+      if (isCollection) {
+        return;
+      }
+      let res = await collect({
+        targetId: this.$route.query.sectionId || this.$route.query.creationId,
+        type: pathType
       });
+      if (res.data.code === 200) {
+        this.$toast.success({
+          mask: true,
+          message: "收藏成功"
+        });
+        if (pathType === "section") {
+          this.$parent.sectionDetail();
+        } else {
+          this.$parent.creationDetail();
+        }
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
     },
     //提交评论内容
     async handle(pathType) {

@@ -17,22 +17,26 @@
           <p>当前版本</p>
           <i>1.0.0</i>
         </li>
-        <li>
-          <p>用户协议</p>
-          <i>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-jiantou1"></use>
-            </svg>
-          </i>
-        </li>
-        <li>
-          <p>隐私政策</p>
-          <i>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-jiantou1"></use>
-            </svg>
-          </i>
-        </li>
+        <router-link to="/userAgreement">
+          <li>
+            <p>用户协议</p>
+            <i>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jiantou1"></use>
+              </svg>
+            </i>
+          </li>
+        </router-link>
+        <router-link to="/privacyPolicy">
+          <li>
+            <p>隐私政策</p>
+            <i>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jiantou1"></use>
+              </svg>
+            </i>
+          </li>
+        </router-link>
       </ul>
     </div>
   </div>
@@ -82,6 +86,7 @@ export default {
       flex-direction: column;
       padding: 0.2rem;
       li {
+        color: #2c3e50;
         height: 1rem;
         display: flex;
         justify-content: space-between;
