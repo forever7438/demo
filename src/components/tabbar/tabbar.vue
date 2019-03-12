@@ -46,7 +46,8 @@ export default {
         "productionDetail",
         "lessonPlay",
         "userAgreement",
-        "privacyPolicy"
+        "privacyPolicy",
+        "commentView"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;

@@ -1,6 +1,6 @@
 <template>
   <div class="commentItem_content">
-    <h3>评论</h3>
+    <h3 v-if="type!='lesson'">评论</h3>
     <ul>
       <li v-for="(item,index) in commentList" :key="index">
         <div class="comment_header">
@@ -82,6 +82,7 @@ export default {
       if (res.data.code === 200) {
         // 获取评论列表 - 成功
         this.commentList = res.data.data.commentList;
+        this.$emit("getCommentNum", this.commentList.length);
       } else {
         this.$toast.fail({
           mask: true,

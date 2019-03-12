@@ -6,7 +6,6 @@
     </van-pull-refresh>
   </div>
 </template>
-
 <script>
 import itemList from "../components/itemList/itemList";
 import tips from "../components/tips";

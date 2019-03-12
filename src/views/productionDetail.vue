@@ -9,6 +9,7 @@
       :collectCount="creationDetails.collectCount"
       pathType="creation"
       :isLiked="creationDetails.isLiked"
+      :isCollection="creationDetails.isCollect"
     ></tabbarList>
   </div>
 </template>

@@ -3,12 +3,7 @@
     <tips title="创客视频" :isActive="true"></tips>
     <!-- <search></search> -->
     <van-pull-refresh v-model="isLoading" @refresh="randomCreationsList">
-      <item-list
-        v-for="(item,index) in videoList"
-        :key="index"
-        itemtype="creation"
-        :message="item"
-      ></item-list>
+      <item-list v-for="(item,index) in videoList" :key="index" itemtype="creation" :message="item"></item-list>
     </van-pull-refresh>
     <!-- <search-content></search-content> -->
   </div>
@@ -30,7 +25,6 @@ export default {
   },
   data() {
     return {
-      userId: null,
       videoList: [],
       isLoading: false
     };
@@ -57,9 +51,9 @@ export default {
     async getUserInfo() {
       let res = await commonUserInfo();
       if (res.data.code === 200) {
-        this.userId = res.data.data.userId;
-        //存储userId在session里
-        sessionStorage.setItem("userId", this.userId);
+        //存储userId  userImage在session里
+        sessionStorage.setItem("userId", res.data.data.userId);
+        sessionStorage.setItem("userImage", res.data.data.avatar);
       } else {
         this.$toast.fail({
           mask: true,

@@ -3,7 +3,10 @@
     <h3>课程章节</h3>
     <ul>
       <li v-for="(item,index) in lessonDesc" :key="index">
-        <router-link :to="{path:'/lessonPlay',query:{sectionId:item.sectionId}}" tag="p">
+        <router-link
+          :to="{path:'/lessonPlay',query:{lessonId:$route.query.lessonId,sectionId:item.sectionId}}"
+          tag="p"
+        >
           <span>{{item.sectionName}}</span>
           <i>{{item.videoLength}}</i>
         </router-link>

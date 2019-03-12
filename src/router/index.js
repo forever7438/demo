@@ -20,6 +20,7 @@ import productionDetail from '@/views/productionDetail';
 import updateSign from '@/views/updateSign';
 import userAgreement from "@/views/userAgreement";
 import privacyPolicy from "@/views/privacyPolicy";
+import commentView from '@/views/commentView';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Vue from 'vue';
@@ -140,6 +141,11 @@ const Routers = [{
     path: '/privacyPolicy',
     name: 'privacyPolicy',
     component: privacyPolicy
+  },
+  {
+    path: '/commentView',
+    name: 'commentView',
+    component: commentView
   }
 ];
 const RouterConfig = {

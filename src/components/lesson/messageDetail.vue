@@ -12,7 +12,11 @@
             <p>{{messageDetail.schoolName}}&nbsp;&nbsp;{{messageDetail.className}}</p>
           </span>
         </div>
-        <fllowBtn :userId="messageDetail.ownerId"></fllowBtn>
+        <fllowBtn
+          :userId="messageDetail.ownerId"
+          :isFollowed="messageDetail.isFollow"
+          @refreshUserInfo="refreshParentInfo(type)"
+        ></fllowBtn>
       </div>
       <div class="message_detail_body">
         <div class="message_detail_desc">
@@ -32,9 +36,10 @@
           </svg>
           <span>{{messageDetail.likeCount}}</span>
         </div>
-        <div class="watch">
+        <div class="watch" @click="collect(type)">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-wujiaoxing_kong"></use>
+            <use v-if="messageDetail.isCollect" xlink:href="#icon-shoucang"></use>
+            <use v-else xlink:href="#icon-wujiaoxing_kong"></use>
           </svg>
           <span>{{messageDetail.collectCount}}</span>
         </div>
@@ -51,7 +56,7 @@
 
 <script>
 import fllowBtn from "../fllowBtn";
-import { like } from "@/api/index";
+import { collect, like } from "@/api/index";
 export default {
   name: "messageDetail",
   components: {
@@ -68,6 +73,14 @@ export default {
     };
   },
   methods: {
+    //刷新父级数据
+    refreshParentInfo(type) {
+      if (type === "lesson") {
+        this.$parent.lessonDetails();
+      } else {
+        this.$parent.creationDetail();
+      }
+    },
     //点赞
     async like(pathType, isLiked) {
       if (isLiked) {
@@ -89,6 +102,32 @@ export default {
         this.$toast.success({
           mask: true,
           message: "点赞成功"
+        });
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //收藏
+    async collect(type) {
+      let res = await collect({
+        targetId:
+          this.$route.query.lessonId ||
+          this.$route.query.sectionId ||
+          this.$route.query.creationId,
+        type: type
+      });
+      if (res.data.code === 200) {
+        if (type === "lesson") {
+          this.$parent.lessonDetails();
+        } else {
+          this.$parent.creationDetail();
+        }
+        this.$toast.success({
+          mask: true,
+          message: "收藏成功"
         });
       } else {
         this.$toast({

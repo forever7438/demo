@@ -31,32 +31,55 @@
       <img v-if="itemtype=='lesson'" :src="message.coverImage">
     </div>
     <div class="item_footer">
-      <div class="message">
+      <div
+        class="message"
+        @click="like(message.lessonId||message.creationId,itemtype,message.isLiked)"
+      >
         <svg class="icon like" aria-hidden="true">
-          <use xlink:href="#icon-z-like"></use>
+          <use v-if="message.isLiked" xlink:href="#icon-dianzan"></use>
+          <use v-else xlink:href="#icon-z-like"></use>
         </svg>
         <span>{{message.likeCount}}</span>
       </div>
       <div class="meun">
-        <div @click="collect(message.lessonId||message.creationId,itemtype)">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-wujiaoxing_kong"></use>
-          </svg>
-          <span>{{message.viewTimes}}</span>
-        </div>
         <div>
+          <svg
+            @click="collect(message.lessonId||message.creationId,itemtype,message.isCollect)"
+            class="icon"
+            aria-hidden="true"
+          >
+            <use v-if="message.isCollect" xlink:href="#icon-shoucang"></use>
+            <use v-else xlink:href="#icon-wujiaoxing_kong"></use>
+          </svg>
+          <span>{{message.collectCount}}</span>
+        </div>
+        <router-link
+          v-if="itemtype=='lesson'"
+          tag="div"
+          :to="{path:'commentView',query:{lessonId:message.lessonId,commentNum:message.commentCount}}"
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{message.likeCount}}</span>
-        </div>
+          <span>{{message.commentCount}}</span>
+        </router-link>
+        <router-link
+          v-else
+          tag="div"
+          :to="{path:'productionDetail',query:{creationId:message.creationId}}"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-icon-test"></use>
+          </svg>
+          <span>{{message.commentCount}}</span>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { collect } from "@/api/index";
+import { collect, like } from "@/api/index";
 export default {
   name: "itemList",
   props: {
@@ -90,15 +113,41 @@ export default {
       }
     },
     //收藏
-    async collect(targetId, type) {
+    async collect(targetId, type, isCollect) {
       let res = await collect({
         targetId: targetId,
         type: type
       });
       if (res.data.code === 200) {
+        if (this.message.isCollect) {
+          this.message.isCollect = false;
+          this.message.collectCount -= 1;
+        } else {
+          this.message.isCollect = true;
+          this.message.collectCount += 1;
+        }
+      } else {
+        this.$toast({
+          mask: true,
+          message: res.data.message
+        });
+      }
+    },
+    //点赞
+    async like(targetId, pathType, isLiked) {
+      if (isLiked) {
+        return;
+      }
+      let res = await like({
+        targetId: targetId,
+        type: pathType
+      });
+      if (res.data.code === 200) {
+        this.message.isLiked = true;
+        this.message.likeCount += 1;
         this.$toast.success({
           mask: true,
-          message: "收藏成功"
+          message: "点赞成功"
         });
       } else {
         this.$toast({

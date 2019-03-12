@@ -1,45 +1,46 @@
 <template>
-  <div class="lessonPlay_content">
-    <tips title="章节播放"></tips>
-    <chapterPlay :sectionDetail="sectionDetails"></chapterPlay>
-    <commentItem :targetId="$route.query.sectionId" type="section"></commentItem>
-    <operationList pathType="section"></operationList>
+  <div class="comment_view_content">
+    <tips :title="`共有${commentNum}条评论`"></tips>
+    <commentItem :targetId="$route.query.lessonId" type="lesson" @getCommentNum="getNum"></commentItem>
+    <operationList pathType="lesson"></operationList>
   </div>
 </template>
 
 <script>
 import tips from "../components/tips";
-import chapterPlay from "../components/lesson/chapterPlay";
 import commentItem from "../components/comment/commentItem";
 import operationList from "../components/tabbar/operationList";
-import { sectionDetail, commentsList } from "@/api/index";
+import { lessonDetail, commentsList } from "@/api/index";
 export default {
-  name: "lessonPlay",
+  name: "commentView",
   components: {
     tips,
-    chapterPlay,
     commentItem,
     operationList
   },
+  props: {},
   data() {
     return {
-      sectionDetails: {},
+      lessonDetail: {},
       commentNum: null
     };
   },
   created() {
-    this.sectionDetail();
+    this.lessonDetails();
     this.getCommentsList(1);
   },
   methods: {
-    //章节详情
-    async sectionDetail() {
-      let res = await sectionDetail({
-        sectionId: this.$route.query.sectionId
+    getNum(num) {
+      // this.commentNum = num;
+    },
+    //课程详情
+    async lessonDetails() {
+      let res = await lessonDetail({
+        lessonId: this.$route.query.lessonId
       });
       if (res.data.code === 200) {
-        this.sectionDetails = res.data.data;
-        document.title = `武汉益谷-创客空间-${this.sectionDetails.sectionName}`;
+        this.lessonDetail = res.data.data;
+        document.title = `武汉益谷-创客空间-${this.lessonDetail.lessonName}`;
       } else {
         this.$toast.fail({
           mask: true,
@@ -52,8 +53,8 @@ export default {
       let parmes = {
         pageNum: pageNum,
         pageSize: 100,
-        targetId: this.$route.query.sectionId,
-        type: "section"
+        targetId: this.$route.query.lessonId,
+        type: "lesson"
       };
       let res = await commentsList(parmes);
       if (res.data.code === 200) {
@@ -66,10 +67,10 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.lessonPlay_content {
+.comment_view_content {
   position: relative;
   top: 1.5rem;
+  z-index: 999999;
   margin-bottom: 2rem;
-  // z-index: 999999;
 }
 </style>

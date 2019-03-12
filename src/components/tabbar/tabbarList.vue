@@ -1,6 +1,6 @@
 <template>
   <div class="tabbar_content" v-if="isShow">
-    <ul class="tabbar_play" v-if="['lessonPlay','productionDetail'].includes($route.name)">
+    <ul class="tabbar_play" v-if="['productionDetail','commentView'].includes($route.name)">
       <li @click="like(pathType,isLiked)">
         <span :class="{isLike:isLiked}">点赞 {{likeNum}}</span>
       </li>
@@ -8,7 +8,7 @@
         <span>评论 {{commentNum}}</span>
       </li>
       <li @click="collection(pathType,isCollection)">
-        <span>收藏 {{collectCount}}</span>
+        <span :class="{isCollection:isCollection}">收藏 {{collectCount}}</span>
       </li>
     </ul>
 
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     showBar(name) {
-      const pathName = ["lessonPlay", "productionDetail"];
+      const pathName = ["productionDetail", "commentView"];
       if (pathName.includes(name)) {
         this.isShow = true;
       } else {
@@ -79,6 +79,8 @@ export default {
       if (res.data.code === 200) {
         if (pathType === "section") {
           this.$parent.sectionDetail();
+        } else if (pathType === "lesson") {
+          this.commentNum += 1;
         } else {
           this.$parent.creationDetail();
         }
@@ -98,11 +100,8 @@ export default {
     },
     //收藏
     async collection(pathType, isCollection) {
-      if (isCollection) {
-        return;
-      }
       let res = await collect({
-        targetId: this.$route.query.sectionId || this.$route.query.creationId,
+        targetId: this.$route.query.lessonId || this.$route.query.creationId,
         type: pathType
       });
       if (res.data.code === 200) {
@@ -302,8 +301,20 @@ export default {
             height: 0.6rem;
             margin-right: 0.1rem;
             content: "";
-            background: url("../../../static/img/icon_shoucang02.png") no-repeat
+            background: url("../../../static/img/icon_shoucang01.png") no-repeat
               center/100%;
+            vertical-align: sub;
+          }
+        }
+        .isCollection {
+          &::before {
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0.1rem;
+            content: "";
+            background: url("../../../static/img/icon_shoucang02.png") no-repeat
+              center/100% !important;
             vertical-align: sub;
           }
         }

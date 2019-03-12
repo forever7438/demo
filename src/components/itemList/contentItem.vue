@@ -15,9 +15,9 @@
       <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
     </div>
     <div class="operation_list">
-      <span>{{item.viewTimes}}</span>
-      <span>{{item.viewTimes}}</span>
       <span>{{item.likeCount}}</span>
+      <span>{{item.collectCount}}</span>
+      <span>{{item.commentCount}}</span>
     </div>
   </div>
 </template>
