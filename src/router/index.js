@@ -150,7 +150,7 @@ const Routers = [{
 ];
 const RouterConfig = {
   // 使用 HTML5 的 History 路由模式
-  mode: 'history',
+  // mode: 'history',
   routes: Routers,
   //路由跳转后每次置顶
   scrollBehavior(to, from, savedPosition) {

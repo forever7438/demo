@@ -56,7 +56,7 @@
         <router-link
           v-if="itemtype=='lesson'"
           tag="div"
-          :to="{path:'commentView',query:{lessonId:message.lessonId,commentNum:message.commentCount}}"
+          :to="{path:'commentView',query:{lessonId:message.lessonId}}"
         >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>

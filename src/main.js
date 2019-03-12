@@ -10,6 +10,7 @@ import Vuex from 'vuex'
 import Vant from 'vant'
 import 'amfe-flexible';
 import aws from 'aws-sdk';
+import './assets/js/appback';
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 require('vant/lib/index.css')
