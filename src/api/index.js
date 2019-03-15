@@ -24,7 +24,6 @@ import {
 let loading //定义loading变量
 function startLoading() { //使用vant loading start 方法
   loading = Toast.loading({
-    duration: 0,
     mask: true,
     message: '加载中...'
   });

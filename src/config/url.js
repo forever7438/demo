@@ -10,7 +10,7 @@ const ossDir = {
   lessonSection: 'lessonSection', //课程章节
   schoolLogo: 'schoolLogo', //学校logo
   selfie: 'selfie', //个人空间封面
-  courseware:'courseware'  //课件资料
+  courseware: 'courseware' //课件资料
 }
 export {
   baseUrl,

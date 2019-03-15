@@ -11,7 +11,11 @@
             <p>{{sectionDetail.sectionName}}&nbsp;&nbsp;六年级一班</p>
           </span>
         </div>
-        <fllowBtn :userId="sectionDetail.userId"></fllowBtn>
+        <fllowBtn
+          :userId="sectionDetail.userId"
+          :isFollowed="sectionDetail.isFollow"
+          @refreshUserInfo="getParentInfo"
+        ></fllowBtn>
       </div>
       <div class="message_detail_body">
         <div class="message_detail_desc">
@@ -37,6 +41,11 @@ export default {
     return {
       img: "../../../static/img/icon_touxiang02.png"
     };
+  },
+  methods: {
+    getParentInfo() {
+      this.$parent.sectionDetail();
+    }
   }
 };
 </script>

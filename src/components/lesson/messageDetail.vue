@@ -47,7 +47,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{commentNum}}</span>
+          <span>{{messageDetail.commentCount || commentNum}}</span>
         </div>
       </div>
     </div>

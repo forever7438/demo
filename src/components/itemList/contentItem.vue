@@ -10,7 +10,7 @@
       <router-link
         tag="span"
         :to="{path:'/productionDetail',query:{creationId:item.creationId}}"
-        v-else
+        v-if="genre=='creation'"
       >{{item.lessonName || item.creationName}}</router-link>
       <span>{{item.uploadTime | dateformat('YYYY-MM-DD')}}</span>
     </div>

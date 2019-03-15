@@ -6,7 +6,7 @@
       <p :class="{isActive:isCheckB}" @click="tabB">收藏课程</p>
     </div>
     <div v-if="flag&&checkList.length" class="collection_list">
-      <contentItem v-for="(item,index) in checkList" :key="index" :item="item"></contentItem>
+      <contentItem v-for="(item,index) in checkList" :key="index" :item="item" :genre="type"></contentItem>
     </div>
     <noContent v-else></noContent>
   </div>
@@ -30,6 +30,7 @@ export default {
       collectionCreationList: [],
       collectionLessonList: [],
       checkList: null,
+      type: "creation",
       isCheckA: true,
       isCheckB: false
     };
@@ -70,12 +71,14 @@ export default {
       this.isCheckA = true;
       this.isCheckB = false;
       this.checkList = this.collectionCreationList;
+      this.type = "creation";
     },
     //切换B
     tabB() {
       this.isCheckA = false;
       this.isCheckB = true;
       this.checkList = this.collectionLessonList;
+      this.type = "lesson";
     }
   }
 };
