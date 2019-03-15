@@ -1,29 +1,24 @@
 <template>
   <div class="production_contnet">
-    <tips title="创客视频" :isActive="true"></tips>
-    <router-link to="/search">
-      <searchHeader :isDisabled="true"></searchHeader>
-    </router-link>
-    <van-pull-refresh v-model="isLoading" @refresh="randomCreationsList">
-      <item-list v-for="(item,index) in videoList" :key="index" itemtype="creation" :message="item"></item-list>
-    </van-pull-refresh>
-    <!-- <search-content></search-content> -->
+    <tips title="搜索"></tips>
+    <searchHeader :isDisabled="false"></searchHeader>
+    <search-content></search-content>
   </div>
 </template>
 
 <script>
 import itemList from "../components/itemList/itemList";
 import tips from "../components/tips";
-import searchContent from "../components/search/searchContent";
 import searchHeader from "../components/search/searchHeader";
+import searchContent from "../components/search/searchContent";
 import { commonUserInfo, randomCreations } from "@/api/index";
 export default {
-  name: "production",
+  name: "search",
   components: {
     itemList,
     tips,
-    searchContent,
-    searchHeader
+    searchHeader,
+    searchContent
   },
   data() {
     return {

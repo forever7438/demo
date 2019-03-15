@@ -47,7 +47,8 @@ export default {
         "lessonPlay",
         "userAgreement",
         "privacyPolicy",
-        "commentView"
+        "commentView",
+        "search"
       ];
       if (pathName.includes(name)) {
         this.isShow = false;

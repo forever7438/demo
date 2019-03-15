@@ -1,14 +1,17 @@
 <template>
   <div class="search_content">
     <s class="icon_search"></s>
-    <input type="text" placeholder="请输入关键字或标签">
-    <span class="icon_btn">确定</span>
+    <input type="text" placeholder="请输入关键字或标签" :disabled="isDisabled">
+    <span v-if="!isDisabled" class="icon_btn">确定</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "search"
+  name: "searchHeader",
+  props: {
+    isDisabled: Boolean
+  }
 };
 </script>
 
@@ -34,15 +37,17 @@ export default {
     width: 100%;
     height: 0.8rem;
     font-size: 0.5rem;
+    font-weight: 600;
     border: none;
     padding-left: 0.8rem;
   }
   .icon_btn {
+    z-index: 999999;
     position: absolute;
     width: 1rem;
-    line-height: 0.7rem;
+    line-height: 0.6rem;
     right: 0.2rem;
-    top: 0.1rem;
+    top: 0.2rem;
     border-radius: 0.1rem;
     color: #523ae7;
     padding: 0.01rem 0.02rem;

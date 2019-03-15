@@ -1,15 +1,44 @@
 <template>
   <div class="label_content">
     <ul>
-      <li :class="{isActive:true}">全部</li>
-      <li v-for="(item,index) in 17" :key="index">类别名{{item}}</li>
+      <li :class="{isActive:isAll}" @click="checkAll">全部</li>
+      <li
+        v-for="(item,index) in categoryList"
+        :key="index"
+        @click="checkCategory(index)"
+        :class="addClass(index)"
+      >{{item.categoryName}}</li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: "labelList"
+  name: "labelList",
+  props: {
+    categoryList: Array
+  },
+  data() {
+    return {
+      checkId: [],
+      isAll: true
+    };
+  },
+  methods: {
+    checkAll() {
+      this.isAll = true;
+      this.checkId = [];
+    },
+    checkCategory(index) {
+      this.isAll = false;
+      this.checkId = [];
+      this.checkId.push(index);
+      
+    },
+    addClass(index) {
+      return this.checkId.indexOf(index) > -1 ? "isActive" : "";
+    }
+  }
 };
 </script>
 

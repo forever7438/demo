@@ -2,7 +2,7 @@
   <div class="labels_content">
     <div class="category">
       <h3>类别：</h3>
-      <label-list></label-list>
+      <label-list :categoryList="categoryList"></label-list>
     </div>
     <div class="label">
       <h3>标签：</h3>
@@ -13,10 +13,28 @@
 
 <script>
 import labelList from "../itemList/labelList";
+import { getCategorys } from "@/api/index";
 export default {
   name: "searchContent",
   components: {
     labelList
+  },
+  data() {
+    return {
+      categoryList: []
+    };
+  },
+  created() {
+    this.getCategoryList();
+  },
+  methods: {
+    //获取分类
+    async getCategoryList() {
+      let res = await getCategorys();
+      if (res.data.code === 200) {
+        this.categoryList = res.data.data.categoryList;
+      }
+    }
   }
 };
 </script>
