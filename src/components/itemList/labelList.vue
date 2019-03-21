@@ -1,13 +1,13 @@
 <template>
   <div class="label_content">
     <ul>
-      <li :class="{isActive:isAll}" @click="checkAll">全部</li>
+      <li v-if="itemtype==='category'" :class="{isActive:isAll}" @click="checkAll">全部</li>
       <li
-        v-for="(item,index) in categoryList"
+        v-for="(item,index) in categoryList || labelList"
         :key="index"
-        @click="checkCategory(index)"
+        @click="checkCategory(index, item.categoryId || item.labelId)"
         :class="addClass(index)"
-      >{{item.categoryName}}</li>
+      >{{item.categoryName||item.labelName}}</li>
     </ul>
   </div>
 </template>
@@ -16,7 +16,9 @@
 export default {
   name: "labelList",
   props: {
-    categoryList: Array
+    categoryList: Array,
+    labelList: Array,
+    itemtype: String
   },
   data() {
     return {
@@ -28,12 +30,17 @@ export default {
     checkAll() {
       this.isAll = true;
       this.checkId = [];
+      this.$parent.getAllLabels();
     },
-    checkCategory(index) {
+    checkCategory(index, id) {
       this.isAll = false;
       this.checkId = [];
       this.checkId.push(index);
-      
+      if (this.itemtype === "category") {
+        this.$parent.getLabelList(id);
+      } else {
+        this.$parent.filterCreation(id);
+      }
     },
     addClass(index) {
       return this.checkId.indexOf(index) > -1 ? "isActive" : "";

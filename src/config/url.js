@@ -1,5 +1,5 @@
 //测试环境
-const baseUrl = 'api';
+const baseUrl = '/api';
 
 //对象oss配置
 const ossDir = {
