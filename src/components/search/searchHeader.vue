@@ -1,8 +1,14 @@
 <template>
   <div class="search_content">
     <s class="icon_search"></s>
-    <input type="text" placeholder="请输入关键字或标签" :disabled="isDisabled">
-    <span v-if="!isDisabled" class="icon_btn">确定</span>
+    <input
+      type="text"
+      placeholder="请输入关键字或标签"
+      :disabled="isDisabled"
+      v-model="searchVal"
+      @change="saveStr"
+    >
+    <span v-if="!isDisabled" class="icon_btn" @click="sendEvent">确定</span>
   </div>
 </template>
 
@@ -11,6 +17,20 @@ export default {
   name: "searchHeader",
   props: {
     isDisabled: Boolean
+  },
+  data() {
+    return {
+      searchVal: null
+    };
+  },
+  methods: {
+    //存储在vuex里面
+    saveStr() {
+      this.$store.commit("SET_STR", this.searchVal);
+    },
+    sendEvent() {
+      this.$emit("getData");
+    }
   }
 };
 </script>

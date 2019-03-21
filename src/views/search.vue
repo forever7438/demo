@@ -1,8 +1,8 @@
 <template>
   <div class="production_contnet">
     <tips title="搜索"></tips>
-    <searchHeader :isDisabled="false"></searchHeader>
-    <search-content></search-content>
+    <searchHeader :isDisabled="false" @getData="$refs.son.searchCreations()"></searchHeader>
+    <search-content ref="son"></search-content>
   </div>
 </template>
 
@@ -23,12 +23,16 @@ export default {
   data() {
     return {
       videoList: [],
+      searchList: [],
       isLoading: false
     };
   },
   created() {
     this.getUserInfo();
     this.randomCreationsList();
+  },
+  mounted() {
+    // console.log(this.$refs.son);
   },
   methods: {
     //随机获取作品视频

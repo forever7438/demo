@@ -8,13 +8,13 @@
       <h3>标签：</h3>
       <label-list :labelList="labelList" itemtype="label"></label-list>
     </div>
-    <search-list v-if="isShow" :searchList="successList"></search-list>
+    <search-lists v-if="isShow" :searchList="successList"></search-lists>
   </div>
 </template>
 
 <script>
 import labelList from "../itemList/labelList";
-import searchList from "../itemList/searchList";
+import searchLists from "../itemList/searchList";
 import {
   getCategorys,
   getLabels,
@@ -26,7 +26,10 @@ export default {
   name: "searchContent",
   components: {
     labelList,
-    searchList
+    searchLists
+  },
+  props: {
+    searchList: Array
   },
   data() {
     return {
@@ -66,6 +69,34 @@ export default {
     async filterCreation(id) {
       let res = await filterCreations({
         labelId: id,
+        pageNum: 1,
+        pageSize: 100,
+        schoolId: null,
+        sort: "time"
+      });
+      if (res.data.code === 200) {
+        this.successList = res.data.data.creationList;
+        if (this.successList.length) {
+          this.isShow = true;
+        } else {
+          this.$toast({
+            mask: true,
+            message: "暂无信息"
+          });
+        }
+      }
+    },
+    //根据关键字搜索
+    async searchCreations() {
+      if (!this.$store.state.data.str) {
+        this.$toast({
+          mask: true,
+          message: "请输入关键字"
+        });
+        return;
+      }
+      let res = await searchCreations({
+        searchStr: this.$store.state.data.str,
         pageNum: 1,
         pageSize: 100,
         schoolId: null,

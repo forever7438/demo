@@ -9,9 +9,13 @@ const data = {
     phoneNum: null, //手机号
     verificationCode: null, //验证码
     signatrueText: null, //个性签名
+    str: null, //关键字搜索
   },
 
   mutations: {
+    SET_STR: (state, str) => {
+      state.str = str
+    },
     SET_STATE: (state, isChange) => {
       state.isChange = true
     },
