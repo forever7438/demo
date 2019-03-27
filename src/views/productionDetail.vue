@@ -2,7 +2,7 @@
   <div class="detail_contnet">
     <tips title="作品详情"></tips>
     <messageDetail :messageDetail="creationDetails" type="creation" :commentNum="commentNum"></messageDetail>
-    <commentItem :targetId="$route.query.creationId" type="creation"></commentItem>
+    <commentItem :targetId="$route.query.creationId" type="creation" ref="comment"></commentItem>
     <tabbarList
       :commentNum="commentNum"
       :likeNum="creationDetails.likeCount"
@@ -10,6 +10,7 @@
       pathType="creation"
       :isLiked="creationDetails.isLiked"
       :isCollection="creationDetails.isCollect"
+      @getCommentList="getSonList"
     ></tabbarList>
   </div>
 </template>
@@ -39,6 +40,10 @@ export default {
     this.getCommentsList(1);
   },
   methods: {
+    //调用子组件刷新评论列表
+    getSonList() {
+      this.$refs.comment.getCommentsList(1);
+    },
     //作品详情
     async creationDetail() {
       let res = await creationDetail({

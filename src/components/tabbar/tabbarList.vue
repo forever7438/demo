@@ -131,7 +131,6 @@ export default {
         });
         return;
       }
-      this.$store.commit("SET_STATE");
       let res = await comment({
         type: pathType,
         content: this.$store.state.data.text,
@@ -143,8 +142,8 @@ export default {
           sessionStorage.getItem("userId")
       });
       if (res.data.code === 200) {
+        this.$emit("getCommentList");
         this.$parent.getCommentsList(1);
-        this.$store.commit("CLEAR_STATE");
         this.$toast.success({
           mask: true,
           message: "评论成功"

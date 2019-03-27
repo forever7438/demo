@@ -64,11 +64,6 @@ export default {
   created() {
     this.getCommentsList(1);
   },
-  computed: {
-    state() {
-      return this.$store.state.data.isChange;
-    }
-  },
   methods: {
     //获取评论列表
     async getCommentsList(pageNum) {
@@ -142,13 +137,6 @@ export default {
           mask: true,
           message: res.data.message
         });
-      }
-    }
-  },
-  watch: {
-    state(newd, old) {
-      if (newd) {
-        this.getCommentsList(1);
       }
     }
   }

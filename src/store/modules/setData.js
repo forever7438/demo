@@ -4,7 +4,6 @@ import {
 
 const data = {
   state: {
-    isChange: false, //用于监听comment列表是否改变
     text: null, //评论内容
     phoneNum: null, //手机号
     verificationCode: null, //验证码
@@ -15,12 +14,6 @@ const data = {
   mutations: {
     SET_STR: (state, str) => {
       state.str = str
-    },
-    SET_STATE: (state, isChange) => {
-      state.isChange = true
-    },
-    CLEAR_STATE: (state, isChange) => {
-      state.isChange = false
     },
     SET_TEXT: (state, text) => {
       state.text = text

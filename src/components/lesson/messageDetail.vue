@@ -9,7 +9,9 @@
           <img :src="messageDetail.avatar || img">
           <span>
             <p>{{messageDetail.realName}}</p>
-            <p>{{messageDetail.schoolName}}&nbsp;&nbsp;{{messageDetail.className}}</p>
+            <p
+              class="message_title"
+            >{{messageDetail.schoolName}}&nbsp;&nbsp;{{messageDetail.className}}</p>
           </span>
         </div>
         <fllowBtn
@@ -185,6 +187,13 @@ export default {
               text-align: left;
               color: #358dfd;
               font-weight: 600;
+            }
+            &:nth-of-type(2) {
+              max-width: 4rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              text-align: left;
             }
           }
         }
