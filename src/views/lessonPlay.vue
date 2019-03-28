@@ -2,8 +2,8 @@
   <div class="lessonPlay_content">
     <tips title="章节播放"></tips>
     <chapterPlay :sectionDetail="sectionDetails"></chapterPlay>
-    <commentItem :targetId="$route.query.sectionId" type="section"></commentItem>
-    <operationList pathType="section"></operationList>
+    <commentItem :targetId="$route.query.sectionId" type="section" ref="comment"></commentItem>
+    <operationList pathType="section" @getCommentList="getSonList"></operationList>
   </div>
 </template>
 
@@ -32,6 +32,10 @@ export default {
     this.getCommentsList(1);
   },
   methods: {
+    //调用子组件刷新评论列表
+    getSonList() {
+      this.$refs.comment.getCommentsList(1);
+    },
     //章节详情
     async sectionDetail() {
       let res = await sectionDetail({

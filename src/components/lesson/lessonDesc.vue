@@ -57,6 +57,12 @@ export default {
         background-color: #e5e5e5;
         font-weight: 600;
         span {
+          max-width: 6rem;
+          overflow: hidden;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: left;
           &::before {
             display: inline-block;
             width: 0.5rem;

@@ -8,7 +8,13 @@
           <img :src="sectionDetail.avatar || img">
           <span>
             <p>{{sectionDetail.realName}}</p>
-            <p>{{sectionDetail.sectionName}}&nbsp;&nbsp;六年级一班</p>
+            <p
+              style=" max-width: 4rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              text-align: left;"
+            >{{sectionDetail.sectionName}}</p>
           </span>
         </div>
         <fllowBtn
@@ -110,6 +116,10 @@ export default {
           }
           &:nth-of-type(2) {
             margin-left: -0.5rem;
+            width: 7rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            overflow: hidden;
           }
         }
       }

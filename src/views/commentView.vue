@@ -1,8 +1,13 @@
 <template>
   <div class="comment_view_content">
     <tips :title="`共有${commentNum}条评论`"></tips>
-    <commentItem :targetId="$route.query.lessonId" type="lesson" @getCommentNum="getNum"></commentItem>
-    <operationList pathType="lesson"></operationList>
+    <commentItem
+      :targetId="$route.query.lessonId"
+      type="lesson"
+      @getCommentNum="getNum"
+      ref="comment"
+    ></commentItem>
+    <operationList pathType="lesson" @getCommentList="getSonList"></operationList>
   </div>
 </template>
 
@@ -30,6 +35,10 @@ export default {
     this.getCommentsList(1);
   },
   methods: {
+    //调用子组件刷新评论列表
+    getSonList() {
+      this.$refs.comment.getCommentsList(1);
+    },
     getNum(num) {
       // this.commentNum = num;
     },

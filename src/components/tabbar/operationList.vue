@@ -38,7 +38,6 @@ export default {
         });
         return;
       }
-      this.$store.commit("SET_STATE");
       let res = await comment({
         type: pathType,
         content: this.content,
@@ -46,8 +45,8 @@ export default {
       });
       if (res.data.code === 200) {
         this.$parent.getCommentsList(1);
-        this.$store.commit("CLEAR_STATE");
         this.content = null;
+        this.$emit("getCommentList");
         this.$toast.success({
           mask: true,
           message: "评论成功"
