@@ -114,6 +114,23 @@ export default {
     },
     //收藏
     async collect(targetId, type, isCollect) {
+      if (isCollect) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消收藏"
+          })
+          .then(() => {
+            this.colles(targetId, type);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.colles(targetId, type);
+      }
+    },
+    async colles(targetId, type) {
       let res = await collect({
         targetId: targetId,
         type: type
@@ -135,20 +152,18 @@ export default {
     },
     //点赞
     async like(targetId, pathType, isLiked) {
-      if (isLiked) {
-        return;
-      }
       let res = await like({
         targetId: targetId,
         type: pathType
       });
       if (res.data.code === 200) {
-        this.message.isLiked = true;
-        this.message.likeCount += 1;
-        this.$toast.success({
-          mask: true,
-          message: "点赞成功"
-        });
+        if (isLiked) {
+          this.message.isLiked = false;
+          this.message.likeCount -= 1;
+        } else {
+          this.message.isLiked = true;
+          this.message.likeCount += 1;
+        }
       } else {
         this.$toast({
           mask: true,

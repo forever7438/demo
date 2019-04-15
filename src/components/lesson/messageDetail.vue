@@ -38,7 +38,7 @@
           </svg>
           <span>{{messageDetail.likeCount}}</span>
         </div>
-        <div class="watch" @click="collect(type)">
+        <div class="watch" @click="collect(type,messageDetail.isCollect)">
           <svg class="icon" aria-hidden="true">
             <use v-if="messageDetail.isCollect" xlink:href="#icon-shoucang"></use>
             <use v-else xlink:href="#icon-wujiaoxing_kong"></use>
@@ -49,8 +49,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{messageDetail.commentCount || commentNum}}</span>
+          <span>{{commentNum || messageDetail.commentCount}}</span>
         </div>
+        
       </div>
     </div>
   </div>
@@ -85,9 +86,6 @@ export default {
     },
     //点赞
     async like(pathType, isLiked) {
-      if (isLiked) {
-        return;
-      }
       let res = await like({
         targetId:
           this.$route.query.lessonId ||
@@ -101,10 +99,6 @@ export default {
         } else {
           this.$parent.creationDetail();
         }
-        this.$toast.success({
-          mask: true,
-          message: "点赞成功"
-        });
       } else {
         this.$toast({
           mask: true,
@@ -113,7 +107,24 @@ export default {
       }
     },
     //收藏
-    async collect(type) {
+    async collect(type, isCollect) {
+      if (isCollect) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消收藏"
+          })
+          .then(() => {
+            this.colles(type);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.colles(type);
+      }
+    },
+    async colles(type) {
       let res = await collect({
         targetId:
           this.$route.query.lessonId ||

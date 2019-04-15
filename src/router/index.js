@@ -29,130 +29,130 @@ import Router from 'vue-router';
 import Cookies from "js-cookie";
 Vue.use(Router)
 const Routers = [{
-    path: '/',
-    redirect: "/login"
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: login
-  },
-  {
-    path: '/quickLogin',
-    name: 'quickLogin',
-    component: quickLogin
-  },
-  {
-    path: '/forgetPassword',
-    name: 'forgetPassword',
-    component: forgetPassword
-  },
-  {
-    path: '/updatePassword',
-    name: 'updatePassword',
-    component: updatePassword
-  },
-  {
-    path: '/production',
-    name: 'production',
-    component: production
-  },
-  {
-    path: '/productionDetail',
-    name: 'productionDetail',
-    component: productionDetail
-  },
-  {
-    path: '/lesson',
-    name: 'lesson',
-    component: lesson
-  },
-  {
-    path: '/lessonDetail',
-    name: 'lessonDetail',
-    component: lessonDetail
-  },
-  {
-    path: '/lessonPlay',
-    name: 'lessonPlay',
-    component: lessonPlay
-  },
-  {
-    path: '/personal',
-    name: 'personal',
-    component: personal
-  },
-  {
-    path: '/homepage',
-    name: 'homepage',
-    component: homepage
-  },
-  {
-    path: '/accountManagement',
-    name: 'accountManagement',
-    component: accountManagement
-  },
-  {
-    path: '/myFllow',
-    name: 'myFllow',
-    component: myFllow
-  },
-  {
-    path: '/myCollection',
-    name: 'myCollection',
-    component: myCollection
-  },
-  {
-    path: '/myLesson',
-    name: 'myLesson',
-    component: myLesson
-  },
-  {
-    path: '/myProduction',
-    name: 'myProduction',
-    component: myProduction
-  },
-  {
-    path: '/mySetting',
-    name: 'mySetting',
-    component: mySetting
-  },
+  path: '/',
+  redirect: "/login"
+},
+{
+  path: '/login',
+  name: 'login',
+  component: login
+},
+{
+  path: '/quickLogin',
+  name: 'quickLogin',
+  component: quickLogin
+},
+{
+  path: '/forgetPassword',
+  name: 'forgetPassword',
+  component: forgetPassword
+},
+{
+  path: '/updatePassword',
+  name: 'updatePassword',
+  component: updatePassword
+},
+{
+  path: '/production',
+  name: 'production',
+  component: production
+},
+{
+  path: '/productionDetail',
+  name: 'productionDetail',
+  component: productionDetail
+},
+{
+  path: '/lesson',
+  name: 'lesson',
+  component: lesson
+},
+{
+  path: '/lessonDetail',
+  name: 'lessonDetail',
+  component: lessonDetail
+},
+{
+  path: '/lessonPlay',
+  name: 'lessonPlay',
+  component: lessonPlay
+},
+{
+  path: '/personal',
+  name: 'personal',
+  component: personal
+},
+{
+  path: '/homepage',
+  name: 'homepage',
+  component: homepage
+},
+{
+  path: '/accountManagement',
+  name: 'accountManagement',
+  component: accountManagement
+},
+{
+  path: '/myFllow',
+  name: 'myFllow',
+  component: myFllow
+},
+{
+  path: '/myCollection',
+  name: 'myCollection',
+  component: myCollection
+},
+{
+  path: '/myLesson',
+  name: 'myLesson',
+  component: myLesson
+},
+{
+  path: '/myProduction',
+  name: 'myProduction',
+  component: myProduction
+},
+{
+  path: '/mySetting',
+  name: 'mySetting',
+  component: mySetting
+},
 
-  {
-    path: '/myMessage',
-    name: 'myMessage',
-    component: myMessage
-  },
-  {
-    path: '/myFan',
-    name: 'myFan',
-    component: myFan
-  },
-  {
-    path: '/updateSign',
-    name: 'updateSign',
-    component: updateSign
-  },
-  {
-    path: '/userAgreement',
-    name: 'userAgreement',
-    component: userAgreement
-  },
-  {
-    path: '/privacyPolicy',
-    name: 'privacyPolicy',
-    component: privacyPolicy
-  },
-  {
-    path: '/commentView',
-    name: 'commentView',
-    component: commentView
-  },
-  {
-    path: '/search',
-    name: 'search',
-    component: search
-  }
+{
+  path: '/myMessage',
+  name: 'myMessage',
+  component: myMessage
+},
+{
+  path: '/myFan',
+  name: 'myFan',
+  component: myFan
+},
+{
+  path: '/updateSign',
+  name: 'updateSign',
+  component: updateSign
+},
+{
+  path: '/userAgreement',
+  name: 'userAgreement',
+  component: userAgreement
+},
+{
+  path: '/privacyPolicy',
+  name: 'privacyPolicy',
+  component: privacyPolicy
+},
+{
+  path: '/commentView',
+  name: 'commentView',
+  component: commentView
+},
+{
+  path: '/search',
+  name: 'search',
+  component: search
+}
 ];
 const RouterConfig = {
   // 使用 HTML5 的 History 路由模式

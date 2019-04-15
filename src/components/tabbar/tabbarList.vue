@@ -69,9 +69,6 @@ export default {
     },
     //点赞
     async like(pathType, isLiked) {
-      if (isLiked) {
-        return;
-      }
       let res = await like({
         targetId: this.$route.query.sectionId || this.$route.query.creationId,
         type: pathType
@@ -100,6 +97,23 @@ export default {
     },
     //收藏
     async collection(pathType, isCollection) {
+      if (isCollection) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消收藏"
+          })
+          .then(() => {
+            this.colles(pathType);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.colles(pathType);
+      }
+    },
+    async colles(pathType) {
       let res = await collect({
         targetId: this.$route.query.lessonId || this.$route.query.creationId,
         type: pathType
