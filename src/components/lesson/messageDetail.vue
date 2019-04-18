@@ -49,9 +49,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-test"></use>
           </svg>
-          <span>{{commentNum || messageDetail.commentCount}}</span>
+          <span v-if="messageDetail.commentCount">{{messageDetail.commentCount}}</span>
+          <span v-else>{{commentNum }}</span>
         </div>
-        
       </div>
     </div>
   </div>
@@ -86,6 +86,23 @@ export default {
     },
     //点赞
     async like(pathType, isLiked) {
+      if (isLiked) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消点赞"
+          })
+          .then(() => {
+            this.likes(pathType);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.likes(pathType);
+      }
+    },
+    async likes(pathType) {
       let res = await like({
         targetId:
           this.$route.query.lessonId ||

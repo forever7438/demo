@@ -36,5 +36,14 @@ exports.changeSignature = async function (parmes) {
   return axios.post(url, qs.stringify(parmes))
 }
 
+
+//获取用户关注数
+exports.getFansAndAttentionCount = async function(parmes){
+  
+  const url = `${baseUrl}/personalSpace/getFansAndAttentionCount`
+  return axios.get(url, {
+    params: parmes
+  })
+}
 /* end
  */

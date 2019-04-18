@@ -28,7 +28,12 @@
     </div>
     <div class="item_body">
       <video :src="message.videoPath" controls="controls" v-if="itemtype=='creation'"></video>
-      <img v-if="itemtype=='lesson'" :src="message.coverImage">
+      <router-link
+        :to="{path:'/lessonDetail',query:{lessonId:message.lessonId}}"
+        v-if="itemtype=='lesson'"
+      >
+        <img :src="message.coverImage">
+      </router-link>
     </div>
     <div class="item_footer">
       <div
@@ -152,12 +157,29 @@ export default {
     },
     //点赞
     async like(targetId, pathType, isLiked) {
+      if (isLiked) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消点赞"
+          })
+          .then(() => {
+            this.likes(targetId, pathType);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.likes(targetId, pathType);
+      }
+    },
+    async likes(targetId, pathType) {
       let res = await like({
         targetId: targetId,
         type: pathType
       });
       if (res.data.code === 200) {
-        if (isLiked) {
+        if (this.message.isLiked) {
           this.message.isLiked = false;
           this.message.likeCount -= 1;
         } else {
@@ -221,18 +243,18 @@ export default {
           white-space: nowrap;
         }
         .labels {
-          font-size: 0.4rem;
+          font-size: 0.3rem;
           .fun-tag {
-            margin-right: 0.6rem !important;
+            margin-right: 0.5rem !important;
             color: #f9fdfe;
             &:nth-of-type(1) {
-              .global-fun-tag(0.8rem, #86bbe1);
+              .global-fun-tag(0.7rem, #86bbe1);
             }
             &:nth-of-type(2) {
-              .global-fun-tag(0.8rem, #98dd80);
+              .global-fun-tag(0.7rem, #98dd80);
             }
             &:nth-of-type(3) {
-              .global-fun-tag(0.8rem, #efa096);
+              .global-fun-tag(0.7rem, #efa096);
             }
           }
         }

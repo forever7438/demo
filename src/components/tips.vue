@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     goback() {
-      window.history.go(-1);
+      this.$router.back(-1);
     },
     sendSure() {
       this.$emit("showBtn");

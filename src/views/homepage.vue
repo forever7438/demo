@@ -6,14 +6,14 @@
         <p>
           <span>关注数</span>
           <span>
-            <i class="fllow_number">{{userInfo.viewedTimes}}</i>人
+            <i class="fllow_number">{{userCount.attention}}</i>人
           </span>
         </p>
         <img :src="userInfo.avatar || img">
         <p>
           <span>粉丝数</span>
           <span>
-            <i class="fan_number">{{userInfo.likeCount}}</i>人
+            <i class="fan_number">{{userCount.fans}}</i>人
           </span>
         </p>
       </div>
@@ -36,7 +36,12 @@
 import tips from "../components/tips";
 import fllowBtn from "../components/fllowBtn";
 import homepageList from "../components/itemList/homepageList";
-import { fetchUserInfo, creationOfUser, lessonOfUser } from "@/api/index";
+import {
+  fetchUserInfo,
+  creationOfUser,
+  lessonOfUser,
+  getFansAndAttentionCount
+} from "@/api/index";
 export default {
   name: "homepage",
   components: {
@@ -49,13 +54,15 @@ export default {
       userInfo: {},
       creationList: [],
       lessonList: [],
-      img: "../../static/img/icon_touxiang02.png"
+      img: "../../static/img/icon_touxiang02.png",
+      userCount: {}
     };
   },
   created() {
     this.getUserInfo();
     this.getUserCreationList();
     this.getUserLessonList();
+    this.getFanCount();
   },
   methods: {
     //获取个人信息
@@ -63,9 +70,18 @@ export default {
       let res = await fetchUserInfo({
         userId: this.$route.query.userId
       });
-      this.userInfo = res.data.data;
+      if (res.data.code === 200) {
+        this.userInfo = res.data.data;
+      }
     },
-
+    async getFanCount() {
+      let res = await getFansAndAttentionCount({
+        userId: this.$route.query.userId
+      });
+      if (res.data.code === 200) {
+        this.userCount = res.data.data;
+      }
+    },
     //获取个人发布的视频
     async getUserCreationList() {
       let res = await creationOfUser({

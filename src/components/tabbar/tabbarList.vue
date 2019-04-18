@@ -69,6 +69,23 @@ export default {
     },
     //点赞
     async like(pathType, isLiked) {
+      if (isLiked) {
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消点赞"
+          })
+          .then(() => {
+            this.likes(pathType);
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.likes(pathType);
+      }
+    },
+    async likes(pathType) {
       let res = await like({
         targetId: this.$route.query.sectionId || this.$route.query.creationId,
         type: pathType
@@ -81,10 +98,6 @@ export default {
         } else {
           this.$parent.creationDetail();
         }
-        this.$toast.success({
-          mask: true,
-          message: "点赞成功"
-        });
       } else {
         this.$toast({
           mask: true,

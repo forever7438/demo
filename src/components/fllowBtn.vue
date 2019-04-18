@@ -21,7 +21,17 @@ export default {
   methods: {
     tabShow(userId) {
       if (this.isFollowed) {
-        this.cancelFollow(userId);
+        this.$dialog
+          .confirm({
+            title: "",
+            message: "是否取消关注"
+          })
+          .then(() => {
+            this.cancelFollow(userId);
+          })
+          .catch(() => {
+            // on cancel
+          });
       } else {
         this.follow(userId);
       }

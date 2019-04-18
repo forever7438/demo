@@ -1,14 +1,14 @@
 <template>
   <div class="fan_item_contnet">
-    <div class="item_meun">
+    <router-link tag="div" class="item_meun" :to="{path:'/homepage',query:{userId:item.userId}}">
       <img :src="item.avatar || img">
-    </div>
-    <div class="item_message">
+    </router-link>
+    <router-link tag="div" class="item_message" :to="{path:'/homepage',query:{userId:item.userId}}">
       <p>{{item.realName}}</p>
       <p>{{item.schoolName}}&nbsp;&nbsp;{{item.className}}</p>
       <p v-if="item.signatrue">{{item.signatrue}}</p>
       <p v-else>这家伙很懒,什么都没有留下！！！</p>
-    </div>
+    </router-link>
     <div class="item_motto">
       <fllowBtn
         :isFollowed="item.isFollowed"
@@ -81,12 +81,22 @@ export default {
         font-size: 0.4rem;
       }
       &:nth-of-type(3) {
+        position: relative;
         width: 3.5rem;
         font-size: 0.45rem;
         font-weight: 600;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        // &::before {
+        //   position: absolute;
+        //   right: 0;
+        //   display: inline-block;
+        //   width: 0.5rem;
+        //   height: 0.5rem;
+        //   content: "";
+        //   background: url("../../../static/img/down.png") no-repeat center/100%;
+        // }
       }
     }
   }
